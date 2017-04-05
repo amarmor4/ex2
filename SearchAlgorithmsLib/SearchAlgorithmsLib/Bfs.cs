@@ -8,7 +8,7 @@ namespace SearchAlgorithmsLib
 {
     public class Bfs<T> : SearcherPriority<T>
     {
-        public override Solution search(ISearchable<T> searchable)
+        public override Solution<T> search(ISearchable<T> searchable)
         {
             addToOpenList(searchable.getInitialState());
             HashSet<State<T>> closed = new HashSet<State<T>>();
@@ -16,8 +16,11 @@ namespace SearchAlgorithmsLib
             {
                 State<T> current = popOpenList();
                 closed.Add(current);
+                updateEvaluatedCount();
                 if (current.Equals(searchable.getGoalState()))
-                    return null; //TODO back trace of n in solution type
+                {
+                    return new Solution<T>(createBackTrace(current));
+                }
                 List<State<T>> succerssors = searchable.getAllPossibleStates(current);
                 foreach (State<T> neg in succerssors)
                 {
@@ -38,8 +41,7 @@ namespace SearchAlgorithmsLib
                             }
                         }
                     }
-                }   
-                  
+                }                     
             }
             return null;
         }

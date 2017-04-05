@@ -8,7 +8,7 @@ namespace SearchAlgorithmsLib
 {
     public class Dfs<T> : Searcher<T>
     {
-        public override Solution search(ISearchable<T> searchable)
+        public override Solution<T> search(ISearchable<T> searchable)
         {
             pushToStack(searchable.getInitialState());
             HashSet<State<T>> discovered = new HashSet<State<T>>();
@@ -26,7 +26,7 @@ namespace SearchAlgorithmsLib
                     }
                 }
             }
-            return null; //TODO build solution
+            return new Solution<T>(createBackTrace(discovered));
         }
 
     }

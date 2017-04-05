@@ -36,7 +36,12 @@ namespace SearchAlgorithmsLib
             return this.stack.Count == 0;
         }
 
-        public abstract Solution search(ISearchable<T> searchable);
+        public List<State<T>> createBackTrace(HashSet<State<T>> discoverde)
+        {
+            return discoverde.ToList<State<T>>();
+        }
+
+        public abstract Solution<T> search(ISearchable<T> searchable);
         public int getNumberOfNodesEvaluated()
         {
             return this.evaluatedNodes;
