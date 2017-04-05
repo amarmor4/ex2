@@ -1,0 +1,38 @@
+{
+    "version": "1.0.0-*",
+    "description": "ConsoleApp1 Console Application",
+    "authors": [ "Moran" ],
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": "",
+
+    "dependencies": {
+        "Newtonsoft.Json": "10.0.2",
+        "WindowsAzure.Storage": "8.1.1",
+        "OptimizedPriorityQueue": "4.0.4"
+    },
+
+    "commands": {
+        "ConsoleApp1": "ConsoleApp1"
+    },
+
+    "frameworks": {
+        "dnx451": {
+            "dependencies": {
+                "MazeGeneratorLib": "1.0.0-*",
+                "MazeLib": "1.0.0-*",
+                "Priority Queue": "1.0.0-*"
+            }
+        },
+        "dnxcore50": {
+            "dependencies": {
+                "System.Collections": "4.0.10-beta-23019",
+                "System.Console": "4.0.0-beta-23019",
+                "System.Linq": "4.0.0-beta-23019",
+                "System.Threading": "4.0.10-beta-23019",
+                "Microsoft.CSharp": "4.0.0-beta-23019",
+                "Priority Queue": "1.0.0-*"
+            }
+        }
+    }
+}

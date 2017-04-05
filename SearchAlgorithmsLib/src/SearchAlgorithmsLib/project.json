@@ -1,0 +1,23 @@
+{
+    "version": "1.0.0-*",
+    "description": "SearchAlgorithmsLib Class Library",
+    "authors": [ "Moran" ],
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": "",
+
+    "dependencies": {
+        "System.Collections": "4.0.10-beta-23019",
+        "System.Linq": "4.0.0-beta-23019",
+        "System.Threading": "4.0.10-beta-23019",
+        "System.Runtime": "4.0.10-beta-23019",
+        "Microsoft.CSharp": "4.0.0-beta-23019",
+        "Newtonsoft.Json": "10.0.2",
+        "OptimizedPriorityQueue": "4.0.4",
+        "ConsoleApp1": "1.0.0-*"
+    },
+
+    "frameworks": {
+        "dotnet": { }
+    }
+}
