@@ -10,5 +10,6 @@ namespace SearchAlgorithmsLib
     {
         Solution search(ISearchable<T> searchable);
         int getNumberOfNodesEvaluated();
+        void updateEvaluatedCount();
     }
 }

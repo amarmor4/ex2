@@ -3,46 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Priority_Queue;
+
 namespace SearchAlgorithmsLib
 {
     public abstract class Searcher<T> : ISearcher<T>
     {
-        private SimplePriorityQueue<State<T>> openList;
+        private Stack<State<T>> stack;
         private int evaluatedNodes;
-        public int OpenListSize
-        {
-            get { return openList.Count; }
-        }
 
         public Searcher()
         {
-            openList = new SimplePriorityQueue<State<T>>();
-            evaluatedNodes = 0;
+            this.stack = new Stack<State<T>>();
+            this.evaluatedNodes = 0;
         }
-        protected State<T> popOpenList()
+
+        public void updateEvaluatedCount()
         {
-            evaluatedNodes++;
-            return openList.Dequeue();
+            this.evaluatedNodes++;
         }
-        protected void addToOpenList(State<T> state)
+
+        public State<T> popFromStack()
         {
-            this.openList.Enqueue(state, (float)state.cost);
+            return this.stack.Pop();
         }
-        protected bool openContaines(State<T> stateToFind)
+        public void pushToStack(State<T> s)
         {
-            foreach(State<T> s in this.openList)
-            {
-                if (s.Equals(stateToFind))
-                    return true;
-            }
-                return false;
+            this.stack.Push(s);
+        }
+
+        public bool stackIsEmpty()
+        {
+            return this.stack.Count == 0;
         }
 
         public abstract Solution search(ISearchable<T> searchable);
         public int getNumberOfNodesEvaluated()
         {
-            return evaluatedNodes;
+            return this.evaluatedNodes;
         }
     }
 }
