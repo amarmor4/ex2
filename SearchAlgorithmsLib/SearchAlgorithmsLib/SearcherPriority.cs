@@ -66,5 +66,11 @@ namespace SearchAlgorithmsLib
         {
             return evaluatedNodes;
         }
+
+        public void updateOpenList(State<T> current)
+        {
+            this.openList.Remove(current);
+            addToOpenList(current);
+        }
     }
 }

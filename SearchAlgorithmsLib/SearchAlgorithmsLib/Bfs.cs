@@ -38,6 +38,7 @@ namespace SearchAlgorithmsLib
                             else
                             {
                                 searchable.updateState(neg, current);
+                                updateOpenList(neg);
                             }
                         }
                     }

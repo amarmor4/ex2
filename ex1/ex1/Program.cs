@@ -15,7 +15,7 @@ namespace ex1
         public static void CompareSolvers()
         {
                IMazeGenerator mazeGenerator = new DFSMazeGenerator();
-               Maze maze = mazeGenerator.Generate(10,10);
+               Maze maze = mazeGenerator.Generate(5,7);
                Console.WriteLine(maze.ToString());
 
                Adapter<Position, Direction> adapter = new MazeToSearchableAdapter<Position, Direction>(maze);
@@ -29,8 +29,9 @@ namespace ex1
                /*
                foreach(Direction d in directionSol)
                {
-                   Console.Write(d);
-               }*/
+                   Console.Write(d + " ");
+               }
+            Console.WriteLine();*/
 
                ISearcher<Position> DFS = new Dfs<Position>();
                Solution<Position> solution1 = DFS.search(searchableMaze);
