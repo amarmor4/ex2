@@ -31,7 +31,7 @@ namespace ex1
                {
                    Console.Write(d + " ");
                }
-            Console.WriteLine();*/
+                Console.WriteLine();*/
 
                ISearcher<Position> DFS = new Dfs<Position>();
                Solution<Position> solution1 = DFS.search(searchableMaze);
