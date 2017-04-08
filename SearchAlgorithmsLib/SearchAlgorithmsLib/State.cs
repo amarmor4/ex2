@@ -8,7 +8,7 @@ namespace SearchAlgorithmsLib
 {
     public class State<T>
     {
-        private T state;
+        public T state{ get; set; }
         public double cost { get; set;}
         public State<T> cameFrom { get; set; }
 
@@ -18,6 +18,16 @@ namespace SearchAlgorithmsLib
         public bool Equals(State<T> s)
         {
             return (state.Equals(s.state));
+        }
+
+        public override int GetHashCode()
+        {
+            return this.state.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as State<T>);
         }
 
     }

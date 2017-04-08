@@ -16,7 +16,7 @@ namespace SearchAlgorithmsLib
             {
                 State<T> current = popOpenList();
                 closed.Add(current);
-                updateEvaluatedCount();
+                //updateEvaluatedCount();
                 if (current.Equals(searchable.getGoalState()))
                 {
                     return new Solution<T>(createBackTrace(current));

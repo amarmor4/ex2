@@ -22,7 +22,8 @@ namespace SearchAlgorithmsLib
                     updateEvaluatedCount();
                     foreach (State<T> neg in searchable.getAllPossibleStates(current))
                     {
-                        pushToStack(neg);
+                        if(!discovered.Contains(neg))
+                            pushToStack(neg);
                     }
                 }
             }
