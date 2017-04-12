@@ -18,5 +18,11 @@ namespace SearchAlgorithmsLib
             this.backTrace = trace;
         }
 
+        public string ToJSON()
+        {
+            return null;
+            // toDo create json format
+        }
+
     }
 }

@@ -45,7 +45,7 @@ namespace ex1
             Console.WriteLine();
             Console.WriteLine("BFS: " + BFS.getNumberOfNodesEvaluated());
            */
-           
+           /*
                IMazeGenerator mazeGenerator = new DFSMazeGenerator();
                Maze maze = mazeGenerator.Generate(60,60);
                Console.WriteLine(maze.ToString());
@@ -64,6 +64,7 @@ namespace ex1
             }
                 Console.WriteLine();
            Console.WriteLine("BFS: " + BFS.getNumberOfNodesEvaluated());
+           */
            /*
            ISearcher<Position> DFS = new Dfs<Position>();
            Solution<Position> solution1 = DFS.search(searchableMaze);
@@ -78,7 +79,15 @@ namespace ex1
 
         static void Main(string[] args)
         {
-            CompareSolvers();
+            //CompareSolvers();
+            //Console.ReadKey();
+            Controller c = new Controller();
+            IClientHandler ch = new ClientHandler(c);
+            Server server = new Server(8000, ch);
+            c.setView(server);
+            IModel m = new MazeModel(c);
+            c.setModel(m);
+            server.Start();
             Console.ReadKey();
         }
     }
