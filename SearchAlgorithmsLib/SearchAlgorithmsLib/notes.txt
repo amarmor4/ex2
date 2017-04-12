@@ -1,4 +1,4 @@
 ﻿BFS: 
-עלות? משקולות?
-statepool
-generic cost תור עדיפויות
+עלות כרגע צריכה להיות 1 ולא 0
+statepool: 
+generic cost: תור עדיפויות

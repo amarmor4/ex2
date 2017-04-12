@@ -23,13 +23,15 @@ namespace SearchAlgorithmsLib
         }
         protected State<T> popOpenList()
         {
-            evaluatedNodes++;
+            updateEvaluatedCount();
             return openList.Dequeue();
         }
         protected void addToOpenList(State<T> state)
         {
+            updateEvaluatedCount();
             this.openList.Enqueue(state, (float)state.cost);
         }
+
         protected bool openContaines(State<T> stateToFind)
         {
             foreach(State<T> s in this.openList)
@@ -61,7 +63,9 @@ namespace SearchAlgorithmsLib
         {
             this.evaluatedNodes++;
         }
+
         public abstract Solution<T> search(ISearchable<T> searchable);
+
         public int getNumberOfNodesEvaluated()
         {
             return evaluatedNodes;
@@ -69,6 +73,7 @@ namespace SearchAlgorithmsLib
 
         public void updateOpenList(State<T> current)
         {
+            updateEvaluatedCount();
             this.openList.Remove(current);
             addToOpenList(current);
         }

@@ -19,21 +19,21 @@ namespace ex1
 
         public State<MazeLib.Position> getIntialized()
         {
-            State<MazeLib.Position> start = new State<MazeLib.Position>(adapteeMaze.InitialPos);
+            State<MazeLib.Position> start = State<MazeLib.Position>.StatePool.getState(adapteeMaze.InitialPos);
             return start;
 
         }
 
         public State<MazeLib.Position> getGoal()
         {
-            State<MazeLib.Position> goal = new State<MazeLib.Position>(this.adapteeMaze.GoalPos);
+            State<MazeLib.Position> goal = State<MazeLib.Position>.StatePool.getState(this.adapteeMaze.GoalPos);
             return goal;
         }
 
         private State<MazeLib.Position> createPos (int row, int col)
         {
             MazeLib.Position tempPos = new MazeLib.Position(row, col);
-            State<MazeLib.Position> tempState = new State<MazeLib.Position>(tempPos);
+            State<MazeLib.Position> tempState = State<MazeLib.Position>.StatePool.getState(tempPos);
             return tempState;
         }
 
@@ -76,7 +76,7 @@ namespace ex1
         //TODO
         public double costBetNeg(State<MazeLib.Position> neg1 , State<MazeLib.Position> neg2)
         {
-            return 0;
+            return 1;
         }
 
         public void updateParent(State<MazeLib.Position> current, State<MazeLib.Position> parent)
@@ -106,13 +106,17 @@ namespace ex1
 
         public List<MazeLib.Direction> convertSolution(Solution<MazeLib.Position> solution)
         {
-            List<MazeLib.Direction> temp = new List<MazeLib.Direction>();
-            
-            for(int i = 0; i < solution.backTrace.Count - 1; i++)
+            if (solution!=null)
             {
-                temp.Add(comperTo(solution.backTrace[i], solution.backTrace[i + 1]));
+                List<MazeLib.Direction> temp = new List<MazeLib.Direction>();
+
+                for (int i = 0; i < solution.backTrace.Count - 1; i++)
+                {
+                    temp.Add(comperTo(solution.backTrace[i], solution.backTrace[i + 1]));
+                }
+                return temp;
             }
-            return temp;
+            return null;
         }
     }
 }
