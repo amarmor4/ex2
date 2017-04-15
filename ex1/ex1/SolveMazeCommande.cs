@@ -21,8 +21,10 @@ namespace ex1
         {
             string name = args[0];
             int algo = int.Parse(args[1]);
-            Solution<Position> solution = model.Solve(name, algo);
-            return solution.ToJSON();
+            Solution<MazeLib.Position> solution = model.Solve(name, algo);
+            SolutionRepresent<MazeLib.Direction, MazeLib.Position, int> solRepresent = new MazeSolRepreset(solution);
+            solRepresent.ConvertSolution();
+            return solRepresent.ToJSON();
         }
     }
 }

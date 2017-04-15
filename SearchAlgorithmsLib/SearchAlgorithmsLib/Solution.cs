@@ -8,21 +8,15 @@ namespace SearchAlgorithmsLib
 {
     public class Solution<T>
     {
-        public List<State<T>> backTrace
-        {
-            get; set;
-        }
+        public List<State<T>> backTrace { get; set; }
+        public int nodesEvaluated { get; set; }
+        public string name { get; set; }
 
-        public Solution(List<State<T>> trace)
+        public Solution(List<State<T>> trace, int evaluatedNodes, string searcherName)
         {
             this.backTrace = trace;
+            this.nodesEvaluated = evaluatedNodes;
+            this.name = searcherName;
         }
-
-        public string ToJSON()
-        {
-            return null;
-            // toDo create json format
-        }
-
     }
 }

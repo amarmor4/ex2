@@ -19,14 +19,22 @@ namespace ex1
         public void HandleClient(TcpClient client)
             {
             new Task(() =>
-                {
+                {                    
                     using (NetworkStream stream = client.GetStream())
                     using (StreamReader reader = new StreamReader(stream))
                     using (StreamWriter writer = new StreamWriter(stream))
                     {
-                        string commandLine = reader.ReadLine();
-                        string result = c.ExecuteCommand(commandLine, client);
-                        writer.Write(result);
+                        while (true)
+                        {
+                            try {
+                                string commandLine = reader.ReadLine();
+                                Console.WriteLine("Got command: {0}", commandLine);
+                                string result = c.ExecuteCommand(commandLine.ToString(), client);
+                                writer.AutoFlush = true;
+                                writer.WriteLine(result);
+                            }
+                            catch (Exception) { break; }
+                        }
                     }
                     client.Close();
                 }).Start();

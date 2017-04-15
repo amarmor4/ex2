@@ -19,7 +19,7 @@ namespace SearchAlgorithmsLib
                 updateEvaluatedCount();
                 if (current.Equals(searchable.getGoalState()))
                 {
-                    return new Solution<T>(createBackTrace(current));
+                    return new Solution<T>(createBackTrace(current), getNumberOfNodesEvaluated(), searchable.GetName());
                 }
                 List<State<T>> succerssors = searchable.getAllPossibleStates(current);
                 foreach (State<T> neg in succerssors)

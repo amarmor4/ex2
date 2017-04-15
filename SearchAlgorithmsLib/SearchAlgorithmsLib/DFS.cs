@@ -27,7 +27,7 @@ namespace SearchAlgorithmsLib
                     }
                 }
             }
-            return new Solution<T>(createBackTrace(discovered));
+            return new Solution<T>(createBackTrace(discovered), getNumberOfNodesEvaluated(), searchable.GetName());
         }
 
     }

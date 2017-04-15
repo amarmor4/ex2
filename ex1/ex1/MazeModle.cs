@@ -28,6 +28,7 @@ namespace ex1
         {
             IMazeGenerator mazeGenerator = new DFSMazeGenerator();
             Maze maze = mazeGenerator.Generate(rows, cols);
+            maze.Name = name;
             if (!this.poolMazes.ContainsKey(name))
             {
                 this.poolMazes.Add(name, maze);
@@ -48,7 +49,7 @@ namespace ex1
                 ISearcher<Position> searchAlgo;
                 Solution<Position> solution;
                 Maze maze = this.poolMazes[name];
-                Adapter<Position, Direction> adapter = new MazeToSearchableAdapter<Position, Direction>(maze);
+                Adapter<Position> adapter = new MazeToSearchableAdapter<Position>(maze);
                 ISearchable<Position> searchableMaze = new Searchable<Position, Direction>(adapter);
                 switch (algo)
                 {
@@ -99,8 +100,11 @@ namespace ex1
 
         public bool Close(string name)
         {
-            if (this.gamesToJoin.Contains(name))
-                this.gamesToJoin.Remove(name); 
+            try {
+                if (this.gamesToJoin.Contains(name))
+                    this.gamesToJoin.Remove(name);
+            }
+            catch (Exception) { return false; }
             return true;
         }
     }

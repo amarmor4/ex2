@@ -8,7 +8,7 @@ using MazeLib;
 
 namespace ex1
 {
-    class MazeToSearchableAdapter<Position, Direction> : Adapter<MazeLib.Position, MazeLib.Direction>
+    class MazeToSearchableAdapter<Position> : Adapter<MazeLib.Position>
     {
         private Maze adapteeMaze;
 
@@ -28,6 +28,11 @@ namespace ex1
         {
             State<MazeLib.Position> goal = State<MazeLib.Position>.StatePool.getState(this.adapteeMaze.GoalPos);
             return goal;
+        }
+
+        public string GetName()
+        {
+            return this.adapteeMaze.Name;
         }
 
         private State<MazeLib.Position> createPos (int row, int col)
@@ -73,7 +78,7 @@ namespace ex1
             return temp;
         }
 
-        //TODO
+       
         public double costBetNeg(State<MazeLib.Position> neg1 , State<MazeLib.Position> neg2)
         {
             return 1;
@@ -83,40 +88,6 @@ namespace ex1
         {
             current.cameFrom = parent;
             current.cost = parent.cost + costBetNeg(current, parent);
-        }
-
-        private MazeLib.Direction comperTo(State<MazeLib.Position> current, State<MazeLib.Position> to)
-        {
-            if (current.state.Row == to.state.Row)
-            {
-                if (to.state.Col == current.state.Col + 1)
-                    return MazeLib.Direction.Right;
-                if (to.state.Col == current.state.Col - 1)
-                    return MazeLib.Direction.Left;
-            }
-            if (current.state.Col == to.state.Col)
-            {
-                if (to.state.Row == current.state.Row + 1)
-                    return MazeLib.Direction.Down;
-                if (to.state.Row == current.state.Row - 1)
-                    return MazeLib.Direction.Up;
-            }
-            return MazeLib.Direction.Unknown;
-        }
-
-        public List<MazeLib.Direction> convertSolution(Solution<MazeLib.Position> solution)
-        {
-            if (solution!=null)
-            {
-                List<MazeLib.Direction> temp = new List<MazeLib.Direction>();
-
-                for (int i = 0; i < solution.backTrace.Count - 1; i++)
-                {
-                    temp.Add(comperTo(solution.backTrace[i], solution.backTrace[i + 1]));
-                }
-                return temp;
-            }
-            return null;
         }
     }
 }

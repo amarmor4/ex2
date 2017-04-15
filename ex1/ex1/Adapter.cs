@@ -7,7 +7,7 @@ using SearchAlgorithmsLib;
 
 namespace ex1
 {
-    interface Adapter<T1, T2>
+    interface Adapter<T1>
     {
         State<T1> getIntialized();
 
@@ -15,10 +15,12 @@ namespace ex1
 
         List<State<T1>> getAllPossible(State<T1> current);
 
+        string GetName();
+
         double costBetNeg(State<T1> neg1, State<T1> neg2);
 
         void updateParent(State<T1> current, State<T1> parent);
 
-        List<T2> convertSolution(Solution<T1> solution);
+        //List<T2> convertSolution(Solution<T1> solution);
     }
 }

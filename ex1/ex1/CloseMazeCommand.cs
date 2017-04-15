@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MazeGeneratorLib;
 using MazeLib;
 using SearchAlgorithmsLib;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Net.Sockets;
 
@@ -22,7 +23,13 @@ namespace ex1
         {
             string name = args[0];
             bool close = this.model.Close(name);
-            return JsonConvert.SerializeObject(close);
+            return this.ToJSON();
+        }
+
+        private string ToJSON()
+        {
+            JObject mazeObj = new JObject();
+            return mazeObj.ToString();
         }
     }
 }

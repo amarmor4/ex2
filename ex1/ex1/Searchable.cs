@@ -9,9 +9,9 @@ namespace ex1
 {
     class Searchable<T,T1> : ISearchable<T>
     {
-        private Adapter<T,T1> adapter;
+        private Adapter<T> adapter;
 
-        public Searchable(Adapter<T,T1> objectAdapter)
+        public Searchable(Adapter<T> objectAdapter)
         {
             this.adapter = objectAdapter;
         }
@@ -24,6 +24,11 @@ namespace ex1
         public State<T> getGoalState()
         {
             return this.adapter.getGoal();
+        }
+
+        public string GetName()
+        {
+            return this.adapter.GetName();
         }
 
         public List<State<T>> getAllPossibleStates(State<T> current)
