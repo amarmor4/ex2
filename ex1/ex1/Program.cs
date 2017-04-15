@@ -9,6 +9,9 @@ using MazeGeneratorLib;
 
 namespace ex1
 {
+    /// <summary>
+    /// main of server side
+    /// </summary>
     class Program
     {
         static void Main(string[] args)

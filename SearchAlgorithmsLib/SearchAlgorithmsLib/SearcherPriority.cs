@@ -6,33 +6,64 @@ using System.Threading.Tasks;
 using Priority_Queue;
 namespace SearchAlgorithmsLib
 {
+    /// <summary>
+    /// implement Isearcher for algoritem (doesn't use priority queue).
+    /// </summary>
+    /// <typeparam name="T">type of state</typeparam>
     public abstract class SearcherPriority<T> : ISearcher<T>
     {
+        /// <summary>
+        /// queue of discovers vertex.
+        /// </summary>
         private SimplePriorityQueue<State<T>> openList;
+
+        /// <summary>
+        /// number of nodes that algorithem evaluated.
+        /// </summary>
         private int evaluatedNodes;
 
+        /// <summary>
+        /// the size of the openList queue
+        /// </summary>
         public int OpenListSize
         {
             get { return openList.Count; }
         }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         public SearcherPriority()
         {
             openList = new SimplePriorityQueue<State<T>>();
             evaluatedNodes = 0;
         }
-        protected State<T> popOpenList()
+
+        /// <summary>
+        /// pop vertex from priority queue openList
+        /// </summary>
+        /// <returns>vertex with high cost in queue</returns>
+        protected State<T> PopOpenList()
         {
-            updateEvaluatedCount();
+            UpdateEvaluatedCount();
             return openList.Dequeue();
         }
-        protected void addToOpenList(State<T> state)
+
+        /// <summary>
+        /// add vertex to openList queue
+        /// </summary>
+        /// <param name="state">vertex - state</param>
+        protected void AddToOpenList(State<T> state)
         {
-            updateEvaluatedCount();
-            this.openList.Enqueue(state, (float)state.cost);
+            this.openList.Enqueue(state, (float)state.Cost);
         }
 
-        protected bool openContaines(State<T> stateToFind)
+        /// <summary>
+        /// check if vertex contain at openList queue
+        /// </summary>
+        /// <param name="stateToFind">vertex - state to check</param>
+        /// <returns></returns>
+        protected bool OpenContaines(State<T> stateToFind)
         {
             foreach(State<T> s in this.openList)
             {
@@ -42,7 +73,12 @@ namespace SearchAlgorithmsLib
                 return false;
         }
         
-        public List<State<T>> createBackTrace(State<T> goalState)
+        /// <summary>
+        /// create list of vertex from initialize state to goal.
+        /// </summary>
+        /// <param name="goalState">goal vertex - state</param>
+        /// <returns>list of states</returns>
+        public List<State<T>> CreateBackTrace(State<T> goalState)
         {
             Stack<State<T>> backTraceStack = new Stack<State<T>>();
             List<State<T>> backTrace = new List<State<T>>();
@@ -50,7 +86,7 @@ namespace SearchAlgorithmsLib
             while (current != null)
             {
                 backTraceStack.Push(current);
-                current = current.cameFrom;
+                current = current.CameFrom;
             }
             while (backTraceStack.Count() != 0)
             {
@@ -59,23 +95,38 @@ namespace SearchAlgorithmsLib
             return backTrace;
         }
 
-        public void updateEvaluatedCount()
+        /// <summary>
+        /// update counter of evaluated vertex.
+        /// </summary>
+        public void UpdateEvaluatedCount()
         {
             this.evaluatedNodes++;
         }
 
-        public abstract Solution<T> search(ISearchable<T> searchable);
+        /// <summary>
+        /// find solution to search problem.
+        /// </summary>
+        /// <param name="searchable">problem</param>
+        /// <returns>solution to problem</returns>
+        public abstract Solution<T> Search(ISearchable<T> searchable);
 
-        public int getNumberOfNodesEvaluated()
+        /// <summary>
+        /// get the number of the nodes that evaluated.
+        /// </summary>
+        /// <returns>counter</returns>
+        public int GetNumberOfNodesEvaluated()
         {
             return evaluatedNodes;
         }
 
-        public void updateOpenList(State<T> current)
+        /// <summary>
+        /// update vertex in priority queue.
+        /// </summary>
+        /// <param name="current">vertex to update</param>
+        public void UpdateOpenList(State<T> current)
         {
-            updateEvaluatedCount();
             this.openList.Remove(current);
-            addToOpenList(current);
+            AddToOpenList(current);
         }
     }
 }

@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bfs.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Dfs.cs" />
     <Compile Include="ISearchable.cs" />
     <Compile Include="ISearcher.cs" />

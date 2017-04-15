@@ -8,14 +8,29 @@ using System.IO;
 
 namespace ex1
 {
-    class ClientHandler: IClientHandler
+    /// <summary>
+    /// implelment handle client.
+    /// </summary>
+    class ClientHandler : IClientHandler
     {
+        /// <summary>
+        /// controller
+        /// </summary>
         Controller c;
+
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="con">controller</param>
         public ClientHandler(Controller con)
         {
             this.c = con;
         }
 
+        /// <summary>
+        /// handle client.
+        /// </summary>
+        /// <param name="client">client's data</param>
         public void HandleClient(TcpClient client)
             {
             new Task(() =>

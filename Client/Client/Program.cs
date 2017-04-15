@@ -15,7 +15,6 @@ namespace Client
         {
             Client client = new Client();
             client.Start();
-            //Console.ReadKey();
         }
     }
 }

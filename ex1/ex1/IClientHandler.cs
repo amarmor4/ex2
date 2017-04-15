@@ -7,8 +7,15 @@ using System.Net.Sockets;
 
 namespace ex1
 {
+    /// <summary>
+    /// interfate of handle client.
+    /// </summary>
     interface IClientHandler
     {
+        /// <summary>
+        /// handle client.
+        /// </summary>
+        /// <param name="client">client's data</param>
         void HandleClient(TcpClient client);
     }
 }

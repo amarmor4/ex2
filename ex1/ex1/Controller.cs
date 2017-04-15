@@ -7,15 +7,34 @@ using System.Net.Sockets;
 
 namespace ex1
 {
+    /// <summary>
+    /// controller - mvc at server side.
+    /// </summary>
     class Controller
     {
+        /// <summary>
+        /// dictionary of commands.
+        /// </summary>
         private Dictionary<string, ICommand> commands;
+
+        /// <summary>
+        /// model
+        /// </summary>
         private IModel model;
+
+        /// <summary>
+        /// view
+        /// </summary>
         private Server view;
+
+        /// <summary>
+        /// constructor
+        /// </summary>
         public Controller()
         {
             this.commands = new Dictionary<string, ICommand>();
         }
+
         public string ExecuteCommand(string commandLine, TcpClient client)
         {
             string[] arr = commandLine.Split(' ');
@@ -27,17 +46,28 @@ namespace ex1
             return command.Execute(args, client);
         }
 
+        /// <summary>
+        /// set view.
+        /// </summary>
+        /// <param name="v">server</param>
         public void setView(Server v)
         {
             this.view = v;
         }
 
+        /// <summary>
+        /// set model
+        /// </summary>
+        /// <param name="m">model</param>
         public void setModel(IModel m)
         {
             this.model = m;
             addCommands();
         }
 
+        /// <summary>
+        /// add commands of maze to dictionary.
+        /// </summary>
         public void addCommands()
         {
             this.commands.Add("generate", new GenerateMazeCommand(model));

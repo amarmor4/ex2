@@ -6,28 +6,40 @@ using System.Threading.Tasks;
 
 namespace SearchAlgorithmsLib
 {
+    /// <summary>
+    /// solve the search problem with dfs algorithem.
+    /// </summary>
+    /// <typeparam name="T">search problem</typeparam>
     public class Dfs<T> : Searcher<T>
     {
-        public override Solution<T> search(ISearchable<T> searchable)
+        /// <summary>
+        /// find solution to search problem.
+        /// </summary>
+        /// <param name="searchable">problem</param>
+        /// <returns>solution to problem</returns>
+        public override Solution<T> Search(ISearchable<T> searchable)
         {
-            pushToStack(searchable.getInitialState());
+            PushToStack(searchable.GetInitialState());
             HashSet<State<T>> discovered = new HashSet<State<T>>();
 
-            while (!stackIsEmpty())
+            while (!StackIsEmpty())
             {
-                State<T> current = popFromStack();
+                State<T> current = PopFromStack();
+                if (current == searchable.GetGoalState())
+                {
+                    return new Solution<T>(CreateBackTrace(discovered), GetNumberOfNodesEvaluated(), searchable.GetName());
+                }
                 if (!discovered.Contains(current))
                 {
                     discovered.Add(current);
-                    updateEvaluatedCount();
-                    foreach (State<T> neg in searchable.getAllPossibleStates(current))
+                    foreach (State<T> neg in searchable.GetAllPossibleStates(current))
                     {
                         if(!discovered.Contains(neg))
-                            pushToStack(neg);
+                            PushToStack(neg);
                     }
                 }
             }
-            return new Solution<T>(createBackTrace(discovered), getNumberOfNodesEvaluated(), searchable.GetName());
+            return new Solution<T>(CreateBackTrace(discovered), GetNumberOfNodesEvaluated(), searchable.GetName());
         }
 
     }
