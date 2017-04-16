@@ -38,8 +38,18 @@ namespace ex1
         /// <returns>solution - string at json format</returns>
         public string Execute(string[] args, TcpClient client)
         {
-            string name = args[0];
+            string name;
+            try {
+                name = args[0];
+            }
+            catch (Exception)
+            {
+                Console.Error.WriteLine("Error in parameters of join comand");
+                return "Error in parameters of join comand - no paramaters or incorrect enum";
+            }
             Maze maze = model.Join(name);
+            if (maze == null)
+                return "game doesn't exist in list games to join";
             return maze.ToJSON();
         }
     }

@@ -15,14 +15,19 @@ namespace ex1
     class MazeModel : IModel
     {
         /// <summary>
-        /// pool of solution.
+        /// pool of solution - singal player.
         /// </summary>
-        Dictionary<string, Solution<Position>> poolSolutions;
+        Dictionary<string, Solution<Position>> solutionsSinglePlayerPool;
 
         /// <summary>
-        /// pool of mazes.
+        /// pool of mazes - singal player.
         /// </summary>
-        Dictionary<string, Maze> poolMazes;
+        Dictionary<string, Maze> mazesSinglePlayerPool;
+
+        /// <summary>
+        /// pool of mazes - multi player.
+        /// </summary>
+        Dictionary<string, Maze> mazesMultiPlayerPool;
 
         /// <summary>
         /// list of games that can join.
@@ -40,8 +45,9 @@ namespace ex1
         /// <param name="con">controller</param>
         public MazeModel(Controller con)
         {
-            this.poolSolutions = new Dictionary<string, Solution<Position>>();
-            this.poolMazes = new Dictionary<string, Maze>();
+            this.solutionsSinglePlayerPool = new Dictionary<string, Solution<Position>>();
+            this.mazesSinglePlayerPool = new Dictionary<string, Maze>();
+            this.mazesMultiPlayerPool = new Dictionary<string, Maze>();
             this.gamesToJoin = new List<string>();
             this.c = con;
         }
@@ -58,53 +64,59 @@ namespace ex1
             IMazeGenerator mazeGenerator = new DFSMazeGenerator();
             Maze maze = mazeGenerator.Generate(rows, cols);
             maze.Name = name;
-            if (!this.poolMazes.ContainsKey(name))
+            if (!this.mazesSinglePlayerPool.ContainsKey(name))
             {
-                this.poolMazes.Add(name, maze);
+                this.mazesSinglePlayerPool.Add(name, maze);
             }
             else
             {
-                this.poolMazes[name] = maze;
-                if (this.poolSolutions.ContainsKey(name))
-                    this.poolSolutions.Remove(name);
+                this.mazesSinglePlayerPool[name] = maze;
+                if (this.solutionsSinglePlayerPool.ContainsKey(name))
+                    this.solutionsSinglePlayerPool.Remove(name);
+                Console.WriteLine("previous maze with the same name overrided");
             }
             return maze;
         }
 
         /// <summary>
-        /// solve the maze problem.
+        /// solve the maze problem - singal player.
         /// </summary>
         /// <param name="name">maze name</param>
         /// <param name="algo">0-bfs, 1-dfs</param>
         /// <returns>get solution of maze problem</returns>
         public Solution<Position> Solve(string name, int algo)
         {
-            if (!this.poolSolutions.ContainsKey(name))
+            if (this.mazesSinglePlayerPool.ContainsKey(name))
             {
-                ISearcher<Position> searchAlgo;
-                Solution<Position> solution;
-                Maze maze = this.poolMazes[name];
-                Adapter<Position> adapter = new MazeToSearchableAdapter<Position>(maze);
-                ISearchable<Position> searchableMaze = new Searchable<Position, Direction>(adapter);
-                switch (algo)
+                if (!this.solutionsSinglePlayerPool.ContainsKey(name))
                 {
-                    case 0:
-                        searchAlgo = new Bfs<Position>();
-                        break;
-                    case 1:
-                        searchAlgo=new Dfs<Position>();
-                        break;
-                    default:
-                        searchAlgo = null;
-                        break;
+                    ISearcher<Position> searchAlgo;
+                    Solution<Position> solution;
+                    Maze maze = this.mazesSinglePlayerPool[name];
+                    Adapter<Position> adapter = new MazeToSearchableAdapter<Position>(maze);
+                    ISearchable<Position> searchableMaze = new Searchable<Position, Direction>(adapter);
+                    switch (algo)
+                    {
+                        case 0:
+                            searchAlgo = new Bfs<Position>();
+                            break;
+                        case 1:
+                            searchAlgo = new Dfs<Position>();
+                            break;
+                        default:
+                            Console.Error.WriteLine("error at algorithem numeber: 0 - for bfs, 1 - for dfs");
+                            return null;
+                    }
+                    if (searchAlgo != null)
+                    {
+                        solution = searchAlgo.Search(searchableMaze);
+                        this.solutionsSinglePlayerPool.Add(name, solution);
+                    }
                 }
-                if (searchAlgo != null)
-                {
-                    solution = searchAlgo.Search(searchableMaze);
-                    this.poolSolutions.Add(name, solution);
-                }
+                return this.solutionsSinglePlayerPool[name];
             }
-            return this.poolSolutions[name];
+            Console.Error.WriteLine("name of maze doesn't exist at maze single player pool");
+            return null;
         }
 
         /// <summary>
@@ -139,9 +151,12 @@ namespace ex1
         public Maze Join(string name)
         {
             if (!this.gamesToJoin.Contains(name))
+            {
+                Console.Error.WriteLine("game doesn't exist in list games to join");
                 return null;
+            }
             this.gamesToJoin.Remove(name);
-            return this.poolMazes[name];
+            return this.mazesSinglePlayerPool[name];
         }
 
         /// <summary>

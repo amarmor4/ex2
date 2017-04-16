@@ -37,9 +37,20 @@ namespace ex1
         /// <returns>solution - string at json format</returns>
         public string Execute(string[] args, TcpClient client)
         {
-            string name = args[0];
-            int algo = int.Parse(args[1]);
+            string name;
+            int algo;
+            try {
+                name = args[0];
+                algo = int.Parse(args[1]);
+            }
+            catch (Exception)
+            {
+                Console.Error.WriteLine("Error in parameters of solve comand");
+                return "Error in parameters of solve comand";
+            }
             Solution<MazeLib.Position> solution = model.Solve(name, algo);
+            if (solution == null)
+                return "Error in solve comand";
             SolutionRepresent<MazeLib.Direction, MazeLib.Position, int> solRepresent = new MazeSolRepreset(solution);
             solRepresent.ConvertSolution();
             return solRepresent.ToJSON();

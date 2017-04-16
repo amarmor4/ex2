@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
+using System.Configuration;
 
 namespace ex1
 {
@@ -33,9 +34,14 @@ namespace ex1
         /// </summary>
         /// <param name="port">port number</param>
         /// <param name="ch">client handler</param>
-        public Server(int port, IClientHandler ch)
+        public Server(IClientHandler ch)
         {
-            this.port = port;
+            int portnum;
+            string portFromAppConfig = ConfigurationManager.AppSettings["port"].ToString();
+            bool getPort = Int32.TryParse(portFromAppConfig, out portnum);
+            if (!getPort)
+                throw new System.InvalidOperationException("port in app.config not an integer");
+            this.port = portnum;
             this.ch = ch;
         }
 
@@ -44,7 +50,8 @@ namespace ex1
         /// </summary>
         public void Start()
         {
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+            string ipAddress = ConfigurationManager.AppSettings["ipAddress"].ToString();
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ipAddress), this.port);
             listener = new TcpListener(ep);
 
             listener.Start();

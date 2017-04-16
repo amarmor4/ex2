@@ -27,19 +27,20 @@ namespace SearchAlgorithmsLib
                 State<T> current = PopFromStack();
                 if (current == searchable.GetGoalState())
                 {
-                    return new Solution<T>(CreateBackTrace(discovered), GetNumberOfNodesEvaluated(), searchable.GetName());
+                    return new Solution<T>(CreateBackTrace(current), GetNumberOfNodesEvaluated(), searchable.GetName());
                 }
                 if (!discovered.Contains(current))
                 {
                     discovered.Add(current);
                     foreach (State<T> neg in searchable.GetAllPossibleStates(current))
                     {
-                        if(!discovered.Contains(neg))
+                        if (!discovered.Contains(neg))
+                            neg.CameFrom = current;
                             PushToStack(neg);
                     }
                 }
             }
-            return new Solution<T>(CreateBackTrace(discovered), GetNumberOfNodesEvaluated(), searchable.GetName());
+            return null;
         }
 
     }

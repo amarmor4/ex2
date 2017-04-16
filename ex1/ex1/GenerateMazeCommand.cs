@@ -37,9 +37,20 @@ namespace ex1
         /// <returns>solution - string at json format</returns>
         public string Execute(string[] args, TcpClient client)
         {
-            string name = args[0];
-            int rows = int.Parse(args[1]);
-            int cols = int.Parse(args[2]);
+            string name;
+            int rows;
+            int cols;
+
+            try {
+                name = args[0];
+                rows = int.Parse(args[1]);
+                cols = int.Parse(args[2]);
+            }
+            catch (Exception)
+            {
+                Console.Error.WriteLine("Error in parameters of generate comand");
+                return "Error in parameters of generate comand";
+            }
             Maze maze = model.Generate(name, rows, cols);
             return maze.ToJSON();
         }

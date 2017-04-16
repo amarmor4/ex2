@@ -39,7 +39,15 @@ namespace ex1
         /// <returns>solution - string at json format</returns>
         public string Execute(string[] args, TcpClient client)
         {
-            string name = args[0];
+            string name;
+            try {
+                name = args[0];
+            }
+            catch (Exception)
+            {
+                Console.Error.WriteLine("Error in parameters of close comand");
+                return "Error in parameters of close comand";
+            }
             bool close = this.model.Close(name);
             return this.ToJSON();
         }

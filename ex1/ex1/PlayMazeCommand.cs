@@ -38,7 +38,19 @@ namespace ex1
         /// <returns>solution - string at json format</returns>
         public string Execute(string[] args, TcpClient client)
         {
-            MazeLib.Direction move =(MazeLib.Direction) Enum.Parse(typeof(MazeLib.Direction), args[0]);
+            MazeLib.Direction move;
+            string direction;
+            try
+            {
+                direction = args[0];
+                move = (MazeLib.Direction)Enum.Parse(typeof(MazeLib.Direction),char.ToUpper(direction[0])+ direction.Substring(1));
+                
+            }            
+            catch (Exception)
+            {
+                Console.Error.WriteLine("Error in parameters of play comand");
+                return "Error in parameters of play comand";
+            }
             MazeLib.Direction move1 = model.Play(move);
             return JsonConvert.SerializeObject(move1);
         }

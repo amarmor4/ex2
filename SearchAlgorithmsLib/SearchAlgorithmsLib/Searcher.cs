@@ -72,9 +72,22 @@ namespace SearchAlgorithmsLib
         /// </summary>
         /// <param name="discoverde">goal vertex - state</param>
         /// <returns>list of states</returns>
-        public List<State<T>> CreateBackTrace(HashSet<State<T>> discoverde)
+        public List<State<T>> CreateBackTrace(State<T> goalState)
         {
-            return discoverde.ToList<State<T>>();
+            Stack<State<T>> backTraceStack = new Stack<State<T>>();
+            List<State<T>> backTrace = new List<State<T>>();
+            State<T> current = goalState;
+            while (current != null)
+            {
+                backTraceStack.Push(current);
+                current = current.CameFrom;
+            }
+            while (backTraceStack.Count() != 0)
+            {
+                backTrace.Add(backTraceStack.Pop());
+            }
+            return backTrace;
+            //return discoverde.ToList<State<T>>();
         }
 
         /// <summary>
