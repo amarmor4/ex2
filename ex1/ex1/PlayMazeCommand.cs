@@ -20,14 +20,16 @@ namespace ex1
         /// model - mvc server.
         /// </summary>
         private IModel model;
+        private IClientHandler view;
 
         /// <summary>
         /// constructor
         /// </summary>
         /// <param name="model">model</param>
-        public PlayMazeCommand(IModel model)
+        public PlayMazeCommand(IModel model, IClientHandler view)
         {
             this.model = model;
+            this.view = view;
         }
 
         /// <summary>
@@ -51,8 +53,14 @@ namespace ex1
                 Console.Error.WriteLine("Error in parameters of play comand");
                 return "Error in parameters of play comand";
             }
-            MazeLib.Direction move1 = model.Play(move);
-            return JsonConvert.SerializeObject(move1);
+            string strMove = this.model.Play(move, client);
+            if (strMove == null)
+                return "Error: client don't Participating in multiplayer game";
+            TcpClient otherClient=this.model.GetOtherParticipate(client);
+            if (otherClient == null)
+                return "other client close connection";
+            this.view.SendToClient(strMove, otherClient);
+            return "move send";
         }
     }
 }

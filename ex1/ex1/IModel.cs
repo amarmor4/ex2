@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MazeGeneratorLib;
 using MazeLib;
 using SearchAlgorithmsLib;
+using System.Net.Sockets;
 
 namespace ex1
 {
@@ -38,7 +39,7 @@ namespace ex1
         /// <param name="rows">number of rows at maze.</param>
         /// <param name="cols">number of cols at maze.</param>
         /// <returns>maze</returns>
-        Maze Start(string name, int rows, int cols);
+        Maze Start(string name, int rows, int cols, TcpClient client);
 
         /// <summary>
         /// list of games that can join - two players.
@@ -51,20 +52,22 @@ namespace ex1
         /// </summary>
         /// <param name="name">maze name</param>
         /// <returns>maze</returns>
-        Maze Join(string name);
+        Maze Join(string name, TcpClient client);
 
         /// <summary>
         /// play one move, in two playres game.
         /// </summary>
         /// <param name="move">direction of player at maze.</param>
         /// <returns>the move</returns>
-        Direction Play(MazeLib.Direction move);
+        string Play(MazeLib.Direction move, TcpClient client);
 
         /// <summary>
         /// close the maze between to playres.
         /// </summary>
         /// <param name="name">maze name</param>
         /// <returns>true - Succeeded in close</returns>
-        bool Close(string name);
+        bool Close(string name, TcpClient client);
+
+        TcpClient GetOtherParticipate(TcpClient client);
     }
 }

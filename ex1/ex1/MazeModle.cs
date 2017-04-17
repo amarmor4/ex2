@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MazeLib;
 using SearchAlgorithmsLib;
 using MazeGeneratorLib;
+using System.Net.Sockets;
 
 namespace ex1
 {
@@ -25,9 +26,12 @@ namespace ex1
         Dictionary<string, Maze> mazesSinglePlayerPool;
 
         /// <summary>
-        /// pool of mazes - multi player.
+        /// pool of Game - multi player.
         /// </summary>
-        Dictionary<string, Maze> mazesMultiPlayerPool;
+        //Dictionary<string, Game> mazesMultiPlayerPool;
+        Dictionary<string, Game> multiPlayersGames;
+
+        Dictionary<TcpClient, Game> clientsAtGame;
 
         /// <summary>
         /// list of games that can join.
@@ -47,7 +51,9 @@ namespace ex1
         {
             this.solutionsSinglePlayerPool = new Dictionary<string, Solution<Position>>();
             this.mazesSinglePlayerPool = new Dictionary<string, Maze>();
-            this.mazesMultiPlayerPool = new Dictionary<string, Maze>();
+            //this.mazesMultiPlayerPool = new Dictionary<string, Maze>();
+            this.multiPlayersGames = new Dictionary<string, Game>();
+            this.clientsAtGame = new  Dictionary<TcpClient, Game>();
             this.gamesToJoin = new List<string>();
             this.c = con;
         }
@@ -104,18 +110,15 @@ namespace ex1
                             searchAlgo = new Dfs<Position>();
                             break;
                         default:
-                            Console.Error.WriteLine("error at algorithem numeber: 0 - for bfs, 1 - for dfs");
+                            //Error at algorithem numeber: 0 - for bfs, 1 - for dfs
                             return null;
                     }
-                    if (searchAlgo != null)
-                    {
-                        solution = searchAlgo.Search(searchableMaze);
-                        this.solutionsSinglePlayerPool.Add(name, solution);
-                    }
+                    solution = searchAlgo.Search(searchableMaze);
+                    this.solutionsSinglePlayerPool.Add(name, solution);
                 }
                 return this.solutionsSinglePlayerPool[name];
             }
-            Console.Error.WriteLine("name of maze doesn't exist at maze single player pool");
+            //name of maze doesn't exist at maze single player pool"
             return null;
         }
 
@@ -126,11 +129,35 @@ namespace ex1
         /// <param name="rows">number of rows at maze.</param>
         /// <param name="cols">number of cols at maze.</param>
         /// <returns>maze</returns>
-        public Maze Start(string name, int rows, int cols)
+        public Maze Start(string name, int rows, int cols, TcpClient client)
         {
-            Maze maze=Generate(name, rows, cols);
+            Maze maze= GenerateMultiPlayresMaze(name, rows, cols);
+            if (maze == null)
+                return null;
             this.gamesToJoin.Add(name);
-            //toDo wait to join and stuff.
+            Game game = new Game(name, maze, client);
+            this.multiPlayersGames.Add(name, game);
+            this.clientsAtGame.Add(client, game);
+            game.WaitToAnotherPlayer();
+            return maze;
+        }
+
+        private Maze GenerateMultiPlayresMaze(string name, int rows, int cols)
+        {
+            Maze maze;
+            //if (!this.mazesMultiPlayerPool.ContainsKey(name))
+            if(!this.multiPlayersGames.ContainsKey(name))
+            {
+                IMazeGenerator mazeGenerator = new DFSMazeGenerator();
+                maze = mazeGenerator.Generate(rows, cols);
+                maze.Name = name;
+                //this.mazesMultiPlayerPool.Add(name, maze);
+            }
+            else
+            {
+                //"Error: exist maze with the same name at multiplayer pool"
+                return null;
+            }
             return maze;
         }
 
@@ -148,25 +175,40 @@ namespace ex1
         /// </summary>
         /// <param name="name">maze name</param>
         /// <returns>maze</returns>
-        public Maze Join(string name)
+        public Maze Join(string name, TcpClient client)
         {
             if (!this.gamesToJoin.Contains(name))
-            {
-                Console.Error.WriteLine("game doesn't exist in list games to join");
+                //"Error: game doesn't exist in list games to join"
                 return null;
-            }
+            
             this.gamesToJoin.Remove(name);
-            return this.mazesSinglePlayerPool[name];
+            if (this.multiPlayersGames.ContainsKey(name))
+            {
+                Game game=this.multiPlayersGames[name];
+                if (game.AddSecondPlayer(client))
+                {
+                    this.clientsAtGame.Add(client, game);
+                    return game.Maze;
+                }
+            }
+            return null;
         }
+
+
 
         /// <summary>
         /// play one move, in two playres game.
         /// </summary>
         /// <param name="move">direction of player at maze.</param>
         /// <returns>the move</returns>
-        public Direction Play(Direction move)
+        public string Play(Direction move, TcpClient client)
         {
-            return move;
+            if (IsParticipate(client))
+            {
+                Game game = this.clientsAtGame[client];
+                return game.MoveToJSON(move);  
+            }
+            return null; 
         }
 
         /// <summary>
@@ -174,14 +216,42 @@ namespace ex1
         /// </summary>
         /// <param name="name">maze name</param>
         /// <returns>true - Succeeded in close</returns>
-        public bool Close(string name)
+        public bool Close(string name, TcpClient client)
         {
-            try {
-                if (this.gamesToJoin.Contains(name))
-                    this.gamesToJoin.Remove(name);
+            if (this.gamesToJoin.Contains(name))
+                this.gamesToJoin.Remove(name);  
+            if (this.clientsAtGame.ContainsKey(client)){
+                Game game = this.clientsAtGame[client];
+                game.DisConnectPlayer(client);
+                this.clientsAtGame.Remove(client);
+                TcpClient otherPlayer = game.GetOtherPlayer(client);
+                if (otherPlayer != null)
+                {
+                    this.clientsAtGame.Remove(otherPlayer);
+                    this.multiPlayersGames.Remove(name);
+                }
             }
-            catch (Exception) { return false; }
             return true;
+        }
+
+        private bool IsParticipate(TcpClient client)
+        {
+            if (!this.clientsAtGame.ContainsKey(client))
+                //"Error: client don't Participating in multi player game"
+                return false;
+            
+            return true;
+        }
+
+        public TcpClient GetOtherParticipate(TcpClient client)
+        {
+            if (IsParticipate(client))
+            {
+                Game game = this.clientsAtGame[client];
+                TcpClient otherParticipate=game.GetOtherPlayer(client);
+                return otherParticipate;
+            }
+            return null;
         }
     }
 }

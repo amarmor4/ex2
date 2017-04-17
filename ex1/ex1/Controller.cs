@@ -25,7 +25,7 @@ namespace ex1
         /// <summary>
         /// view
         /// </summary>
-        private Server view;
+        private IClientHandler view;
 
         /// <summary>
         /// constructor
@@ -49,10 +49,10 @@ namespace ex1
         /// <summary>
         /// set view.
         /// </summary>
-        /// <param name="v">server</param>
-        public void setView(Server v)
+        /// <param name="v">ClientHandler</param>
+        public void setView(IClientHandler c)
         {
-            this.view = v;
+            this.view = c;
         }
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace ex1
             this.commands.Add("start", new StartMazeCommand(model));
             this.commands.Add("list", new ListMazeCommand(model));
             this.commands.Add("join", new JoinMazeCommand(model));
-            this.commands.Add("play", new PlayMazeCommand(model));
-            this.commands.Add("close", new CloseMazeCommand(model));
+            this.commands.Add("play", new PlayMazeCommand(model, view));
+            this.commands.Add("close", new CloseMazeCommand(model, view));
         }
     }
 }

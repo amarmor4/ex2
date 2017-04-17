@@ -19,7 +19,7 @@ namespace ex1
             Controller c = new Controller();
             IClientHandler ch = new ClientHandler(c);
             Server server = new Server(ch);
-            c.setView(server);
+            c.setView(ch);
             IModel m = new MazeModel(c);
             c.setModel(m);
             server.Start();

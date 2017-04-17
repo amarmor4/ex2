@@ -17,5 +17,6 @@ namespace ex1
         /// </summary>
         /// <param name="client">client's data</param>
         void HandleClient(TcpClient client);
+        void SendToClient(string str, TcpClient client);
     }
 }

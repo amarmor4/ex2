@@ -42,6 +42,8 @@ namespace ex1
             try {
                 name = args[0];
                 algo = int.Parse(args[1]);
+                if (algo != 1 || algo != 0)
+                    return "Error at algorithem numeber parameter: 0 - for bfs, 1 - for dfs";
             }
             catch (Exception)
             {
@@ -50,7 +52,7 @@ namespace ex1
             }
             Solution<MazeLib.Position> solution = model.Solve(name, algo);
             if (solution == null)
-                return "Error in solve comand";
+                return "name of maze doesn't exist at maze single player pool";
             SolutionRepresent<MazeLib.Direction, MazeLib.Position, int> solRepresent = new MazeSolRepreset(solution);
             solRepresent.ConvertSolution();
             return solRepresent.ToJSON();

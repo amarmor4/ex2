@@ -22,13 +22,16 @@ namespace ex1
         /// </summary>
         private IModel model;
 
+        private IClientHandler view;
+
         /// <summary>
         /// constructor
         /// </summary>
         /// <param name="model">model</param>
-        public CloseMazeCommand(IModel model)
+        public CloseMazeCommand(IModel model, IClientHandler view)
         {
             this.model = model;
+            this.view = view;
         }
 
         /// <summary>
@@ -48,7 +51,10 @@ namespace ex1
                 Console.Error.WriteLine("Error in parameters of close comand");
                 return "Error in parameters of close comand";
             }
-            bool close = this.model.Close(name);
+            TcpClient otherParticipate = this.model.GetOtherParticipate(client);
+            bool close = this.model.Close(name, client);
+            if (otherParticipate != null)
+                this.view.SendToClient(this.ToJSON(), otherParticipate);
             return this.ToJSON();
         }
 

@@ -51,7 +51,9 @@ namespace ex1
                 Console.Error.WriteLine("Error in parameters of start comand");
                 return "Error in parameters of start comand";
             }
-            Maze maze = model.Start(name, rows, cols);
+            Maze maze = model.Start(name, rows, cols, client);
+            if (maze == null)
+                return "Error: exist maze with the same name at multiplayer pool or maze generate failed";
             return maze.ToJSON();
         }
     }

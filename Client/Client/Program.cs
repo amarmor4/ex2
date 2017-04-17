@@ -9,6 +9,9 @@ using System.IO;
 
 namespace Client
 {
+    /// <summary>
+    /// client
+    /// </summary>
     class Program
     {
         static void Main(string[] args)

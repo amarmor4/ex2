@@ -32,16 +32,17 @@ namespace ex1
         /// </summary>
         /// <param name="client">client's data</param>
         public void HandleClient(TcpClient client)
-            {
+        {
             new Task(() =>
-                {                    
+                {
                     using (NetworkStream stream = client.GetStream())
                     using (StreamReader reader = new StreamReader(stream))
                     using (StreamWriter writer = new StreamWriter(stream))
                     {
                         while (true)
                         {
-                            try {
+                            try
+                            {
                                 string commandLine = reader.ReadLine();
                                 Console.WriteLine("Got command: {0}", commandLine);
                                 string result = c.ExecuteCommand(commandLine.ToString(), client);
@@ -53,6 +54,15 @@ namespace ex1
                     }
                     client.Close();
                 }).Start();
-            }
         }
+
+        public void SendToClient(string str, TcpClient client)
+        {
+            NetworkStream stream = client.GetStream();
+            StreamReader reader = new StreamReader(stream);
+            StreamWriter writer = new StreamWriter(stream);
+            writer.AutoFlush = true;
+            writer.WriteLine(str);
+        }
+    }
 }
