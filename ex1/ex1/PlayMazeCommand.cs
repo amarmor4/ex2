@@ -53,9 +53,9 @@ namespace ex1
                 Console.Error.WriteLine("Error in parameters of play comand");
                 return "Error in parameters of play comand";
             }
-            string strMove = this.model.Play(move, client);
-            if (strMove == null)
+            if (!model.IsParticipate(client))
                 return "Error: client don't Participating in multiplayer game";
+            string strMove = this.model.Play(move, client);     
             TcpClient otherClient=this.model.GetOtherParticipate(client);
             if (otherClient == null)
                 return "other client close connection";

@@ -47,6 +47,8 @@ namespace ex1
                 Console.Error.WriteLine("Error in parameters of join comand");
                 return "Error in parameters of join comand - no paramaters or incorrect enum";
             }
+            if(model.IsParticipate(client))
+                return "Error: client Participating in multiplayer game";
             Maze maze = model.Join(name, client);
             if (maze == null)
                 return "Error: game doesn't exist in list games to join";

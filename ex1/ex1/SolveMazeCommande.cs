@@ -42,7 +42,7 @@ namespace ex1
             try {
                 name = args[0];
                 algo = int.Parse(args[1]);
-                if (algo != 1 || algo != 0)
+                if (algo != 1 && algo != 0)
                     return "Error at algorithem numeber parameter: 0 - for bfs, 1 - for dfs";
             }
             catch (Exception)

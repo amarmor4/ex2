@@ -131,27 +131,25 @@ namespace ex1
         /// <returns>maze</returns>
         public Maze Start(string name, int rows, int cols, TcpClient client)
         {
-            Maze maze= GenerateMultiPlayresMaze(name, rows, cols);
-            if (maze == null)
-                return null;
-            this.gamesToJoin.Add(name);
-            Game game = new Game(name, maze, client);
-            this.multiPlayersGames.Add(name, game);
-            this.clientsAtGame.Add(client, game);
-            game.WaitToAnotherPlayer();
-            return maze;
+                Maze maze = GenerateMultiPlayresMaze(name, rows, cols);
+                if (maze == null)
+                    return null;
+                this.gamesToJoin.Add(name);
+                Game game = new Game(name, maze, client);
+                this.multiPlayersGames.Add(name, game);
+                this.clientsAtGame.Add(client, game);
+                game.WaitToAnotherPlayer();
+                return maze;
         }
 
         private Maze GenerateMultiPlayresMaze(string name, int rows, int cols)
         {
             Maze maze;
-            //if (!this.mazesMultiPlayerPool.ContainsKey(name))
             if(!this.multiPlayersGames.ContainsKey(name))
             {
                 IMazeGenerator mazeGenerator = new DFSMazeGenerator();
                 maze = mazeGenerator.Generate(rows, cols);
                 maze.Name = name;
-                //this.mazesMultiPlayerPool.Add(name, maze);
             }
             else
             {
@@ -203,12 +201,8 @@ namespace ex1
         /// <returns>the move</returns>
         public string Play(Direction move, TcpClient client)
         {
-            if (IsParticipate(client))
-            {
-                Game game = this.clientsAtGame[client];
-                return game.MoveToJSON(move);  
-            }
-            return null; 
+            Game game = this.clientsAtGame[client];
+            return game.MoveToJSON(move);  
         }
 
         /// <summary>
@@ -216,12 +210,13 @@ namespace ex1
         /// </summary>
         /// <param name="name">maze name</param>
         /// <returns>true - Succeeded in close</returns>
-        public bool Close(string name, TcpClient client)
+        public string Close(string name, TcpClient client)
         {
-            if (this.gamesToJoin.Contains(name))
-                this.gamesToJoin.Remove(name);  
-            if (this.clientsAtGame.ContainsKey(client)){
-                Game game = this.clientsAtGame[client];
+            Game game = this.clientsAtGame[client];
+            if (game.Name == name)
+            {
+                if (this.gamesToJoin.Contains(name))
+                    this.gamesToJoin.Remove(name);
                 game.DisConnectPlayer(client);
                 this.clientsAtGame.Remove(client);
                 TcpClient otherPlayer = game.GetOtherPlayer(client);
@@ -230,11 +225,12 @@ namespace ex1
                     this.clientsAtGame.Remove(otherPlayer);
                     this.multiPlayersGames.Remove(name);
                 }
+                return null;
             }
-            return true;
+            return "Error try to close not exist game or game of others player";
         }
 
-        private bool IsParticipate(TcpClient client)
+        public bool IsParticipate(TcpClient client)
         {
             if (!this.clientsAtGame.ContainsKey(client))
                 //"Error: client don't Participating in multi player game"

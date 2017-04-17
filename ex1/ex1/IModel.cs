@@ -66,8 +66,10 @@ namespace ex1
         /// </summary>
         /// <param name="name">maze name</param>
         /// <returns>true - Succeeded in close</returns>
-        bool Close(string name, TcpClient client);
+        string Close(string name, TcpClient client);
 
         TcpClient GetOtherParticipate(TcpClient client);
+
+        bool IsParticipate(TcpClient client);
     }
 }

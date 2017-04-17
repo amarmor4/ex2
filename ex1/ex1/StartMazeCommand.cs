@@ -51,6 +51,8 @@ namespace ex1
                 Console.Error.WriteLine("Error in parameters of start comand");
                 return "Error in parameters of start comand";
             }
+            if (this.model.IsParticipate(client))
+                return "Error: client Participating in multiplayer game";
             Maze maze = model.Start(name, rows, cols, client);
             if (maze == null)
                 return "Error: exist maze with the same name at multiplayer pool or maze generate failed";

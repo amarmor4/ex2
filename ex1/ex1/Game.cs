@@ -22,7 +22,7 @@ namespace ex1
         /// <summary>
         /// game name.
         /// </summary>
-        string Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// maze.

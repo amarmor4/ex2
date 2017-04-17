@@ -51,8 +51,12 @@ namespace ex1
                 Console.Error.WriteLine("Error in parameters of close comand");
                 return "Error in parameters of close comand";
             }
+            if(!model.IsParticipate(client))
+                return "Error: client Participating in multiplayer game";
             TcpClient otherParticipate = this.model.GetOtherParticipate(client);
-            bool close = this.model.Close(name, client);
+            string temp=this.model.Close(name, client);
+            if (temp != null)
+                return temp;
             if (otherParticipate != null)
                 this.view.SendToClient(this.ToJSON(), otherParticipate);
             return this.ToJSON();
