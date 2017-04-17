@@ -43,12 +43,21 @@ namespace ex1
             this.playerTwo = null;
         }
 
+        /// <summary>
+        /// wait to anoter player to connect.
+        /// </summary>
+        /// <returns>true when connected</returns>
         public bool WaitToAnotherPlayer()
         {
             while (this.playerTwo==null) { }
             return true; 
         }
 
+        /// <summary>
+        /// add second player to game
+        /// </summary>
+        /// <param name="client">second player</param>
+        /// <returns>true if added</returns>
         public bool AddSecondPlayer(TcpClient client)
         {
             if (this.playerTwo != null)
@@ -59,6 +68,11 @@ namespace ex1
             return true;
         }
 
+        /// <summary>
+        /// get other player at game.
+        /// </summary>
+        /// <param name="currentPlayer">current player</param>
+        /// <returns>other player at game</returns>
         public TcpClient GetOtherPlayer(TcpClient currentPlayer)
         {
             if (currentPlayer.Equals(this.playerOne.Client))
@@ -74,6 +88,10 @@ namespace ex1
             return null;
         }
 
+        /// <summary>
+        /// disconnect player
+        /// </summary>
+        /// <param name="currentPlayer">current player</param>
         public void DisConnectPlayer(TcpClient currentPlayer)
         {
             if (currentPlayer.Equals(this.playerOne.Client))
@@ -82,6 +100,11 @@ namespace ex1
                 this.playerTwo.IsConnected = false;
         }
 
+        /// <summary>
+        /// move in json format.
+        /// </summary>
+        /// <param name="move">move enum - up/down/left/right</param>
+        /// <returns>move in json format</returns>
         public string MoveToJSON(Direction move)
         {
             string strMove = move.ToString();

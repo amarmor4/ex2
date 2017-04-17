@@ -68,8 +68,18 @@ namespace ex1
         /// <returns>true - Succeeded in close</returns>
         string Close(string name, TcpClient client);
 
+        /// <summary>
+        /// get other participate at game.
+        /// </summary>
+        /// <param name="client">client</param>
+        /// <returns>other participate at game</returns>
         TcpClient GetOtherParticipate(TcpClient client);
 
+        /// <summary>
+        /// check if client participate in multiplayer game.
+        /// </summary>
+        /// <param name="client">client</param>
+        /// <returns>true if participate, otherwise not</returns>
         bool IsParticipate(TcpClient client);
     }
 }

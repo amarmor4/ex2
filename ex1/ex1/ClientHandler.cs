@@ -56,6 +56,11 @@ namespace ex1
                 }).Start();
         }
 
+        /// <summary>
+        /// send string to client
+        /// </summary>
+        /// <param name="str">string to send</param>
+        /// <param name="client">client</param>
         public void SendToClient(string str, TcpClient client)
         {
             NetworkStream stream = client.GetStream();

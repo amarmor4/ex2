@@ -35,6 +35,12 @@ namespace ex1
             this.commands = new Dictionary<string, ICommand>();
         }
 
+        /// <summary>
+        /// execute command.
+        /// </summary>
+        /// <param name="commandLine">input</param>
+        /// <param name="client">client</param>
+        /// <returns>json format</returns>
         public string ExecuteCommand(string commandLine, TcpClient client)
         {
             string[] arr = commandLine.Split(' ');

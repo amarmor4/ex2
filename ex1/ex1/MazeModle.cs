@@ -230,6 +230,11 @@ namespace ex1
             return "Error try to close not exist game or game of others player";
         }
 
+        /// <summary>
+        /// check if client participate in multiplayer game.
+        /// </summary>
+        /// <param name="client">client</param>
+        /// <returns>true if participate, otherwise not</returns>
         public bool IsParticipate(TcpClient client)
         {
             if (!this.clientsAtGame.ContainsKey(client))
@@ -239,6 +244,11 @@ namespace ex1
             return true;
         }
 
+        /// <summary>
+        /// get other participate at game.
+        /// </summary>
+        /// <param name="client">client</param>
+        /// <returns>other participate at game</returns>
         public TcpClient GetOtherParticipate(TcpClient client)
         {
             if (IsParticipate(client))

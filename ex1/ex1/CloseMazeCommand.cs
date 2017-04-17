@@ -22,6 +22,9 @@ namespace ex1
         /// </summary>
         private IModel model;
 
+        /// <summary>
+        /// view
+        /// </summary>
         private IClientHandler view;
 
         /// <summary>
