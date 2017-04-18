@@ -19,6 +19,7 @@ namespace SearchAlgorithmsLib
         /// <returns>solution to problem</returns>
         public override Solution<T> Search(ISearchable<T> searchable)
         {
+            State<T>.StatePool.ResetPoolState();
             AddToOpenList(searchable.GetInitialState());
             HashSet<State<T>> closed = new HashSet<State<T>>();
             while (OpenListSize > 0)

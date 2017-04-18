@@ -98,6 +98,15 @@ namespace SearchAlgorithmsLib
                 }
                 return pool[type.ToString().GetHashCode()];
             }
+
+            /// <summary>
+            /// resert vars in pool after bfs/dfs running.
+            /// </summary>
+            public static void ResetPoolState()
+            {
+                hashT.Clear();
+                pool.Clear();
+            }
         }
     }
 }

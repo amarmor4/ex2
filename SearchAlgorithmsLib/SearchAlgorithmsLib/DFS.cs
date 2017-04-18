@@ -19,6 +19,7 @@ namespace SearchAlgorithmsLib
         /// <returns>solution to problem</returns>
         public override Solution<T> Search(ISearchable<T> searchable)
         {
+            State<T>.StatePool.ResetPoolState();
             PushToStack(searchable.GetInitialState());
             HashSet<State<T>> discovered = new HashSet<State<T>>();
 
