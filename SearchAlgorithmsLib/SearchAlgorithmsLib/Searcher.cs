@@ -45,7 +45,7 @@ namespace SearchAlgorithmsLib
         /// <returns>pop vertex</returns>
         public State<T> PopFromStack()
         {
-            UpdateEvaluatedCount();
+            //UpdateEvaluatedCount();
             return this.stack.Pop();
         }
 
@@ -87,7 +87,6 @@ namespace SearchAlgorithmsLib
                 backTrace.Add(backTraceStack.Pop());
             }
             return backTrace;
-            //return discoverde.ToList<State<T>>();
         }
 
         /// <summary>

@@ -21,6 +21,7 @@ namespace SearchAlgorithmsLib
         {
             State<T>.StatePool.ResetPoolState();
             PushToStack(searchable.GetInitialState());
+            //UpdateEvaluatedCount();
             HashSet<State<T>> discovered = new HashSet<State<T>>();
 
             while (!StackIsEmpty())
@@ -28,11 +29,13 @@ namespace SearchAlgorithmsLib
                 State<T> current = PopFromStack();
                 if (current == searchable.GetGoalState())
                 {
+                    UpdateEvaluatedCount();
                     return new Solution<T>(CreateBackTrace(current), GetNumberOfNodesEvaluated(), searchable.GetName());
                 }
                 if (!discovered.Contains(current))
                 {
                     discovered.Add(current);
+                    UpdateEvaluatedCount();
                     foreach (State<T> neg in searchable.GetAllPossibleStates(current))
                     {
                         if (!discovered.Contains(neg))

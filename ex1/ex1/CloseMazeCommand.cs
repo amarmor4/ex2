@@ -55,7 +55,7 @@ namespace ex1
                 return "Error in parameters of close comand";
             }
             if(!model.IsParticipate(client))
-                return "Error: client Participating in multiplayer game";
+                return "Error: client don't Participating in multiplayer game ";
             TcpClient otherParticipate = this.model.GetOtherParticipate(client);
             string temp=this.model.Close(name, client);
             if (temp != null)
