@@ -129,7 +129,7 @@ namespace ex1
         /// <param name="rows">number of rows at maze.</param>
         /// <param name="cols">number of cols at maze.</param>
         /// <returns>maze</returns>
-        public Maze Start(string name, int rows, int cols, TcpClient client)
+        public String Start(string name, int rows, int cols, TcpClient client)
         {
                 Maze maze = GenerateMultiPlayresMaze(name, rows, cols);
                 if (maze == null)
@@ -138,8 +138,8 @@ namespace ex1
                 Game game = new Game(name, maze, client);
                 this.multiPlayersGames.Add(name, game);
                 this.clientsAtGame.Add(client, game);
-                game.WaitToAnotherPlayer();
-                return maze;
+                //game.WaitToAnotherPlayer();
+                return "wait for another player";
         }
 
         private Maze GenerateMultiPlayresMaze(string name, int rows, int cols)

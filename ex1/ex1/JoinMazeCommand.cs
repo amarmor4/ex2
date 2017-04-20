@@ -22,12 +22,18 @@ namespace ex1
         private IModel model;
 
         /// <summary>
+        /// view
+        /// </summary>
+        private IClientHandler view;
+
+        /// <summary>
         /// constructor
         /// </summary>
         /// <param name="model">model</param>
-        public JoinMazeCommand(IModel model)
+        public JoinMazeCommand(IModel model, IClientHandler view)
         {
             this.model = model;
+            this.view = view;
         }
 
         /// <summary>
@@ -52,6 +58,10 @@ namespace ex1
             Maze maze = model.Join(name, client);
             if (maze == null)
                 return "Error: game doesn't exist in list games to join";
+            TcpClient otherClient = this.model.GetOtherParticipate(client);
+            if (otherClient == null)
+                return "other client close connection";
+            this.view.SendToClient(maze.ToJSON(), otherClient);
             return maze.ToJSON();
         }
     }

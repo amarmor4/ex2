@@ -39,7 +39,7 @@ namespace ex1
         /// <param name="rows">number of rows at maze.</param>
         /// <param name="cols">number of cols at maze.</param>
         /// <returns>maze</returns>
-        Maze Start(string name, int rows, int cols, TcpClient client);
+        String Start(string name, int rows, int cols, TcpClient client);
 
         /// <summary>
         /// list of games that can join - two players.

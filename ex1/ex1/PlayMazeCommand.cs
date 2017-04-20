@@ -20,6 +20,10 @@ namespace ex1
         /// model - mvc server.
         /// </summary>
         private IModel model;
+
+        /// <summary>
+        /// view
+        /// </summary>
         private IClientHandler view;
 
         /// <summary>

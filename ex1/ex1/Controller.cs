@@ -80,7 +80,7 @@ namespace ex1
             this.commands.Add("solve", new SolveMazeCommand(model));
             this.commands.Add("start", new StartMazeCommand(model));
             this.commands.Add("list", new ListMazeCommand(model));
-            this.commands.Add("join", new JoinMazeCommand(model));
+            this.commands.Add("join", new JoinMazeCommand(model, view));
             this.commands.Add("play", new PlayMazeCommand(model, view));
             this.commands.Add("close", new CloseMazeCommand(model, view));
         }

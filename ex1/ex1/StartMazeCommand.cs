@@ -53,10 +53,11 @@ namespace ex1
             }
             if (this.model.IsParticipate(client))
                 return "Error: client Participating in multiplayer game";
-            Maze maze = model.Start(name, rows, cols, client);
-            if (maze == null)
+            String str = model.Start(name, rows, cols, client);
+            if (str == null)
                 return "Error: exist maze with the same name at multiplayer pool or maze generate failed";
-            return maze.ToJSON();
+            //return maze.ToJSON();
+            return str;
         }
     }
 }

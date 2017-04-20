@@ -77,13 +77,15 @@ namespace ex1
         {
             if (currentPlayer.Equals(this.playerOne.Client))
             {
-                if(this.playerTwo.IsConnected)
-                    return this.playerTwo.Client;
+                if(this.playerTwo!=null)
+                    if(this.playerTwo.IsConnected)
+                        return this.playerTwo.Client;
             }
             else
             {
-                 if(this.playerOne.IsConnected)   
-                    return this.playerOne.Client;
+                 if(this.playerOne!=null)  
+                    if(this.playerOne.IsConnected) 
+                        return this.playerOne.Client;
             }
             return null;
         }
