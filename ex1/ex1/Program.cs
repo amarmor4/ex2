@@ -43,13 +43,17 @@ namespace ex1
             Solution<Position> solBfs = bfs.Search(searchableMaze);
             Solution<Position> solDfs = dfs.Search(searchableMaze);
             Console.WriteLine("bfs " + solBfs.NodesEvaluated.ToString());
+            SolutionRepresent<MazeLib.Direction, MazeLib.Position, int> solRepresent = new MazeSolRepreset(solBfs);
+            solRepresent.ConvertSolution();
+            
+            Console.WriteLine("bfs sol " + solRepresent.ToJSON());
             Console.WriteLine("dfs " + solDfs.NodesEvaluated);
             Console.ReadKey();
         }
 
         static void Main(string[] args)
         {
-            //test();
+            //test();  
             Controller c = new Controller();
             IClientHandler ch = new ClientHandler(c);
             Server server = new Server(ch);
