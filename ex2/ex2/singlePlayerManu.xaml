@@ -1,0 +1,33 @@
+﻿<Window x:Class="ex2.singlePlayerManu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ex2"
+        mc:Ignorable="d"
+        Title="singlePlayerManu" Height="200" Width="300">
+    <Grid TextBlock.FontSize="14">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Padding="3" Margin="3">Maze name:</TextBlock>
+        <TextBox x:Name="mazeNameValue" Text ="enter name here" Grid.Column="2" Padding="3" Margin="3" GotFocus="textRemoveName" LostFocus="defTextName"></TextBox>
+        <TextBlock Grid.Row="1" Padding="3" Margin="3">Maze rows:</TextBlock>
+        <TextBox x:Name="rowNum" Grid.Row="1" Text="enter rows here" Grid.Column="2" Padding="3"
+Margin="3" GotFocus="textRemoveRow" LostFocus="defTextRow"></TextBox>
+        <TextBlock Grid.Row="2" Padding="3" Margin="3">Maze columns:</TextBlock>
+        <TextBox x:Name="colNum" Text="enter columns here" Grid.Row="2" Grid.Column="2" Padding="3"
+Margin="3" GotFocus="textRemoveCol" LostFocus="defTextCol"></TextBox>
+        <Button x:Name="btnStart" Grid.Row="3" HorizontalAlignment="Center"
+Grid.ColumnSpan="2" Click="startGame_Click" Margin="5" Padding="5">Start Game</Button>
+    </Grid>
+
+
+</Window>
