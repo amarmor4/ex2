@@ -29,8 +29,8 @@
         <TextBlock>Maze name:</TextBlock>
         <TextBox x:Name="txtMazeName" Text ="enter name here" Grid.Column="1" GotFocus="txtRemoveName" LostFocus="txtDefName"></TextBox>
         <TextBlock Grid.Row="1" Padding="3" Margin="3">Maze rows:</TextBlock>
-        <TextBox x:Name="txtRows" Grid.Row="1" Text="enter rows here" Grid.Column="1" GotFocus="txtRemoveRow" LostFocus="txtDefRows"></TextBox>
+        <TextBox x:Name="txtRows" Grid.Row="1" Text="{Binding Path=MazeRows, UpdateSourceTrigger=Explicit}" Grid.Column="1"></TextBox>
         <TextBlock Grid.Row="2">Maze columns:</TextBlock>
-        <TextBox x:Name="txtCols" Text="enter columns here" Grid.Row="2" Grid.Column="1" GotFocus="txtRemoveCol" LostFocus="txtDefCols"></TextBox>
+        <TextBox x:Name="txtCols" Text="{Binding Path=MazeCols, UpdateSourceTrigger=Explicit}" Grid.Row="2" Grid.Column="1"></TextBox>
     </Grid>
 </UserControl>

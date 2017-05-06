@@ -59,11 +59,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ApplicationMazeFieldsModel.cs" />
     <Compile Include="ApplicationSettingsModel.cs" />
+    <Compile Include="IMazeFieldsModel.cs" />
     <Compile Include="ISettingsModel.cs" />
     <Compile Include="MazeFields.xaml.cs">
       <DependentUpon>MazeFields.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MazeFieldsViewModel.cs" />
     <Compile Include="MultiPlayerManu.xaml.cs">
       <DependentUpon>MultiPlayerManu.xaml</DependentUpon>
     </Compile>

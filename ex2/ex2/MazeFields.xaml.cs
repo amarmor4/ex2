@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ex2;
 
 namespace MazeGUI.Controls
 {
@@ -20,12 +21,17 @@ namespace MazeGUI.Controls
     /// </summary>
     public partial class MazeFields : UserControl
     {
+        private MazeFieldsViewModel vm;
+
         /// <summary>
         /// constructor
         /// </summary>
         public MazeFields()
         {
             InitializeComponent();
+            IMazeFieldsModel mazeFieldsModel = new ApplicationMazeFieldsModel();
+            vm = new MazeFieldsViewModel(mazeFieldsModel);
+            this.DataContext = vm;
         }
 
         /// <summary>
@@ -35,19 +41,16 @@ namespace MazeGUI.Controls
         /// <param name="e">routed event args</param>
         public void valid_ok(object sender, RoutedEventArgs e)
         {
-            int row, col;
-            if (txtMazeName.Text == "" || txtMazeName.Text == "enter name here"
-                || txtRows.Text == "" || txtRows.Text == "enter rows here"
-                || txtCols.Text == "" || txtCols.Text == "enter columns here")
-            {
+            int rows, cols;
+
+            if (txtMazeName.Text == "" || txtMazeName.Text == "enter name here" || txtRows.Text == "" || txtCols.Text == "")
                 MessageBox.Show("some fileds are missing");
-            }
             else
             {
-                if (!int.TryParse(txtRows.Text, out row) || !int.TryParse(txtCols.Text, out col))
-                {
-                    MessageBox.Show("rows & cols must be an integer");
-                }
+                if (!int.TryParse(txtRows.Text, out rows) || !int.TryParse(txtCols.Text, out cols))
+                    MessageBox.Show("rows & cols must be an integers");
+                else if(rows<=0 || cols<=0)
+                    MessageBox.Show("rows & cols must be positive integers");
             }
         }
 
@@ -65,32 +68,6 @@ namespace MazeGUI.Controls
         }
 
         /// <summary>
-        /// clear row filed
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">routed event args</param>
-        private void txtRemoveRow(object sender, RoutedEventArgs e)
-        {
-            if (txtRows.Text == "enter rows here")
-            {
-                txtRows.Text = "";
-            }
-        }
-
-        /// <summary>
-        /// clear column filed
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">routed event args</param>
-        private void txtRemoveCol(object sender, RoutedEventArgs e)
-        {
-            if (txtCols.Text == "enter columns here")
-            {
-                txtCols.Text = "";
-            }
-        }
-
-        /// <summary>
         /// set default text filed - name
         /// </summary>
         /// <param name="sender">sender</param>
@@ -100,32 +77,6 @@ namespace MazeGUI.Controls
             if (txtMazeName.Text == "")
             {
                 txtMazeName.Text = "enter name here";
-            }
-        }
-
-        /// <summary>
-        /// set default text filed - rows
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">routed event args</param>
-        private void txtDefRows(object sender, RoutedEventArgs e)
-        {
-            if (txtRows.Text == "")
-            {
-                txtRows.Text = "enter rows here";
-            }
-        }
-
-        /// <summary>
-        /// default text filed - columns
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">routed event args</param>
-        private void txtDefCols(object sender, RoutedEventArgs e)
-        {
-            if (txtCols.Text == "")
-            {
-                txtCols.Text = "enter columns here";
             }
         }
     }
