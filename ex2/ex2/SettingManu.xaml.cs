@@ -19,9 +19,29 @@ namespace ex2
     /// </summary>
     public partial class SettingManu : Window
     {
+        private SettingsViewModel vm;
+
         public SettingManu()
         {
             InitializeComponent();
+            ISettingsModel settingsModel=new ApplicationSettingsModel();
+            vm = new SettingsViewModel(settingsModel);
+            this.DataContext = vm;
+        }
+
+        private void btnOk_click(object sender, RoutedEventArgs e)
+        {
+            vm.SaveSettings(); 
+            MainWindow win = (MainWindow)Application.Current.MainWindow;
+            win.Show();
+            this.Close();
+        }
+
+        private void btnCancel_click(object sender, RoutedEventArgs e)
+        {
+            MainWindow win = (MainWindow)Application.Current.MainWindow;
+            win.Show();
+            this.Close();
         }
     }
 }

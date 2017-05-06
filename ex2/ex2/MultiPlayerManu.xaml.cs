@@ -24,69 +24,76 @@ namespace ex2
             InitializeComponent();
         }
 
-        private void textRemoveName(object sender, RoutedEventArgs e)
+        private void txtRemoveName(object sender, RoutedEventArgs e)
         {
-            if (mazeNameValue.Text == "enter name here")
+            if (txtMazeName.Text == "enter name here")
             {
 
-                mazeNameValue.Text = "";
+                txtMazeName.Text = "";
             }
         }
-        private void textRemoveRow(object sender, RoutedEventArgs e)
+        private void txtRemoveRow(object sender, RoutedEventArgs e)
         {
-            if (rowNum.Text == "enter rows here")
+            if (txtRows.Text == "enter rows here")
             {
-                rowNum.Text = "";
+                txtRows.Text = "";
             }
         }
-        private void textRemoveCol(object sender, RoutedEventArgs e)
+        private void txtRemoveCol(object sender, RoutedEventArgs e)
         {
-            if (colNum.Text == "enter columns here")
+            if (txtCols.Text == "enter columns here")
             {
-                colNum.Text = "";
-            }
-        }
-
-        private void defTextName(object sender, RoutedEventArgs e)
-        {
-            if (mazeNameValue.Text == "")
-            {
-
-                mazeNameValue.Text = "enter name here";
-            }
-        }
-        private void defTextRow(object sender, RoutedEventArgs e)
-        {
-            if (rowNum.Text == "")
-            {
-                rowNum.Text = "enter rows here";
-            }
-        }
-        private void defTextCol(object sender, RoutedEventArgs e)
-        {
-            if (colNum.Text == "")
-            {
-                colNum.Text = "enter columns here";
+                txtCols.Text = "";
             }
         }
 
-        private void startGameClick(object sender, RoutedEventArgs e)
+        private void txtDefName(object sender, RoutedEventArgs e)
+        {
+            if (txtMazeName.Text == "")
+            {
+
+                txtMazeName.Text = "enter name here";
+            }
+        }
+        private void txtDefRows(object sender, RoutedEventArgs e)
+        {
+            if (txtRows.Text == "")
+            {
+                txtRows.Text = "enter rows here";
+            }
+        }
+        private void txtDefCols(object sender, RoutedEventArgs e)
+        {
+            if (txtCols.Text == "")
+            {
+                txtCols.Text = "enter columns here";
+            }
+        }
+
+        private void btnStart_click(object sender, RoutedEventArgs e)
         {
             int row, col;
-            if (mazeNameValue.Text == "" || mazeNameValue.Text == "enter name here"
-                || rowNum.Text == "" || rowNum.Text == "enter rows here"
-                || colNum.Text == "" || colNum.Text == "enter columns here")
+            if (txtMazeName.Text == "" || txtMazeName.Text == "enter name here"
+                || txtRows.Text == "" || txtRows.Text == "enter rows here"
+                || txtCols.Text == "" || txtCols.Text == "enter columns here")
             {
                 MessageBox.Show("some fileds are missing");
             }
             else
             {
                 //double.TryParse(candidate, out num)
-                if (!int.TryParse(rowNum.Text, out row) || !int.TryParse(colNum.Text, out col))
+                if (!int.TryParse(txtRows.Text, out row) || !int.TryParse(txtCols.Text, out col))
                 {
                     MessageBox.Show("rows & cols must be an integer");
                 }
             }
+        }
+
+        private void btnCancel_click(object sender, RoutedEventArgs e)
+        {
+            MainWindow win = (MainWindow)Application.Current.MainWindow;
+            win.Show();
+            this.Close();
         }
     }
 }

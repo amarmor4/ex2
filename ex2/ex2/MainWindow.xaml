@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ex2"
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="300">
-    <Grid TextBlock.FontSize="14" Height="300" Width="300">
+    <Grid TextBlock.FontSize="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
             <RowDefinition Height="Auto"/>
@@ -16,8 +16,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="singlePlayer" Grid.Row="1" Padding="3" Margin ="3" Content="Single Player" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"  Click="clickSinglePlayer"/>
-        <Button x:Name="multiPlayer" Grid.Row="2" Padding="3" Margin ="3" Content="Multi player" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"  Click="clickMultiPlayer"></Button>
-        <Button x:Name="settings" Grid.Row="3" Padding="3" Margin ="3" Content="Settings" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Click="settings_click" ></Button>
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Padding" Value="3"/>
+                <Setter Property="Margin" Value="3"/>
+            </Style>
+        </Grid.Resources>
+        <Button x:Name="singlePlayer" Grid.Row="1" Content="Single Player" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"  Click="clickSinglePlayer"/>
+        <Button x:Name="multiPlayer" Grid.Row="2" Content="Multi player" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"  Click="clickMultiPlayer"></Button>
+        <Button x:Name="settings" Grid.Row="3" Content="Settings" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Click="settings_click" ></Button>
     </Grid>
 </Window>

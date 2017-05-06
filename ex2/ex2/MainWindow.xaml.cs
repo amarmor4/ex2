@@ -29,21 +29,21 @@ namespace ex2
         {
             Window singleManu = new singlePlayerManu();
             this.Hide();
-            singleManu.Show();
+            singleManu.ShowDialog();
         }
 
         private void clickMultiPlayer(object sender, RoutedEventArgs e)
         {
             Window multiManu = new MultiPlayerManu();
             this.Hide();
-            multiManu.Show();
+            multiManu.ShowDialog();
         }
 
         private void settings_click(object sender, RoutedEventArgs e)
         {
             Window settings = new SettingManu();
             this.Hide();
-            settings.Show();
+            settings.ShowDialog();
         }
     }
 }

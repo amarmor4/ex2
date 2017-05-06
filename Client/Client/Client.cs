@@ -52,11 +52,11 @@ namespace Client
         public Client()
         {
             int portnum;
-            string portFromAppConfig = ConfigurationManager.AppSettings["port"].ToString();
+            string portFromAppConfig = ConfigurationManager.AppSettings["ServerPort"].ToString();
             bool getPort = Int32.TryParse(portFromAppConfig, out portnum);
             if (!getPort)
                 throw new System.InvalidOperationException("port in app.config not an integer");
-            string ipAddress = ConfigurationManager.AppSettings["ipAddress"].ToString();
+            string ipAddress = ConfigurationManager.AppSettings["ServerIP"].ToString();
             this.ep = new IPEndPoint(IPAddress.Parse(ipAddress), portnum);
             Console.WriteLine("You are connected");
             isConnected = false; ;

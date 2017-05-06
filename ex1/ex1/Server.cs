@@ -37,7 +37,7 @@ namespace ex1
         public Server(IClientHandler ch)
         {
             int portnum;
-            string portFromAppConfig = ConfigurationManager.AppSettings["port"].ToString();
+            string portFromAppConfig = ConfigurationManager.AppSettings["ServerPort"].ToString();
             bool getPort = Int32.TryParse(portFromAppConfig, out portnum);
             if (!getPort)
                 throw new System.InvalidOperationException("port in app.config not an integer");
@@ -50,7 +50,7 @@ namespace ex1
         /// </summary>
         public void Start()
         {
-            string ipAddress = ConfigurationManager.AppSettings["ipAddress"].ToString();
+            string ipAddress = ConfigurationManager.AppSettings["ServerIP"].ToString();
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ipAddress), this.port);
             listener = new TcpListener(ep);
 

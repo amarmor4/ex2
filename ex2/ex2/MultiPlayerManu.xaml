@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ex2"
         mc:Ignorable="d"
-        Title="MultiPlayerManu" Height="200" Width="300">
-    <Grid>
+        Title="MultiPlayerManu" Height="210" Width="300">
+    <Grid TextBlock.FontSize="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -19,15 +19,29 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="gameListLable" Padding="3" Grid.Row="0" Grid.Column="0" >List of games:</TextBlock>
-        <ComboBox x:Name="gameList" AllowDrop="True" Grid.Column="1"></ComboBox>
-        <Button x:Name="join" Grid.Row="1" Grid.Column="1" Width="75" HorizontalAlignment="Left" Padding="3">Join Game</Button>
-        <TextBlock x:Name="mazeName" Padding="3" Grid.Row="2" Grid.Column="0">Maze name:</TextBlock>
-        <TextBox x:Name="mazeNameValue" Grid.Row="2" Grid.Column="1" GotFocus="textRemoveName" LostFocus="defTextName">enter name here</TextBox>
-        <TextBlock x:Name="mazeRow" Padding="3" Grid.Row="3" Grid.Column="0">Maze rows:</TextBlock>
-        <TextBox x:Name="rowNum" Grid.Row="3" Grid.Column="1" GotFocus="textRemoveRow" LostFocus="defTextRow">enter rows here</TextBox>
-        <TextBlock x:Name="mazeCol" Padding="3" Grid.Row="4" Grid.Column="0">Maze columns:</TextBlock>
-        <TextBox x:Name="colNum" Grid.Row="4" Grid.Column="1" GotFocus="textRemoveCol" LostFocus="defTextCol">enter columns here</TextBox>
-        <Button x:Name="start" Grid.Row="5" Grid.Column="1" Width="75" HorizontalAlignment="Left" Padding="3" Click="startGameClick">Start Game</Button>
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Padding" Value="3"/>
+                <Setter Property="Margin" Value="1"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Padding" Value="3"/>
+                <Setter Property="Margin" Value="3"/>
+            </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="Margin" Value="3,0,0,0"/>
+            </Style>
+        </Grid.Resources>
+        <TextBlock>List of games:</TextBlock>
+        <ComboBox x:Name="comboGamesList" AllowDrop="True" Grid.Column="1"></ComboBox>
+        <Button x:Name="btnJoin" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="3,0,0,0">Join Game</Button>
+        <TextBlock Grid.Row="2">Maze name:</TextBlock>
+        <TextBox x:Name="txtMazeName" Grid.Row="2" Grid.Column="1" GotFocus="txtRemoveName" LostFocus="txtDefName">enter name here</TextBox>
+        <TextBlock Grid.Row="3">Maze rows:</TextBlock>
+        <TextBox x:Name="txtRows" Grid.Row="3" Grid.Column="1" GotFocus="txtRemoveRow" LostFocus="txtDefRows">enter rows here</TextBox>
+        <TextBlock Grid.Row="4">Maze columns:</TextBlock>
+        <TextBox x:Name="txtCols" Grid.Row="4" Grid.Column="1" GotFocus="txtRemoveCol" LostFocus="txtDefCols">enter columns here</TextBox>
+        <Button x:Name="btnStart" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Click="btnStart_click" Margin="3,10,0,0">Start Game</Button>
+        <Button x:Name="btnCancel" Grid.Row="5" HorizontalAlignment="right" Grid.Column="1" Padding="5,0,5,0" Margin="0,10,90,0" Click="btnCancel_click">cancel</Button>
     </Grid>
 </Window>

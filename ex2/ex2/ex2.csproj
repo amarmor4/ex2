@@ -59,15 +59,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ApplicationSettingsModel.cs" />
+    <Compile Include="ISettingsModel.cs" />
     <Compile Include="MultiPlayerManu.xaml.cs">
       <DependentUpon>MultiPlayerManu.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingManu.xaml.cs">
       <DependentUpon>SettingManu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsViewModel.cs" />
     <Compile Include="singlePlayerManu.xaml.cs">
       <DependentUpon>singlePlayerManu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
