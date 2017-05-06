@@ -6,15 +6,28 @@ using System.Threading.Tasks;
 
 namespace ex2
 {
+    /// <summary>
+    /// class settings viewmodel.
+    /// </summary>
     class SettingsViewModel : ViewModel
     {
+        /// <summary>
+        /// settings model.
+        /// </summary>
         private ISettingsModel model;
-        //public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// constractor.
+        /// </summary>
+        /// <param name="model">settings model</param>
         public SettingsViewModel(ISettingsModel model)
         {
             this.model = model;
         }
+
+        /// <summary>
+        /// server ip property.
+        /// </summary>
         public string ServerIP
         {
             get { return model.ServerIP; }
@@ -24,6 +37,10 @@ namespace ex2
                 NotifyPropertyChanged("ServerIP");
             }
         }
+
+        /// <summary>
+        /// server port property.
+        /// </summary>
         public int ServerPort
         {
             get { return model.ServerPort; }
@@ -33,6 +50,10 @@ namespace ex2
                 NotifyPropertyChanged("ServerPort");
             }
         }
+
+        /// <summary>
+        /// maze rows property
+        /// </summary>
         public int MazeRows
         {
             get { return model.MazeRows; }
@@ -42,6 +63,10 @@ namespace ex2
                 NotifyPropertyChanged("MazeRows");
             }
         }
+
+        /// <summary>
+        /// maze cols property
+        /// </summary>
         public int MazeCols
         {
             get { return model.MazeCols; }
@@ -51,6 +76,10 @@ namespace ex2
                 NotifyPropertyChanged("MazeCols");
             }
         }
+
+        /// <summary>
+        /// search algorithm property.
+        /// </summary>
         public int SearchAlgorithm
         {
             get { return model.SearchAlgorithm; }
@@ -60,6 +89,10 @@ namespace ex2
                 NotifyPropertyChanged("SearchAlgorithm");
             }
         }
+
+        /// <summary>
+        /// save settings at app.config.
+        /// </summary>
         public void SaveSettings()
         {
             model.SaveSettings();
