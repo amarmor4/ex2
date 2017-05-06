@@ -21,6 +21,9 @@ namespace ex2
     {
         private SettingsViewModel vm;
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         public SettingManu()
         {
             InitializeComponent();
@@ -29,6 +32,11 @@ namespace ex2
             this.DataContext = vm;
         }
 
+        /// <summary>
+        /// event click on start btn.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event args</param>
         private void btnOk_click(object sender, RoutedEventArgs e)
         {
             vm.SaveSettings(); 
@@ -37,6 +45,11 @@ namespace ex2
             this.Close();
         }
 
+        /// <summary>
+        /// event click on cancel btn.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event args</param>
         private void btnCancel_click(object sender, RoutedEventArgs e)
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;

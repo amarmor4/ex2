@@ -22,8 +22,8 @@
                 <Setter Property="Margin" Value="3"/>
             </Style>
         </Grid.Resources>
-        <Button x:Name="singlePlayer" Grid.Row="1" Content="Single Player" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"  Click="clickSinglePlayer"/>
-        <Button x:Name="multiPlayer" Grid.Row="2" Content="Multi player" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"  Click="clickMultiPlayer"></Button>
-        <Button x:Name="settings" Grid.Row="3" Content="Settings" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Click="settings_click" ></Button>
+        <Button x:Name="btnSinglePlayer" Grid.Row="1" Content="Single Player" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"  Click="btnSinglePlayer_click"/>
+        <Button x:Name="btnMultiPlayer" Grid.Row="2" Content="Multi player" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"  Click="btnMultiPlayer_click"></Button>
+        <Button x:Name="btmSettings" Grid.Row="3" Content="Settings" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Click="btnSettings_click" ></Button>
     </Grid>
 </Window>

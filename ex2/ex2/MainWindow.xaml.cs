@@ -20,26 +20,44 @@ namespace ex2
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// constructor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void clickSinglePlayer(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// event click on single player btn
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event args</param>
+        private void btnSinglePlayer_click(object sender, RoutedEventArgs e)
         {
             Window singleManu = new singlePlayerManu();
             this.Hide();
             singleManu.ShowDialog();
         }
 
-        private void clickMultiPlayer(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// event click on multiplayer btn
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event args</param>
+        private void btnMultiPlayer_click(object sender, RoutedEventArgs e)
         {
             Window multiManu = new MultiPlayerManu();
             this.Hide();
             multiManu.ShowDialog();
         }
 
-        private void settings_click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// event click on settings btn.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event args</param>
+        private void btnSettings_click(object sender, RoutedEventArgs e)
         {
             Window settings = new SettingManu();
             this.Hide();
