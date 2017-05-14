@@ -7,6 +7,7 @@ using MazeGeneratorLib;
 using MazeLib;
 using SearchAlgorithmsLib;
 using System.Net.Sockets;
+using Newtonsoft.Json;
 
 namespace ex1
 {
@@ -52,6 +53,7 @@ namespace ex1
                 return "Error in parameters of generate comand";
             }
             Maze maze = model.Generate(name, rows, cols);
+            string str = maze.ToJSON();
             return maze.ToJSON();
         }
     }

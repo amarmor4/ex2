@@ -35,7 +35,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MazeGeneratorLib">
+      <HintPath>..\..\..\..\..\Downloads\מטלה 1-20170402\MazeGeneratorLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MazeLib">
+      <HintPath>..\..\..\..\..\Downloads\מטלה 1-20170402\MazeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\ex1\packages\Newtonsoft.Json.10.0.2\lib\netstandard1.0\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SearchAlgorithmsLib">
+      <HintPath>..\..\SearchAlgorithmsLib\SearchAlgorithmsLib\bin\Debug\SearchAlgorithmsLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -63,6 +76,7 @@
     <Compile Include="ApplicationSettingsModel.cs" />
     <Compile Include="IMazeFieldsModel.cs" />
     <Compile Include="ISettingsModel.cs" />
+    <Compile Include="ITelnetClient.cs" />
     <Compile Include="MazeBoard.xaml.cs">
       <DependentUpon>MazeBoard.xaml</DependentUpon>
     </Compile>
@@ -70,6 +84,8 @@
       <DependentUpon>MazeFields.xaml</DependentUpon>
     </Compile>
     <Compile Include="MazeFieldsViewModel.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SinglePlayerGameModel.cs" />
     <Compile Include="MultiPlayerManu.xaml.cs">
       <DependentUpon>MultiPlayerManu.xaml</DependentUpon>
     </Compile>
@@ -80,9 +96,11 @@
     <Compile Include="SinglePlayerGame.xaml.cs">
       <DependentUpon>SinglePlayerGame.xaml</DependentUpon>
     </Compile>
-    <Compile Include="singlePlayerManu.xaml.cs">
-      <DependentUpon>singlePlayerManu.xaml</DependentUpon>
+    <Compile Include="SinglePlayerGameViewModel.cs" />
+    <Compile Include="SinglePlayerManu.xaml.cs">
+      <DependentUpon>SinglePlayerManu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TelnetClient.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -116,7 +134,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="singlePlayerManu.xaml">
+    <Page Include="SinglePlayerManu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -5,15 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:MazeGUI.Controls"
         mc:Ignorable="d"
-        Title="{Binding MazeName}" Height="300" Width="300">
+        Title="{Binding Path=Name}" Height="500" Width="500">
     <Grid TextBlock.FontSize="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="stnRestart" HorizontalAlignment="left" Margin="53,5,0,6">Restart game</Button>
-        <Button x:Name="stnSolve" HorizontalAlignment="Center" Margin="0,5,0,6">Solve maze</Button>
-        <Button x:Name="stnMainMenu" HorizontalAlignment="right" Margin="0,5,61,6">Main menu</Button>
-        <controls:MazeBoard x:Name="mazeBoard" Grid.Row="1"></controls:MazeBoard>
+        <Button x:Name="stnRestart" HorizontalAlignment="left" Margin="53,10,0,15" Click="stnRestart_Click">Restart game</Button>
+        <Button x:Name="stnSolve" HorizontalAlignment="Center" Margin="0,10,0,15" Click="stnSolve_Click">Solve maze</Button>
+        <Button x:Name="stnMainMenu" HorizontalAlignment="right" Margin="0,10,61,15" Click="stnMainMenu_Click">Main menu</Button>
+        <controls:MazeBoard x:Name="mazeBoard" Grid.Row="1" Rows="{Binding Path=Rows}" Cols="{Binding Path=Cols}" MazePath="{Binding Path=MazePath}" 
+                            InitialState="{Binding Path=InitialState}" GoalState="{Binding Path=GoalState}" Margin="0,0,0,10"></controls:MazeBoard>
     </Grid>
 </Window>

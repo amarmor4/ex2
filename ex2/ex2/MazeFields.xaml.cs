@@ -42,7 +42,6 @@ namespace MazeGUI.Controls
         public void valid_ok(object sender, RoutedEventArgs e)
         {
             int rows, cols;
-
             if (txtMazeName.Text == "" || txtMazeName.Text == "enter name here" || txtRows.Text == "" || txtCols.Text == "")
                 MessageBox.Show("some fileds are missing");
             else

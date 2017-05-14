@@ -35,7 +35,7 @@ namespace ex2
         /// <param name="e">routed event args</param>
         private void btnSinglePlayer_click(object sender, RoutedEventArgs e)
         {
-            Window singleManu = new singlePlayerManu();
+            Window singleManu = new SinglePlayerManu();
             this.Hide();
             singleManu.ShowDialog();
         }

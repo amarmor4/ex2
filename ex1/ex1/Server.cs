@@ -55,7 +55,7 @@ namespace ex1
             listener = new TcpListener(ep);
 
             listener.Start();
-            Console.WriteLine("Waiting for connections...");
+            //Console.WriteLine("Waiting for connections...");
 
             Task task = new Task(() =>
             {
@@ -64,7 +64,7 @@ namespace ex1
                     try
                     {
                         TcpClient client = listener.AcceptTcpClient();
-                        Console.WriteLine("Got new connection");
+                        //Console.WriteLine("Got new connection");
                         ch.HandleClient(client);
                     }
                     catch (SocketException)
@@ -72,7 +72,7 @@ namespace ex1
                         break;
                     }
                 }
-                Console.WriteLine("Server stopped");
+                //Console.WriteLine("Server stopped");
             });
             task.Start();
         }

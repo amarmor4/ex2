@@ -40,13 +40,14 @@
       <HintPath>..\..\..\..\..\Desktop\מדעי המחשב\מדמח שנה ב\סמסטר ב\תכנות מתקדם 2\MazeLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\ex1\ex1\packages\Newtonsoft.Json.10.0.2\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Priority Queue">
       <HintPath>..\..\..\ex1\SearchAlgorithmsLib\packages\OptimizedPriorityQueue.4.0.4\lib\netstandard1.0\Priority Queue.dll</HintPath>
     </Reference>
-    <Reference Include="SearchAlgorithmsLib">
+    <Reference Include="SearchAlgorithmsLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SearchAlgorithmsLib\SearchAlgorithmsLib\bin\Debug\SearchAlgorithmsLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -87,6 +88,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

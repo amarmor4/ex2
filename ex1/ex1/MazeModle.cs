@@ -79,7 +79,7 @@ namespace ex1
                 this.mazesSinglePlayerPool[name] = maze;
                 if (this.solutionsSinglePlayerPool.ContainsKey(name))
                     this.solutionsSinglePlayerPool.Remove(name);
-                Console.WriteLine("previous maze with the same name overrided");
+                //Console.WriteLine("previous maze with the same name overrided");
             }
             return maze;
         }
