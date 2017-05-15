@@ -195,8 +195,8 @@ namespace MazeGUI.Controls
         public void DrawMaze()
         {
             this.DrawWalls(RectHeight, RectWidth);
-            this.DrawIcons(InitialStateCol, InitialStateRow, RectHeight, RectWidth, "chicken_bride_right.png");
-            this.DrawIcons(GoalStateCol, GoalStateRow, RectHeight, RectWidth, "ring.png");
+            this.DrawIcons(InitialStateCol, InitialStateRow, RectHeight, RectWidth, "chicken_bride_right.png", "player");
+            this.DrawIcons(GoalStateCol, GoalStateRow, RectHeight, RectWidth, "ring.png","goal");
             foreach (UIElement ue in myCanvas.Children)
                 if (((System.Windows.FrameworkElement)ue).Name == "player")
                     Player = ue; 
@@ -218,7 +218,7 @@ namespace MazeGUI.Controls
                     {
                         int col = Convert.ToInt32(j * width);
                         int row = Convert.ToInt32(i * height);
-                        this.AddRectToBoard(col, row, height, width);
+                        this.AddRectToBoard(col, row, height, width, "wall");
                     }
                 }
             }
@@ -232,11 +232,12 @@ namespace MazeGUI.Controls
         /// <param name="height">rect height</param>
         /// <param name="width">rect width</param>
         /// <param name="file">image location</param>
-        private void DrawIcons(int stateCol,int stateRow,double height, double width, string file)
+        /// <param name="name">name</param>
+        private void DrawIcons(int stateCol,int stateRow,double height, double width, string file, string name)
         {
             int col = Convert.ToInt32(stateCol * width);
             int row = Convert.ToInt32(stateRow * height);
-            this.AddImageRectToBoard(col, row, height, width, file);
+            this.AddImageRectToBoard(col, row, height, width, file, name);
         }
 
         /// <summary>
@@ -247,7 +248,8 @@ namespace MazeGUI.Controls
         /// <param name="height">rect height</param>
         /// <param name="width">rect width</param>
         /// <param name="file">image location</param>
-        public void AddImageRectToBoard(int col, int row, double height, double width, string file)
+        /// <param name="file">name</param>
+        public void AddImageRectToBoard(int col, int row, double height, double width, string file, string name)
         {
             ImageBrush imgBrush = new ImageBrush();
             imgBrush.ImageSource = new BitmapImage(new Uri(@file, UriKind.Relative));
@@ -255,6 +257,7 @@ namespace MazeGUI.Controls
             rect.Height = height;
             rect.Width = width;
             rect.Fill = imgBrush;
+            rect.Name = name;
             Canvas.SetLeft(rect, col);
             Canvas.SetTop(rect, row);
             myCanvas.Children.Add(rect);           
@@ -267,12 +270,14 @@ namespace MazeGUI.Controls
         /// <param name="row"></param>
         /// <param name="height"></param>
         /// <param name="width"></param>
-        private void AddRectToBoard(int col, int row, double height, double width)
+        /// <param name="name">name</param>
+        private void AddRectToBoard(int col, int row, double height, double width, string name)
         {
             Rectangle rect = new Rectangle();
             rect.Height = height;
             rect.Width = width;
             rect.Fill= new SolidColorBrush(Colors.Black);
+            rect.Name = name;
             Canvas.SetLeft(rect, col);
             Canvas.SetTop(rect, row);
             myCanvas.Children.Add(rect);
