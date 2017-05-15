@@ -36,12 +36,14 @@ namespace ex2
         /// <param name="e">routed event args</param>
         private void btnStart_click(object sender, RoutedEventArgs e)
         {
-            mazeFildes.valid_ok(sender, e);
-            string name = mazeFildes.txtMazeName.Text;
-            int rows = int.Parse(mazeFildes.txtRows.Text);
-            int cols = int.Parse(mazeFildes.txtCols.Text);
-            this.Close();
-            Window singlePlayerGame = new SinglePlayerGame(name, rows, cols);
+            if (mazeFildes.valid_ok(sender, e) == true)
+            {
+                string name = mazeFildes.txtMazeName.Text;
+                int rows = int.Parse(mazeFildes.txtRows.Text);
+                int cols = int.Parse(mazeFildes.txtCols.Text);
+                this.Close();
+                Window singlePlayerGame = new SinglePlayerGame(name, rows, cols);
+            }
         }
 
         /// <summary>

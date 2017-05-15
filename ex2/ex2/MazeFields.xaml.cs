@@ -42,18 +42,28 @@ namespace MazeGUI.Controls
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event args</param>
-        public void valid_ok(object sender, RoutedEventArgs e)
+        public bool valid_ok(object sender, RoutedEventArgs e)
         {
             int rows, cols;
             if (txtMazeName.Text == "" || txtMazeName.Text == "enter name here" || txtRows.Text == "" || txtCols.Text == "")
+            {
                 MessageBox.Show("some fileds are missing");
+                return false;
+            }
             else
             {
                 if (!int.TryParse(txtRows.Text, out rows) || !int.TryParse(txtCols.Text, out cols))
+                {
                     MessageBox.Show("rows & cols must be an integers");
-                else if(rows<=0 || cols<=0)
+                    return false;
+                }
+                else if (rows <= 0 || cols <= 0)
+                {
                     MessageBox.Show("rows & cols must be positive integers");
+                    return false;
+                }
             }
+            return true;
         }
 
         /// <summary>
