@@ -94,22 +94,28 @@ namespace MazeGUI.Controls
         public static readonly DependencyProperty GoalStateProperty =
             DependencyProperty.Register("GoalState", typeof(string), typeof(MazeBoard));
 
-        private int InitialStateRow{ get{ return Int32.Parse(InitialState.Split(',')[1]); }}
+        private int InitialStateRow{ get{ return Int32.Parse(InitialState.Split(',')[0]); }}
 
-        private int InitialStateCol { get { return Int32.Parse(InitialState.Split(',')[0]); } }
+        private int InitialStateCol { get { return Int32.Parse(InitialState.Split(',')[1]); } }
 
-        private int GoalStateRow { get { return Int32.Parse(GoalState.Split(',')[1]); }}
+        private int GoalStateRow { get { return Int32.Parse(GoalState.Split(',')[0]); }}
 
-        private int GoalStateCol { get { return Int32.Parse(GoalState.Split(',')[0]); } }
+        private int GoalStateCol { get { return Int32.Parse(GoalState.Split(',')[1]); } }
+
+        private UIElement Player { get; set; }
+
+        private double RectHeight { get { return 300 / Rows; } }
+
+        private double RectWidth { get { return 300 / Cols; } }
 
         public void DrawMaze()
         {
-            double rowHeight = 300/Rows;
-            double colWidth = 300/Cols;
-
-            this.DrawWalls(rowHeight, colWidth);
-            this.DrawIcons(InitialStateCol, InitialStateRow, rowHeight, colWidth, "chicken_bride_right.png", "current");
-            this.DrawIcons(GoalStateCol, GoalStateRow, rowHeight, colWidth, "ring.png", "goal");
+            this.DrawWalls(RectHeight, RectWidth);
+            this.DrawIcons(InitialStateCol, InitialStateRow, RectHeight, RectWidth, "chicken_bride_right.png", "player");
+            this.DrawIcons(GoalStateCol, GoalStateRow, RectHeight, RectWidth, "ring.png", "goal");
+            foreach (UIElement ue in myCanvas.Children)
+                if (((System.Windows.FrameworkElement)ue).Name == "player")
+                    Player = ue;   
             ResetCurrentState();
         }
 
@@ -123,8 +129,7 @@ namespace MazeGUI.Controls
                     {
                         int col = Convert.ToInt32(j * width);
                         int row = Convert.ToInt32(i * height);
-                        if (MazePath[i * Cols + j] == '1')
-                            this.AddRectToBoard(col, row, height, width);
+                        this.AddRectToBoard(col, row, height, width);
                     }
                 }
             }
@@ -146,8 +151,8 @@ namespace MazeGUI.Controls
             rect.Width = width;
             rect.Fill = imgBrush;
             rect.Name = name;
-            Canvas.SetLeft(rect, row);
-            Canvas.SetTop(rect, col);
+            Canvas.SetLeft(rect, col);
+            Canvas.SetTop(rect, row);
             myCanvas.Children.Add(rect);           
         }
 
@@ -171,12 +176,43 @@ namespace MazeGUI.Controls
 
         public void KeyBoardDown(object sender, KeyEventArgs e)
         {
-            switch(e.Key)
-            {
-                case Key.Right:
+            try {
+                switch (e.Key)
+                {
+                    case Key.Right:
+                        if (MazePath[CurrntStateRow * Cols + CurrntStateCols + 1] == '0')
+                            CurrntStateCols += 1;   
+                        break;
+                    case Key.Left:
+                        if (MazePath[CurrntStateRow * Cols + CurrntStateCols - 1] == '0')
+                            CurrntStateCols -= 1;
+                        break;
+                    case Key.Up:
+                        if (MazePath[(CurrntStateRow - 1) * Cols + CurrntStateCols] == '0')
+                            CurrntStateRow -= 1;
+                        break;
+                    case Key.Down:
+                        if (MazePath[(CurrntStateRow + 1) * Cols + CurrntStateCols] == '0')
+                            CurrntStateRow += 1;
+                        break;
+                }
 
-                    break;
+                if(e.Key== Key.Right || e.Key== Key.Left)
+                    this.movePlayer(Player, Convert.ToInt32(CurrntStateCols * RectWidth), "Left");
+                if (e.Key == Key.Up || e.Key == Key.Down)
+                    this.movePlayer(Player, Convert.ToInt32(CurrntStateRow * RectHeight), "Top");
+                
             }
+            catch { }
+            e.Handled = true;
+        }
+
+        public void movePlayer(UIElement player, int location, string setDirection)
+        {
+            if(setDirection=="Left")
+                Canvas.SetLeft(player, location);
+            else if(setDirection=="Top")
+                Canvas.SetTop(player, location);
         }
     }
 }

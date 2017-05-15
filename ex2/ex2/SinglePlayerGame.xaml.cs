@@ -37,7 +37,8 @@ namespace ex2
             InitializeComponent();
             this.StartGame();
             this.Show();
-            mazeBoard.DrawMaze();     
+            mazeBoard.DrawMaze();
+            this.KeyDown += MazeBoard_KeyDown;
         }
 
         private void StartGame()
