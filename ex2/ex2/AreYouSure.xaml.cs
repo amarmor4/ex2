@@ -19,24 +19,30 @@ namespace ex2
     /// </summary>
     public partial class AreYouSure : Window
     {
+        /// <summary>
+        /// constructor
+        /// </summary>
         public AreYouSure()
         {
             InitializeComponent();
         }
 
-        string clicked;
-
-        public string Clicked {
-            private set { this.clicked=value; }
-            get { return this.Clicked; }
-       } 
-
+        /// <summary>
+        /// cancel click event
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routedEventArgs</param>
         public void btnCancel_click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
             this.Close();
         }
 
+        /// <summary>
+        /// sure click event
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routedEventArgs</param>
         public void btnSure_click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;

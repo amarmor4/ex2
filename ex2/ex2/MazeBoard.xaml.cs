@@ -127,7 +127,7 @@ namespace MazeGUI.Controls
             this.DrawIcons(GoalStateCol, GoalStateRow, RectHeight, RectWidth, "ring.png", "goal");
             foreach (UIElement ue in myCanvas.Children)
                 if (((System.Windows.FrameworkElement)ue).Name == "player")
-                    Player = ue;   
+                    Player = ue; 
             ResetCurrentState();
         }
 
@@ -182,10 +182,12 @@ namespace MazeGUI.Controls
 
         public void ResetCurrentState()
         {
+            if (!myCanvas.Children.Contains(Player))
+                myCanvas.Children.Add(Player);
             CurrntStateRow = InitialStateRow;
             CurrntStateCols = InitialStateCol;
             this.movePlayer(Player, Convert.ToInt32(CurrntStateCols * RectWidth), "Left");
-            this.movePlayer(Player, Convert.ToInt32(CurrntStateRow * RectHeight), "Top");
+            this.movePlayer(Player, Convert.ToInt32(CurrntStateRow * RectHeight), "Top");  
         }
 
         public void KeyBoardDown(object sender, KeyEventArgs e)
@@ -211,7 +213,14 @@ namespace MazeGUI.Controls
                         break;
                 }
 
-                if(e.Key== Key.Right || e.Key== Key.Left)
+                if(CurrntStateRow==GoalStateRow && CurrntStateCols==GoalStateCol)
+                {
+                    MessageBox.Show("winner");
+                    myCanvas.Children.Remove(Player);
+                }
+                    
+
+                if (e.Key== Key.Right || e.Key== Key.Left)
                     this.movePlayer(Player, Convert.ToInt32(CurrntStateCols * RectWidth), "Left");
                 if (e.Key == Key.Up || e.Key == Key.Down)
                     this.movePlayer(Player, Convert.ToInt32(CurrntStateRow * RectHeight), "Top");
