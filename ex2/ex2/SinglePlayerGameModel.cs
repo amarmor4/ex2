@@ -27,7 +27,7 @@ namespace ex2
         /// <summary>
         /// 
         /// </summary>
-        Solution<Position> solve;
+        string solve;
 
         /// <summary>
         /// telnet client 
@@ -55,7 +55,7 @@ namespace ex2
         /// <summary>
         /// maze solution property.
         /// </summary>
-        public Solution<Position> MazeSolve
+        public string MazeSolve
         {
             get { return this.solve; }
             set
@@ -106,7 +106,8 @@ namespace ex2
             this.telnetClient.Write(command);
             string str = this.telnetClient.Read();
             this.telnetClient.Disconnect();
-            //Solution<Position> sol = JsonConvert.DeserializeObject<Solution<Position>>(str);
+            JObject sol = JObject.Parse(str);
+            MazeSolve = sol.GetValue("Solution").ToString();
         }
     }
 }

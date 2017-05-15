@@ -61,6 +61,22 @@ namespace MazeGUI.Controls
             }
         }
 
+        int currntStateRow;
+
+        public int CurrntStateRow
+        {
+            get { return this.currntStateRow; }
+            set { this.currntStateRow = value; }
+        }
+
+        int currentStateCols;
+
+        public int CurrntStateCols
+        {
+            get { return this.currentStateCols; }
+            set { this.currentStateCols = value; }
+        }
+
         public static readonly DependencyProperty RowsProperty =
             DependencyProperty.Register("Rows", typeof(int), typeof(MazeBoard));
 
@@ -78,39 +94,50 @@ namespace MazeGUI.Controls
         public static readonly DependencyProperty GoalStateProperty =
             DependencyProperty.Register("GoalState", typeof(string), typeof(MazeBoard));
 
-        private int InitialStateRow {get { return Int32.Parse(InitialState[3].ToString()); }}
+        private int InitialStateRow{ get{ return Int32.Parse(InitialState.Split(',')[1]); }}
 
-        private int InitialStateCol { get { return Int32.Parse(InitialState[1].ToString()); }}
+        private int InitialStateCol { get { return Int32.Parse(InitialState.Split(',')[0]); } }
 
-        private int GoalStateRow { get { return Int32.Parse(GoalState[3].ToString()); }}
+        private int GoalStateRow { get { return Int32.Parse(GoalState.Split(',')[1]); }}
 
-        private int GoalStateCol { get { return Int32.Parse(GoalState[1].ToString()); } }
+        private int GoalStateCol { get { return Int32.Parse(GoalState.Split(',')[0]); } }
 
         public void DrawMaze()
         {
             double rowHeight = 300/Rows;
             double colWidth = 300/Cols;
 
+            this.DrawWalls(rowHeight, colWidth);
+            this.DrawIcons(InitialStateCol, InitialStateRow, rowHeight, colWidth, "chicken_bride_right.png", "current");
+            this.DrawIcons(GoalStateCol, GoalStateRow, rowHeight, colWidth, "ring.png", "goal");
+            ResetCurrentState();
+        }
+
+        private void DrawWalls(double height, double width)
+        {
             for (int i = 0; i < Rows; i++)
             {
                 for (int j = 0; j < Cols; j++)
                 {
-                    if (MazePath[i * Cols + j] == '1' || InitialStateRow == i && InitialStateCol == j || GoalStateRow == i && GoalStateCol == j)
+                    if (MazePath[i * Cols + j] == '1')
                     {
-                        int col = Convert.ToInt32(j * colWidth);
-                        int row = Convert.ToInt32(i * rowHeight);
+                        int col = Convert.ToInt32(j * width);
+                        int row = Convert.ToInt32(i * height);
                         if (MazePath[i * Cols + j] == '1')
-                            AddRectToBoard(col, row, rowHeight, colWidth);
-                        if (InitialStateRow == i && InitialStateCol == j)
-                            AddImageRectToBoard(col, row, rowHeight, colWidth, "chicken_bride_right.png");
-                        if (GoalStateRow == i && GoalStateCol == j)
-                            AddImageRectToBoard(col, row, rowHeight, colWidth, "ring.png");
+                            this.AddRectToBoard(col, row, height, width);
                     }
                 }
             }
         }
 
-        public void AddImageRectToBoard(int col, int row, double height, double width, string file)
+        private void DrawIcons(int stateCol,int stateRow,double height, double width, string file, string name)
+        {
+            int col = Convert.ToInt32(stateCol * width);
+            int row = Convert.ToInt32(stateRow * height);
+            this.AddImageRectToBoard(col, row, height, width, file, name);
+        }
+
+        public void AddImageRectToBoard(int col, int row, double height, double width, string file, string name)
         {
             ImageBrush imgBrush = new ImageBrush();
             imgBrush.ImageSource = new BitmapImage(new Uri(@file, UriKind.Relative));
@@ -118,6 +145,7 @@ namespace MazeGUI.Controls
             rect.Height = height;
             rect.Width = width;
             rect.Fill = imgBrush;
+            rect.Name = name;
             Canvas.SetLeft(rect, row);
             Canvas.SetTop(rect, col);
             myCanvas.Children.Add(rect);           
@@ -131,7 +159,24 @@ namespace MazeGUI.Controls
             rect.Fill= new SolidColorBrush(Colors.Black);
             Canvas.SetLeft(rect, col);
             Canvas.SetTop(rect, row);
+            rect.Name = "wall";
             myCanvas.Children.Add(rect);
+        }
+
+        public void ResetCurrentState()
+        {
+            CurrntStateRow = InitialStateRow;
+            CurrntStateCols = InitialStateCol;
+        }
+
+        public void KeyBoardDown(object sender, KeyEventArgs e)
+        {
+            switch(e.Key)
+            {
+                case Key.Right:
+
+                    break;
+            }
         }
     }
 }

@@ -41,12 +41,12 @@ namespace ex2
         /// <summary>
         /// currentState
         /// </summary>
-        public Position initialState;
+        public string initialState;
 
         /// <summary>
         /// goal state
         /// </summary>
-        public Position goalState;
+        public string goalState;
 
         /// <summary>
         /// maze rows
@@ -117,8 +117,14 @@ namespace ex2
         public void InitializeMaze()
         {
             Name = this.mazeGame.Name;
-            InitialState = this.mazeGame.InitialPos;
-            GoalState = this.mazeGame.GoalPos;
+            string strInitial = this.mazeGame.InitialPos.ToString();
+            strInitial=strInitial.Replace("(","");
+            strInitial=strInitial.Replace(")", "");
+            InitialState = strInitial;
+            string strGoal = this.mazeGame.GoalPos.ToString();
+            strGoal = strGoal.Replace("(", "");
+            strGoal = strGoal.Replace(")", "");
+            GoalState = strGoal;
             Rows = this.mazeGame.Rows;
             Cols = this.mazeGame.Cols;
             JObject maze = JObject.Parse(this.mazeGame.ToJSON());
@@ -152,7 +158,7 @@ namespace ex2
         /// <summary>
         /// initials state property
         /// </summary>
-        public Position InitialState
+        public string InitialState
         {
             get { return this.initialState; }
             set {
@@ -164,7 +170,7 @@ namespace ex2
         /// <summary>
         /// goal state property
         /// </summary>
-        public Position GoalState
+        public string GoalState
         {
             get { return this.goalState; }
             set {

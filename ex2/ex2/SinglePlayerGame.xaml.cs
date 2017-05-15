@@ -61,5 +61,10 @@ namespace ex2
             win.Show();
             this.Close();
         }
+
+        private void MazeBoard_KeyDown(object sender, KeyEventArgs e)
+        {
+            mazeBoard.KeyBoardDown(sender, e);
+        }
     }
 }
