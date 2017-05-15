@@ -26,7 +26,7 @@ namespace ex2
         /// <summary>
         /// maze solution
         /// </summary>
-        Solution<Position> mazeSolve;
+        string mazeSolve;
 
         /// <summary>
         /// maze name
@@ -81,6 +81,8 @@ namespace ex2
         {
             if (propName == "MazeGame")
                 MazeGame = model.MazeGame;
+            if (propName == "MazeSolve")
+                MazeSolve = model.MazeSolve;
         }
 
         /// <summary>
@@ -99,14 +101,13 @@ namespace ex2
         /// <summary>
         /// 
         /// </summary>
-        public Solution<Position> MazeSolve
+        public string MazeSolve
         {
             get { return this.mazeSolve; }
             set
             {
                 this.mazeSolve = value;
-                JObject solve = JObject.Parse(this.mazeSolve.ToString());
-                string str = solve.GetValue("Solve").ToString();
+                NotifyPropertyChanged("MazeSolve");
             }
 
         }

@@ -61,6 +61,15 @@ namespace MazeGUI.Controls
             }
         }
 
+        public string MazeSolve
+        {
+            get { return (string)GetValue(MazeSolveProperty); }
+            set
+            {
+                SetValue(MazeSolveProperty, value);
+            }
+        }
+
         int currntStateRow;
 
         public int CurrntStateRow
@@ -93,6 +102,9 @@ namespace MazeGUI.Controls
 
         public static readonly DependencyProperty GoalStateProperty =
             DependencyProperty.Register("GoalState", typeof(string), typeof(MazeBoard));
+
+        public static readonly DependencyProperty MazeSolveProperty =
+            DependencyProperty.Register("MazeSolve", typeof(string), typeof(MazeBoard));
 
         private int InitialStateRow{ get{ return Int32.Parse(InitialState.Split(',')[0]); }}
 
@@ -215,6 +227,11 @@ namespace MazeGUI.Controls
                 Canvas.SetLeft(player, location);
             else if(setDirection=="Top")
                 Canvas.SetTop(player, location);
+        }
+
+        public void test()
+        {
+            MessageBox.Show("solve test");
         }
     }
 }

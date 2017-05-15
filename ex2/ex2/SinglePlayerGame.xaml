@@ -15,6 +15,6 @@
         <Button x:Name="stnSolve" HorizontalAlignment="Center" Margin="0,10,0,15" Click="stnSolve_Click">Solve maze</Button>
         <Button x:Name="stnMainMenu" HorizontalAlignment="right" Margin="0,10,61,15" Click="stnMainMenu_Click">Main menu</Button>
         <controls:MazeBoard x:Name="mazeBoard" Grid.Row="1" Rows="{Binding Path=Rows}" Cols="{Binding Path=Cols}" MazePath="{Binding Path=MazePath}" 
-                            InitialState="{Binding Path=InitialState}" GoalState="{Binding Path=GoalState}" Margin="0,0,0,10" KeyDown="MazeBoard_KeyDown"></controls:MazeBoard>
+                            InitialState="{Binding Path=InitialState}" GoalState="{Binding Path=GoalState}" MazeSolve="{Binding Path=MazeSolve}" Margin="0,0,0,10" KeyDown="MazeBoard_KeyDown"></controls:MazeBoard>
     </Grid>
 </Window>

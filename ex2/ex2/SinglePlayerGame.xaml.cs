@@ -48,7 +48,11 @@ namespace ex2
 
         private void stnRestart_Click(object sender, RoutedEventArgs e)
         {
-            mazeBoard.ResetCurrentState();
+            Window areYouSure = new AreYouSure();
+            if (areYouSure.ShowDialog() == true)
+            {
+                mazeBoard.ResetCurrentState();
+            }
         }
 
         private void stnSolve_Click(object sender, RoutedEventArgs e)
@@ -58,9 +62,13 @@ namespace ex2
 
         private void stnMainMenu_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow win = (MainWindow)Application.Current.MainWindow;
-            win.Show();
-            this.Close();
+            Window areYouSure = new AreYouSure();
+            if (areYouSure.ShowDialog()==true)
+            {
+                MainWindow win = (MainWindow)Application.Current.MainWindow;
+                win.Show();
+                this.Close();
+            }
         }
 
         private void MazeBoard_KeyDown(object sender, KeyEventArgs e)

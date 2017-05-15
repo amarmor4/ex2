@@ -79,6 +79,9 @@
     </ApplicationDefinition>
     <Compile Include="ApplicationMazeFieldsModel.cs" />
     <Compile Include="ApplicationSettingsModel.cs" />
+    <Compile Include="AreYouSure.xaml.cs">
+      <DependentUpon>AreYouSure.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IMazeFieldsModel.cs" />
     <Compile Include="ISettingsModel.cs" />
     <Compile Include="ITelnetClient.cs" />
@@ -107,6 +110,10 @@
     </Compile>
     <Compile Include="TelnetClient.cs" />
     <Compile Include="ViewModel.cs" />
+    <Page Include="AreYouSure.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

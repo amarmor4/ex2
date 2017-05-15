@@ -94,6 +94,15 @@ namespace ex2
             string str = this.telnetClient.Read();
             this.telnetClient.Disconnect();
             MazeGame = MazeLib.Maze.FromJSON(str);
+            /*
+            Task recv = new Task(() =>
+            {
+                string str = this.telnetClient.Read();
+                this.telnetClient.Disconnect();
+                MazeGame = MazeLib.Maze.FromJSON(str);
+            });
+            recv.Start();
+            */
         }
 
         /// <summary>
@@ -104,10 +113,20 @@ namespace ex2
         {
             this.telnetClient.Connect();
             this.telnetClient.Write(command);
+
             string str = this.telnetClient.Read();
             this.telnetClient.Disconnect();
             JObject sol = JObject.Parse(str);
             MazeSolve = sol.GetValue("Solution").ToString();
+            /*
+            Task recv = new Task(() =>
+            {
+                string str = this.telnetClient.Read();
+                this.telnetClient.Disconnect();
+                JObject sol = JObject.Parse(str);
+                MazeSolve = sol.GetValue("Solution").ToString();
+            });
+            recv.Start();*/
         }
     }
 }
