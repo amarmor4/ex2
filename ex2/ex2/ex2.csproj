@@ -92,6 +92,9 @@
       <DependentUpon>MazeFields.xaml</DependentUpon>
     </Compile>
     <Compile Include="MazeFieldsViewModel.cs" />
+    <Compile Include="MultiPlayerGame.xaml.cs">
+      <DependentUpon>MultiPlayerGame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="SinglePlayerGameModel.cs" />
     <Compile Include="MultiPlayerManu.xaml.cs">
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MazeFields.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MultiPlayerGame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
