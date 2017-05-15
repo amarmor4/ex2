@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ex2
 {
-    class MazeFieldsViewModel:ViewModel
+    /// <summary>
+    /// maze fields viewModel
+    /// </summary>
+    class MazeFieldsViewModel :ViewModel
     {
         /// <summary>
         /// settings model.

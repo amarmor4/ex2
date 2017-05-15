@@ -20,11 +20,32 @@ namespace ex2
     /// </summary>
     public partial class SinglePlayerGame : Window
     {
+        /// <summary>
+        /// single player game viewModel
+        /// </summary>
         private SinglePlayerGameViewModel vm;
+
+        /// <summary>
+        /// maze name
+        /// </summary>
         String name;
+
+        /// <summary>
+        /// maze rows
+        /// </summary>
         int rows;
+
+        /// <summary>
+        /// maze cols
+        /// </summary>
         int cols;
-        
+
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="mazeName">maze name</param>
+        /// <param name="mazeRows">maze rows</param>
+        /// <param name="mazeCols">maze cols</param>
         public SinglePlayerGame(string mazeName, int mazeRows, int mazeCols)
         {
             this.name = mazeName;
@@ -41,11 +62,19 @@ namespace ex2
             this.KeyDown += MazeBoard_KeyDown;
         }
 
+        /// <summary>
+        /// start game - generate game
+        /// </summary>
         private void StartGame()
         {
             vm.StartGame(this.name, this.rows, this.cols);
         }
 
+        /// <summary>
+        /// restart game
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routedEventArgs</param>
         private void stnRestart_Click(object sender, RoutedEventArgs e)
         {
             Window areYouSure = new AreYouSure();
@@ -55,11 +84,21 @@ namespace ex2
             }
         }
 
+        /// <summary>
+        /// stnSolve_Click event
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routedEventArgs</param>
         private void stnSolve_Click(object sender, RoutedEventArgs e)
         {
             vm.SolveGame(this.name);
         }
 
+        /// <summary>
+        /// stnMainMenu_Click event
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routedEventArgs</param>
         private void stnMainMenu_Click(object sender, RoutedEventArgs e)
         {
             Window areYouSure = new AreYouSure();
@@ -71,6 +110,11 @@ namespace ex2
             }
         }
 
+        /// <summary>
+        /// MazeBoard_KeyDown event
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">KeyEventArgs</param>
         private void MazeBoard_KeyDown(object sender, KeyEventArgs e)
         {
             mazeBoard.KeyBoardDown(sender, e);

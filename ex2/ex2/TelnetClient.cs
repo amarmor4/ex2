@@ -10,7 +10,10 @@ using System.Configuration;
 
 namespace ex2
 {
-    class TelnetClient:ITelnetClient
+    /// <summary>
+    /// TelnetClient
+    /// </summary>
+    class TelnetClient :ITelnetClient
     {
         /// <summary>
         /// ip and port.
@@ -37,7 +40,9 @@ namespace ex2
         /// </summary>
         StreamWriter writer;
 
-
+        /// <summary>
+        /// constructor
+        /// </summary>
         public TelnetClient()
         {
             int portnum = Properties.Settings.Default.ServerPort;

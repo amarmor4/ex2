@@ -17,6 +17,9 @@ using Newtonsoft.Json.Linq;
 
 namespace ex2
 {
+    /// <summary>
+    /// single player game model
+    /// </summary>
     class SinglePlayerGameModel : INotifyPropertyChanged
     {
         /// <summary>

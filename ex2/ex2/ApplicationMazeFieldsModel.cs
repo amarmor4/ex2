@@ -6,9 +6,19 @@ using System.Threading.Tasks;
 
 namespace ex2
 {
-    class ApplicationMazeFieldsModel:IMazeFieldsModel
+    /// <summary>
+    /// application maze fields model
+    /// </summary>
+    class ApplicationMazeFieldsModel :IMazeFieldsModel
     {
+        /// <summary>
+        /// maze rows
+        /// </summary>
         int mazeRows;
+
+        /// <summary>
+        /// maze cols
+        /// </summary>
         int mazeCols;
 
         /// <summary>

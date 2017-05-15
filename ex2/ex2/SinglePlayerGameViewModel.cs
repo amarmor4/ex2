@@ -11,7 +11,10 @@ using Newtonsoft.Json.Linq;
 
 namespace ex2
 {
-    class SinglePlayerGameViewModel:ViewModel
+    /// <summary>
+    /// single player game viewModel
+    /// </summary>
+    class SinglePlayerGameViewModel :ViewModel
     {
         /// <summary>
         /// single player game model

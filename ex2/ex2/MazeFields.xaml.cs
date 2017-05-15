@@ -21,6 +21,9 @@ namespace MazeGUI.Controls
     /// </summary>
     public partial class MazeFields : UserControl
     {
+        /// <summary>
+        /// maze fields viewModel
+        /// </summary>
         private MazeFieldsViewModel vm;
 
         /// <summary>

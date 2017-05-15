@@ -19,6 +19,9 @@ namespace ex2
     /// </summary>
     public partial class SettingManu : Window
     {
+        /// <summary>
+        /// settings viewModel
+        /// </summary>
         private SettingsViewModel vm;
 
         /// <summary>

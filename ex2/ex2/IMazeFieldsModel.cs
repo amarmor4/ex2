@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ex2
 {
+    /// <summary>
+    /// interface maze fields model
+    /// </summary>
     interface IMazeFieldsModel
     {
         /// <summary>
