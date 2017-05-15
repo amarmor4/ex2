@@ -172,6 +172,8 @@ namespace MazeGUI.Controls
         {
             CurrntStateRow = InitialStateRow;
             CurrntStateCols = InitialStateCol;
+            this.movePlayer(Player, Convert.ToInt32(CurrntStateCols * RectWidth), "Left");
+            this.movePlayer(Player, Convert.ToInt32(CurrntStateRow * RectHeight), "Top");
         }
 
         public void KeyBoardDown(object sender, KeyEventArgs e)

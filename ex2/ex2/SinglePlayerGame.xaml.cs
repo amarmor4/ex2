@@ -48,7 +48,7 @@ namespace ex2
 
         private void stnRestart_Click(object sender, RoutedEventArgs e)
         {
-            mazeBoard.DrawMaze();
+            mazeBoard.ResetCurrentState();
         }
 
         private void stnSolve_Click(object sender, RoutedEventArgs e)
