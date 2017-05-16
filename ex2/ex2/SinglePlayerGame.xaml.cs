@@ -57,8 +57,6 @@ namespace ex2
             this.DataContext = vm;
             InitializeComponent();
             this.StartGame();
-            this.Show();
-            this.KeyDown += MazeBoard_KeyDown;
         }
 
         /// <summary>
@@ -117,6 +115,16 @@ namespace ex2
         private void MazeBoard_KeyDown(object sender, KeyEventArgs e)
         {
             mazeBoard.KeyBoardDown(sender, e);
+        }
+
+        public void AddListenToKeyBoard()
+        {
+            this.KeyDown += MazeBoard_KeyDown;
+        }
+
+        public void RemoveAddListenToKeyBoard()
+        {
+            this.KeyDown -= MazeBoard_KeyDown;
         }
     }
 }

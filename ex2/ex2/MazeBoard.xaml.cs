@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ex2;
+using System.Windows.Media.Animation;
+using System.Threading;
 
 namespace MazeGUI.Controls
 {
@@ -158,6 +161,8 @@ namespace MazeGUI.Controls
         private static void onMazePathPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
                 ((MazeBoard)d).DrawMaze();
+                ((MazeBoard)d).ShowWindow();
+                ((MazeBoard)d).ListenToKeyBoard();
         }
 
         private static void onMazeSolvePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -304,8 +309,8 @@ namespace MazeGUI.Controls
                 myCanvas.Children.Add(Player);
             CurrntStateRow = InitialStateRow;
             CurrntStateCol = InitialStateCol;
-            this.movePlayer(Player, Convert.ToInt32(CurrntStateCol * RectWidth), "Left");
-            this.movePlayer(Player, Convert.ToInt32(CurrntStateRow * RectHeight), "Top");  
+            this.MovePlayer(Player, Convert.ToInt32(CurrntStateCol * RectWidth), "Left");
+            this.MovePlayer(Player, Convert.ToInt32(CurrntStateRow * RectHeight), "Top");  
         }
 
         /// <summary>
@@ -320,7 +325,7 @@ namespace MazeGUI.Controls
                 {
                     case Key.Right:
                         if (MazePath[CurrntStateRow * Cols + CurrntStateCol + 1] == '0')
-                            CurrntStateCol += 1;   
+                            CurrntStateCol += 1;
                         break;
                     case Key.Left:
                         if (MazePath[CurrntStateRow * Cols + CurrntStateCol - 1] == '0')
@@ -336,20 +341,20 @@ namespace MazeGUI.Controls
                         break;
                 }
 
-                if(CurrntStateRow==GoalStateRow && CurrntStateCol==GoalStateCol)
+                if (CurrntStateRow == GoalStateRow && CurrntStateCol == GoalStateCol)
                 {
                     MessageBox.Show("winner");
                     myCanvas.Children.Remove(Player);
                 }
-                    
-                if (e.Key== Key.Right || e.Key== Key.Left)
-                    this.movePlayer(Player, Convert.ToInt32(CurrntStateCol * RectWidth), "Left");
-                if (e.Key == Key.Up || e.Key == Key.Down)
-                    this.movePlayer(Player, Convert.ToInt32(CurrntStateRow * RectHeight), "Top");  
+                if (e.Key == Key.Right || e.Key == Key.Left)
+                    this.MovePlayer(Player, Convert.ToInt32(CurrntStateCol * RectWidth), "Left");
+                else if (e.Key == Key.Up || e.Key == Key.Down)
+                    this.MovePlayer(Player, Convert.ToInt32(CurrntStateRow * RectHeight), "Top");
             }
             catch { }
             e.Handled = true;
         }
+
 
         /// <summary>
         /// move player
@@ -357,7 +362,7 @@ namespace MazeGUI.Controls
         /// <param name="player">player to move</param>
         /// <param name="location">location to move</param>
         /// <param name="setDirection">Left or Top for Canvas.SetLeft/Canvas.Top</param>
-        public void movePlayer(UIElement player, int location, string setDirection)
+        public void MovePlayer(UIElement player, int location, string setDirection)
         {
             if(setDirection=="Left")
                 Canvas.SetLeft(player, location);
@@ -367,7 +372,75 @@ namespace MazeGUI.Controls
 
         public void AnimationSolve()
         {
-            MessageBox.Show("solve test");
+            this.RemoveListenToKeyBoard();
+            this.ResetCurrentState();
+            
+            Task animation = new Task((stateObj) => 
+            {
+                var paramsArr = (object[])stateObj;
+                string MazeSolve = (string)paramsArr[0];
+                int CurrntStateRow=(int)paramsArr[1];
+                int CurrntStateCol = (int)paramsArr[2];
+                int GoalStateRow = (int)paramsArr[3];
+                int GoalStateCol = (int)paramsArr[4];
+                double RectHeight = (double)paramsArr[5];
+                double RectWidth=(double)paramsArr[6];
+                UIElement Player=(UIElement)paramsArr[7];
+
+                for (int i = 0; i < MazeSolve.Length; i++)
+                {
+                    char c = (Char)MazeSolve[i];
+                    this.Dispatcher.Invoke((Action)(() =>
+                    {
+                        DoubleAnimation da = new DoubleAnimation();
+                        da.Duration = new Duration(TimeSpan.FromSeconds(1));
+                        if (c == '1' || c == '0')
+                        {
+                            da.From = CurrntStateCol * RectWidth;
+                            if (c == '1')
+                                CurrntStateCol += 1;
+                            else if (c == '0')
+                                CurrntStateCol -= 1;
+                            da.To = CurrntStateCol * RectWidth;
+                            Player.BeginAnimation(Canvas.LeftProperty, da);
+                        }
+                        else if (c == '2' || c == '3')
+                        {
+                            da.From = CurrntStateRow * RectHeight;
+                            if (c == '2')
+                                CurrntStateRow -= 1;
+                            else if (c == '3')
+                                CurrntStateRow += 1;
+                            da.To = CurrntStateRow * RectHeight;
+                            Player.BeginAnimation(Canvas.TopProperty, da);
+                        }
+                    }));
+                    Thread.Sleep(1000);
+                }
+            },
+            new object[] { MazeSolve, CurrntStateRow, CurrntStateCol, GoalStateRow, GoalStateCol, RectHeight, RectWidth, Player});
+            animation.Start();
+        }
+
+        public void ShowWindow()
+        {
+            Window window = Window.GetWindow(this);
+            if (window != null)
+                window.Show();
+        }
+
+        public void ListenToKeyBoard()
+        {
+            SinglePlayerGame window = (SinglePlayerGame)Window.GetWindow(this);
+            if (window != null)
+                window.AddListenToKeyBoard();
+        }
+
+        public void RemoveListenToKeyBoard()
+        {
+            SinglePlayerGame window = (SinglePlayerGame)Window.GetWindow(this);
+            if (window != null)
+                window.RemoveAddListenToKeyBoard();
         }
     }
 }
