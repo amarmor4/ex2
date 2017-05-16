@@ -16,6 +16,7 @@ using ex2;
 using System.Windows.Media.Animation;
 using System.Threading;
 
+
 namespace MazeGUI.Controls
 {
     /// <summary>
@@ -373,8 +374,7 @@ namespace MazeGUI.Controls
         public void AnimationSolve()
         {
             this.RemoveListenToKeyBoard();
-            this.ResetCurrentState();
-            
+            this.ResetCurrentState();        
             Task animation = new Task((stateObj) => 
             {
                 var paramsArr = (object[])stateObj;
@@ -387,7 +387,7 @@ namespace MazeGUI.Controls
                 double RectWidth=(double)paramsArr[6];
                 UIElement Player=(UIElement)paramsArr[7];
 
-                for (int i = 0; i < MazeSolve.Length; i++)
+                for (int i = 0; i < MazeSolve.Length-1; i++)
                 {
                     char c = (Char)MazeSolve[i];
                     this.Dispatcher.Invoke((Action)(() =>
@@ -415,11 +415,14 @@ namespace MazeGUI.Controls
                             Player.BeginAnimation(Canvas.TopProperty, da);
                         }
                     }));
-                    Thread.Sleep(1000);
+                    Thread.Sleep(1000);                   
                 }
+                MessageBox.Show("winner");
             },
             new object[] { MazeSolve, CurrntStateRow, CurrntStateCol, GoalStateRow, GoalStateCol, RectHeight, RectWidth, Player});
             animation.Start();
+            //animation.Wait();
+            //myCanvas.Children.Remove(Player);
         }
 
         public void ShowWindow()
