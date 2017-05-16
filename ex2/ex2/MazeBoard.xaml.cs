@@ -89,6 +89,8 @@ namespace MazeGUI.Controls
             }
         }
 
+        
+
         /// <summary>
         /// currnt state row
         /// </summary>
@@ -133,7 +135,7 @@ namespace MazeGUI.Controls
         /// DependencyProperty MazePathProperty
         /// </summary>
         public static readonly DependencyProperty MazePathProperty =
-            DependencyProperty.Register("MazePath", typeof(string), typeof(MazeBoard));
+            DependencyProperty.Register("MazePath", typeof(string), typeof(MazeBoard), new PropertyMetadata(onMazePathPropertyChanged));
 
         /// <summary>
         /// DependencyProperty InitialStateProperty
@@ -151,7 +153,17 @@ namespace MazeGUI.Controls
         /// DependencyProperty MazeSolveProperty
         /// </summary>
         public static readonly DependencyProperty MazeSolveProperty =
-            DependencyProperty.Register("MazeSolve", typeof(string), typeof(MazeBoard));
+            DependencyProperty.Register("MazeSolve", typeof(string), typeof(MazeBoard), new PropertyMetadata(onMazeSolvePropertyChanged));
+
+        private static void onMazePathPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+                ((MazeBoard)d).DrawMaze();
+        }
+
+        private static void onMazeSolvePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((MazeBoard)d).AnimationSolve();
+        }
 
         /// <summary>
         /// initial state row propery
@@ -353,7 +365,7 @@ namespace MazeGUI.Controls
                 Canvas.SetTop(player, location);
         }
 
-        public void test()
+        public void AnimationSolve()
         {
             MessageBox.Show("solve test");
         }

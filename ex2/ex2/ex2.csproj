@@ -95,6 +95,7 @@
     <Compile Include="MultiPlayerGame.xaml.cs">
       <DependentUpon>MultiPlayerGame.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MultiPlayerViewModel.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SinglePlayerGameModel.cs" />
     <Compile Include="MultiPlayerManu.xaml.cs">
