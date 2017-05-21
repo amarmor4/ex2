@@ -79,12 +79,14 @@ namespace ex2
         /// </summary>
         /// <returns>answer</returns>
         public string Read()
-        {
+        {         
             string str="";
             string line;
             while (!reader.EndOfStream)
             {
                 line = reader.ReadLine();
+                if (line == "End of command")
+                    break;
                 Console.WriteLine(line);
                 str=string.Concat(str, line);
             }
@@ -95,7 +97,7 @@ namespace ex2
         /// disconnect from server.
         /// </summary>
         public void Disconnect()
-        {
+        {           
             this.client.Close();
         }
     }

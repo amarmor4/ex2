@@ -129,7 +129,7 @@ namespace ex1
         /// <param name="rows">number of rows at maze.</param>
         /// <param name="cols">number of cols at maze.</param>
         /// <returns>maze</returns>
-        public String Start(string name, int rows, int cols, TcpClient client)
+        public string Start(string name, int rows, int cols, TcpClient client)
         {
                 Maze maze = GenerateMultiPlayresMaze(name, rows, cols);
                 if (maze == null)

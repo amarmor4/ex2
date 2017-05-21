@@ -28,7 +28,7 @@ namespace ex2
         Maze maze;
 
         /// <summary>
-        /// 
+        /// solution
         /// </summary>
         string solve;
 
@@ -100,8 +100,7 @@ namespace ex2
                 this.telnetClient.Disconnect();
                 MazeGame = MazeLib.Maze.FromJSON(str);
             });
-            recv.Start();
-            
+            recv.Start();           
         }
 
         /// <summary>

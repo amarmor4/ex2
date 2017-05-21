@@ -1,39 +1,25 @@
-﻿using System;
+﻿using MazeLib;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel;
-using MazeLib;
-using SearchAlgorithmsLib;
-using MazeGeneratorLib;
-using Newtonsoft.Json.Linq;
 
 namespace ex2
 {
     /// <summary>
-    /// single player game viewModel
+    /// multi player game view model
     /// </summary>
-    class SinglePlayerGameViewModel :ViewModel
+    class MultiPlayerGameViewModel : ViewModel
     {
-        /// <summary>
-        /// single player game model
-        /// </summary>
-        private SinglePlayerGameModel model;
-
         /// <summary>
         /// maze game
         /// </summary>
         Maze mazeGame;
 
-        /// <summary>
-        /// maze solution
-        /// </summary>
-        string mazeSolve;
-
-        /// <summary>
-        /// mode play single
-        /// </summary>
         string modePlay;
 
         /// <summary>
@@ -67,13 +53,19 @@ namespace ex2
         public int cols;
 
         /// <summary>
-        /// constructor
+        /// list of games.
         /// </summary>
-        /// <param name="model">single player game model</param>
-        public SinglePlayerGameViewModel(SinglePlayerGameModel model)
+        public ObservableCollection<string> listOfGames;
+
+        /// <summary>
+        /// multi player game model
+        /// </summary>
+        private MultiPlayerGameModel model;
+
+        public MultiPlayerGameViewModel(MultiPlayerGameModel model)
         {
             this.model = model;
-            model.PropertyChanged += delegate(Object sender, PropertyChangedEventArgs e) {
+            model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e) {
                 NotifyPropertyChangedModel(e.PropertyName);
             };
         }
@@ -91,8 +83,11 @@ namespace ex2
         {
             if (propName == "MazeGame")
                 MazeGame = model.MazeGame;
-            if (propName == "MazeSolve")
-                MazeSolve = model.MazeSolve;
+            if (propName == "ListOfGames")
+            {
+                string str = model.ListOfGames;
+                ListOfGames= Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<string>>(str);
+            }               
         }
 
         /// <summary>
@@ -109,29 +104,15 @@ namespace ex2
         }
 
         /// <summary>
-        /// maze solution
-        /// </summary>
-        public string MazeSolve
-        {
-            get { return this.mazeSolve; }
-            set
-            {
-                this.mazeSolve = value;
-                NotifyPropertyChanged("MazeSolve");
-            }
-
-        }
-
-        /// <summary>
         /// initialize maze when maze game set
         /// </summary>
         public void InitializeMaze()
         {
-            ModePlay = "Single";
+            ModePlay = "Multi";
             Name = this.mazeGame.Name;
             string strInitial = this.mazeGame.InitialPos.ToString();
-            strInitial=strInitial.Replace("(","");
-            strInitial=strInitial.Replace(")", "");
+            strInitial = strInitial.Replace("(", "");
+            strInitial = strInitial.Replace(")", "");
             InitialState = strInitial;
             string strGoal = this.mazeGame.GoalPos.ToString();
             strGoal = strGoal.Replace("(", "");
@@ -159,8 +140,9 @@ namespace ex2
         public string Name
         {
             get { return this.name; }
-            set {
-                this.name=value;
+            set
+            {
+                this.name = value;
                 NotifyPropertyChanged("Name");
             }
         }
@@ -171,7 +153,8 @@ namespace ex2
         public string MazePath
         {
             get { return this.mazePath; }
-            set {
+            set
+            {
                 this.mazePath = value;
                 NotifyPropertyChanged("MazePath");
             }
@@ -183,7 +166,8 @@ namespace ex2
         public string InitialState
         {
             get { return this.initialState; }
-            set {
+            set
+            {
                 this.initialState = value;
                 NotifyPropertyChanged("InitialState");
             }
@@ -195,7 +179,8 @@ namespace ex2
         public string GoalState
         {
             get { return this.goalState; }
-            set {
+            set
+            {
                 this.goalState = value;
                 NotifyPropertyChanged("GoalState");
             }
@@ -227,27 +212,41 @@ namespace ex2
             }
         }
 
+        
+        public ObservableCollection<string> ListOfGames
+        {
+            get { return this.listOfGames; }
+            set
+            {
+                this.listOfGames = value;
+                NotifyPropertyChanged("ListOfGames");
+            }
+        }
+
         /// <summary>
-        /// start game - generate maze
+        /// start game - start maze
         /// </summary>
         /// <param name="name">maze name</param>
         /// <param name="rows">rows maze</param>
         /// <param name="cols">cols maze</param>
         public void StartGame(string name, int rows, int cols)
-        { 
-            string command = "generate " + name + " " + rows + " " + cols;
+        {
+            string command = "start " + name + " " + rows + " " + cols;
             model.Start(command);
         }
 
         /// <summary>
-        /// solve game
+        /// request to list of game to join
         /// </summary>
-        /// <param name="name">maze name</param>
-        public void SolveGame(string name)
+        public void GetListToJoin()
         {
-            int algo=Properties.Settings.Default.SearchAlgorithm;
-            string command = "solve " + name + " " +algo;
-            model.Solve(command);
+            model.List();
+        }
+
+        public void Join(string name)
+        {
+            string command = "join " + name;
+            model.Join(command);
         }
     }
 }

@@ -64,7 +64,6 @@ namespace ex1
                     try
                     {
                         TcpClient client = listener.AcceptTcpClient();
-                        //Console.WriteLine("Got new connection");
                         ch.HandleClient(client);
                     }
                     catch (SocketException)

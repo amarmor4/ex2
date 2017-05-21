@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,12 +20,29 @@ namespace ex2
     /// </summary>
     public partial class MultiPlayerManu : Window
     {
+        private MultiPlayerGameViewModel vm;
+
+        /*
+        public ObservableCollection<string> ListOfGames
+        {
+            get { return (ObservableCollection<string>)GetValue(ListOfGamesProperty); }
+            set { SetValue(ListOfGamesProperty, value); }
+        }
+
+        public static readonly DependencyProperty ListOfGamesProperty =
+            DependencyProperty.Register("ModePlay", typeof(ObservableCollection<string>), typeof(MultiPlayerManu));
+            */
         /// <summary>
         /// constructor
         /// </summary>
         public MultiPlayerManu()
         {
             InitializeComponent();
+            ITelnetClient telnetClient = new TelnetClient();
+            MultiPlayerGameModel model = new MultiPlayerGameModel(telnetClient);
+            this.vm = new MultiPlayerGameViewModel(model);
+            this.DataContext = this.vm;
+            vm.GetListToJoin();      
         }
 
         /// <summary>
@@ -34,7 +52,14 @@ namespace ex2
         /// <param name="e">routed event args</param>
         private void btnStart_click(object sender, RoutedEventArgs e)
         {
-            mazeFildes.valid_ok(sender, e);
+            if (mazeFildes.valid_ok(sender, e) == true)
+            {
+                string name = mazeFildes.txtMazeName.Text;
+                int rows = int.Parse(mazeFildes.txtRows.Text);
+                int cols = int.Parse(mazeFildes.txtCols.Text);
+                Window multiPlayerGame = new MultiPlayerGame("Start", name, rows, cols);
+                this.Close();
+            }
         }
 
         /// <summary>
@@ -47,6 +72,19 @@ namespace ex2
             MainWindow win = (MainWindow)Application.Current.MainWindow;
             win.Show();
             this.Close();
+        }
+
+        private void btnJoin_click(object sender, RoutedEventArgs e)
+        {
+            if (comboGamesList.SelectedItem.ToString()==null)
+                MessageBox.Show("can't join without choose a game");
+            Window multiPlayerGame = new MultiPlayerGame("Join", comboGamesList.SelectedItem.ToString(), 0, 0);       
+            this.Close();
+        }
+
+        private void comboSelectedItem(object sender, RoutedEventArgs e)
+        {
+            btnJoin.IsEnabled = true;
         }
     }
 }

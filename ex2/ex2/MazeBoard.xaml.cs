@@ -33,6 +33,14 @@ namespace MazeGUI.Controls
         }
 
         /// <summary>
+        /// mode play dp
+        /// </summary>
+        public string ModePlay {
+            get { return (string)GetValue(ModePlayProperty); }
+            set { SetValue(ModePlayProperty, value); }
+        }
+
+        /// <summary>
         /// rows dp
         /// </summary>
         public int Rows
@@ -123,6 +131,13 @@ namespace MazeGUI.Controls
             set { this.currentStateCol = value; }
         }
 
+
+        /// <summary>
+        /// DependencyProperty ModePlayProperty
+        /// </summary>
+        public static readonly DependencyProperty ModePlayProperty =
+            DependencyProperty.Register("ModePlay", typeof(string), typeof(MazeBoard));
+
         /// <summary>
         /// DependencyProperty RowsProperty
         /// </summary>
@@ -159,6 +174,11 @@ namespace MazeGUI.Controls
         public static readonly DependencyProperty MazeSolveProperty =
             DependencyProperty.Register("MazeSolve", typeof(string), typeof(MazeBoard), new PropertyMetadata(onMazeSolvePropertyChanged));
 
+        /// <summary>
+        /// onMazePathPropertyChanged metadata
+        /// </summary>
+        /// <param name="d">DependencyObject</param>
+        /// <param name="e">DependencyPropertyChangedEventArgs</param>
         private static void onMazePathPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
                 ((MazeBoard)d).DrawMaze();
@@ -166,6 +186,11 @@ namespace MazeGUI.Controls
                 ((MazeBoard)d).ListenToKeyBoard();
         }
 
+        /// <summary>
+        /// onMazeSolvePropertyChanged metadata - single player
+        /// </summary>
+        /// <param name="d">DependencyObject</param>
+        /// <param name="e">DependencyPropertyChangedEventArgs</param>
         private static void onMazeSolvePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((MazeBoard)d).AnimationSolve();
@@ -325,11 +350,11 @@ namespace MazeGUI.Controls
                 switch (e.Key)
                 {
                     case Key.Right:
-                        if (MazePath[CurrntStateRow * Cols + CurrntStateCol + 1] == '0')
+                        if (MazePath[CurrntStateRow * Cols + (CurrntStateCol + 1)] == '0')
                             CurrntStateCol += 1;
                         break;
                     case Key.Left:
-                        if (MazePath[CurrntStateRow * Cols + CurrntStateCol - 1] == '0')
+                        if (MazePath[CurrntStateRow * Cols + (CurrntStateCol - 1)] == '0')
                             CurrntStateCol -= 1;
                         break;
                     case Key.Up:
@@ -371,6 +396,9 @@ namespace MazeGUI.Controls
                 Canvas.SetTop(player, location);
         }
 
+        /// <summary>
+        /// animation solve.
+        /// </summary>
         public void AnimationSolve()
         {
             this.RemoveListenToKeyBoard();
@@ -425,6 +453,9 @@ namespace MazeGUI.Controls
             //myCanvas.Children.Remove(Player);
         }
 
+        /// <summary>
+        /// show window.
+        /// </summary>
         public void ShowWindow()
         {
             Window window = Window.GetWindow(this);
@@ -432,18 +463,30 @@ namespace MazeGUI.Controls
                 window.Show();
         }
 
+        /// <summary>
+        /// add listen to key board
+        /// </summary>
         public void ListenToKeyBoard()
         {
-            SinglePlayerGame window = (SinglePlayerGame)Window.GetWindow(this);
-            if (window != null)
-                window.AddListenToKeyBoard();
+            if (ModePlay == "Single")
+            {
+                SinglePlayerGame window = (SinglePlayerGame)Window.GetWindow(this);
+                if (window != null)
+                    window.AddListenToKeyBoard();
+            }          
         }
 
+        /// <summary>
+        /// remove listen to key board
+        /// </summary>
         public void RemoveListenToKeyBoard()
         {
-            SinglePlayerGame window = (SinglePlayerGame)Window.GetWindow(this);
-            if (window != null)
-                window.RemoveAddListenToKeyBoard();
+            if (ModePlay == "Single")
+            {
+                SinglePlayerGame window = (SinglePlayerGame)Window.GetWindow(this);
+                if (window != null)
+                    window.RemoveAddListenToKeyBoard();
+            }
         }
     }
 }

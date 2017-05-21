@@ -61,7 +61,7 @@ namespace ex1
             TcpClient otherClient = this.model.GetOtherParticipate(client);
             if (otherClient == null)
                 return "other client close connection";
-            this.view.SendToClient(maze.ToJSON(), otherClient);
+            this.view.SendToClient(maze.ToJSON(), otherClient, "join");
             return maze.ToJSON();
         }
     }

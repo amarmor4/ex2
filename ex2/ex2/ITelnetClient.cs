@@ -20,7 +20,7 @@ namespace ex2
         /// send to server command.
         /// </summary>
         /// <param name="command">command</param>
-        void Write(string command); 
+        void Write(string command);
 
         /// <summary>
         /// read from server.

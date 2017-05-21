@@ -5,28 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:MazeGUI.Controls"
         mc:Ignorable="d"
-        Title="{Binding Path=Name}" Height="400" Width="650">
+        Title="multi" Height="400" Width="650">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="stnSolve" Grid.Row="0" HorizontalAlignment="Center" Margin="0,10,0,370" Click="stnMainMenu_Click">Back to main menu</Button>
-        <Grid>
+        <Button x:Name="stnSolve" Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,0" Click="stnMainMenu_Click">Back to main menu</Button>
+        <Grid  Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="1" HorizontalAlignment="Left" Margin="10,40,0,0" Foreground="Blue">My board</TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="10,40,0,0" Foreground="Green">others player's board</TextBlock>
-            <controls:MazeBoard x:Name="myMazeBoard" Grid.Row="2" HorizontalAlignment="Left" Rows="{Binding Path=Rows}" Cols="{Binding Path=Cols}" MazePath="{Binding Path=MazePath}" 
-                            InitialState="{Binding Path=InitialState}" GoalState="{Binding Path=GoalState}" MazeSolve="{Binding Path=MazeSolve}" Margin="10,20,0,0" KeyDown="MazeBoard_KeyDown"></controls:MazeBoard>
+            <TextBlock Grid.Row="0" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Blue">My board</TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Green">others player's board</TextBlock>
+            <controls:MazeBoard x:Name="mazeBoard" Grid.Row="2" HorizontalAlignment="Left" Rows="{Binding Path=Rows}" Cols="{Binding Path=Cols}" MazePath="{Binding Path=MazePath}" 
+                            InitialState="{Binding Path=InitialState}" GoalState="{Binding Path=GoalState}" ModePlay="{Binding ModePlay}" Margin="10,10,5,10"></controls:MazeBoard>
             <controls:MazeBoard x:Name="otherMazeBoard" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Rows="{Binding Path=Rows}" Cols="{Binding Path=Cols}" MazePath="{Binding Path=MazePath}" 
-                            InitialState="{Binding Path=InitialState}" GoalState="{Binding Path=GoalState}" MazeSolve="{Binding Path=MazeSolve}" Margin="10,20,0,0"></controls:MazeBoard>
+                            InitialState="{Binding Path=InitialState}" GoalState="{Binding Path=GoalState}" ModePlay="{Binding ModePlay}" Margin="5,10,10,10"></controls:MazeBoard>
         </Grid>
     </Grid>
 </Window>

@@ -33,25 +33,29 @@ namespace ex1
         /// <param name="client">client's data</param>
         public void HandleClient(TcpClient client)
         {
+            
             new Task(() =>
                 {
                     using (NetworkStream stream = client.GetStream())
                     using (StreamReader reader = new StreamReader(stream))
                     using (StreamWriter writer = new StreamWriter(stream))
                     {
-                        //while (true)
-                        //{
-                            try
+                        while (true)
+                        {
+                        try
                             {
                                 string commandLine = reader.ReadLine();
                                 string result = c.ExecuteCommand(commandLine.ToString(), client);
+                                string[] arr = commandLine.Split(' ');
+                                string commandKey = arr[0];
+                                string str = string.Concat(result, "\nEnd of command" + "\n" + commandKey);
                                 writer.AutoFlush = true;
-                                writer.WriteLine(result);
+                                writer.WriteLine(str);                                 
                             }
                             catch (Exception) {
-                            //break;
+                                break;
                             }
-                        //}
+                        }
                     }
                     //client.Close();
                 }).Start();
@@ -62,13 +66,14 @@ namespace ex1
         /// </summary>
         /// <param name="str">string to send</param>
         /// <param name="client">client</param>
-        public void SendToClient(string str, TcpClient client)
+        public void SendToClient(string str, TcpClient client, string commandKey)
         {
             NetworkStream stream = client.GetStream();
             StreamReader reader = new StreamReader(stream);
             StreamWriter writer = new StreamWriter(stream);
+            string result= string.Concat(str, "\nEnd of command" + "\n" + commandKey);
             writer.AutoFlush = true;
-            writer.WriteLine(str);
+            writer.WriteLine(result);
         }
     }
 }

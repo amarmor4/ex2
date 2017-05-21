@@ -19,9 +19,25 @@ namespace ex2
     /// </summary>
     public partial class MultiPlayerGame : Window
     {
-        public MultiPlayerGame()
-        {
+        /// <summary>
+        /// multi player game view model;
+        /// </summary>
+        private MultiPlayerGameViewModel vm;
+
+        /// <summary>
+        /// constructor
+        /// </summary>
+        public MultiPlayerGame(string command, string name, int rows, int cols)
+        {          
+            ITelnetClient telnetClient = new TelnetClient();
+            MultiPlayerGameModel model = new MultiPlayerGameModel(telnetClient);
+            this.vm = new MultiPlayerGameViewModel(model);
+            this.DataContext = this.vm;
             InitializeComponent();
+            if (command == "Start")
+                this.Start(name, rows, cols);
+            if (command == "Join")
+                this.Join(name);
         }
 
         /// <summary>
@@ -38,6 +54,16 @@ namespace ex2
                 win.Show();
                 this.Close();
             }
+        }
+
+        public void Start(string name, int rows, int cols)
+        {
+            this.vm.StartGame(name, rows, cols);
+        }
+
+        public void Join(string name)
+        {
+            this.vm.Join(name);
         }
     }
 }

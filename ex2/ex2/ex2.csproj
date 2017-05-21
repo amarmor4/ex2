@@ -82,6 +82,7 @@
     <Compile Include="AreYouSure.xaml.cs">
       <DependentUpon>AreYouSure.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ClientMulti.cs" />
     <Compile Include="IMazeFieldsModel.cs" />
     <Compile Include="ISettingsModel.cs" />
     <Compile Include="ITelnetClient.cs" />
@@ -95,7 +96,8 @@
     <Compile Include="MultiPlayerGame.xaml.cs">
       <DependentUpon>MultiPlayerGame.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MultiPlayerViewModel.cs" />
+    <Compile Include="MultiPlayerGameModel.cs" />
+    <Compile Include="MultiPlayerGameViewModel.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SinglePlayerGameModel.cs" />
     <Compile Include="MultiPlayerManu.xaml.cs">
