@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -64,6 +65,51 @@ namespace ex2
         public void Join(string name)
         {
             this.vm.Join(name);
+        }
+
+        private void MazeBoard_KeyDown(object sender, KeyEventArgs e)
+        {
+            myMazeBoard.KeyBoardDown(myMazeBoard, e);
+            
+        }
+
+        public void AddListenToKeyBoard()
+        {
+            this.KeyDown += MazeBoard_KeyDown;
+            myMazeBoard.PlayMoveChanged += delegate (string move) {
+                this.vm.Play(move);
+            };
+        }
+
+        public void RemoveAddListenToKeyBoard()
+        {
+            this.KeyDown -= MazeBoard_KeyDown;
+        }
+
+        public void RivalMove(string move)
+        {
+            Key key;
+            key = Key.Space;
+            switch (move)
+            {
+                case "right":
+                    key = Key.Right;
+                    break;
+                case "left":
+                    key = Key.Left;
+                    break;
+                case "up":
+                    key = Key.Up;
+                    break;
+                case "down":
+                    key = Key.Down;
+                    break;
+            }
+            if (key != Key.Space)
+            {
+                var kea = new KeyEventArgs(Keyboard.PrimaryDevice, new HwndSource(0, 0, 0, 0, 0, "", IntPtr.Zero), 0,key);
+                otherMazeBoard.KeyBoardDown(otherMazeBoard, kea);
+            }
         }
     }
 }

@@ -63,7 +63,7 @@ namespace ex1
             TcpClient otherClient=this.model.GetOtherParticipate(client);
             if (otherClient == null)
                 return "other client close connection";
-            this.view.SendToClient(strMove, otherClient, "play");
+            this.view.SendToClient(strMove, otherClient, "move");
             return "move send";
         }
     }

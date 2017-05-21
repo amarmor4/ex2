@@ -57,6 +57,8 @@ namespace ex2
         /// </summary>
         public ObservableCollection<string> listOfGames;
 
+        public string playMove;
+
         /// <summary>
         /// multi player game model
         /// </summary>
@@ -87,7 +89,13 @@ namespace ex2
             {
                 string str = model.ListOfGames;
                 ListOfGames= Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<string>>(str);
-            }               
+            }
+            if (propName == "Move")
+            {
+                JObject play = JObject.Parse(model.Move);
+                Move = play.GetValue("Direction").ToString();
+            }
+            
         }
 
         /// <summary>
@@ -223,6 +231,16 @@ namespace ex2
             }
         }
 
+        public string Move
+        {
+            get { return this.playMove; }
+            set
+            {
+                this.playMove = value;
+                NotifyPropertyChanged("Move");
+            }
+        }
+
         /// <summary>
         /// start game - start maze
         /// </summary>
@@ -247,6 +265,12 @@ namespace ex2
         {
             string command = "join " + name;
             model.Join(command);
+        }
+
+        public void Play(string move)
+        {
+            string command = "play " + move;
+            model.Play(command);
         }
     }
 }

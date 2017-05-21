@@ -24,6 +24,8 @@ namespace ex2
         /// </summary>
         string listOfGames;
 
+        string playMove;
+
         /// <summary>
         /// telnet client
         /// </summary>
@@ -53,6 +55,8 @@ namespace ex2
         {
             if(name=="join")
                 MazeGame= MazeLib.Maze.FromJSON(message);
+            if (name == "move")
+                Move = message;                
         }
 
         /// <summary>
@@ -85,6 +89,16 @@ namespace ex2
             {
                 this.listOfGames = value;
                 NotifyPropertyChanged("ListOfGames");
+            }
+        }
+
+        public string Move
+        {
+            get { return this.playMove; }
+            set
+            {
+                this.playMove = value;
+                NotifyPropertyChanged("Move");
             }
         }
 
@@ -131,7 +145,7 @@ namespace ex2
         /// <param name="command">command</param>
         public void Play(string command)
         {
-
+            this.clientMulti.Write(command);
         }
 
         /// <summary>

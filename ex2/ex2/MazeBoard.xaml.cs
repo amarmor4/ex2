@@ -32,6 +32,11 @@ namespace MazeGUI.Controls
             InitializeComponent();
         }
 
+
+        public delegate void PlayMove(string move);
+
+        public event PlayMove PlayMoveChanged;
+
         /// <summary>
         /// mode play dp
         /// </summary>
@@ -101,7 +106,14 @@ namespace MazeGUI.Controls
             }
         }
 
-        
+        public string Move
+        {
+            get { return (string)GetValue(MoveProperty); }
+            set
+            {
+                SetValue(MoveProperty, value);
+            }
+        }
 
         /// <summary>
         /// currnt state row
@@ -130,7 +142,6 @@ namespace MazeGUI.Controls
             get { return this.currentStateCol; }
             set { this.currentStateCol = value; }
         }
-
 
         /// <summary>
         /// DependencyProperty ModePlayProperty
@@ -174,6 +185,9 @@ namespace MazeGUI.Controls
         public static readonly DependencyProperty MazeSolveProperty =
             DependencyProperty.Register("MazeSolve", typeof(string), typeof(MazeBoard), new PropertyMetadata(onMazeSolvePropertyChanged));
 
+        public static readonly DependencyProperty MoveProperty =
+            DependencyProperty.Register("Move", typeof(object), typeof(MazeBoard), new PropertyMetadata(null,onMovePropertyChanged, moveCallBack));
+
         /// <summary>
         /// onMazePathPropertyChanged metadata
         /// </summary>
@@ -194,6 +208,21 @@ namespace MazeGUI.Controls
         private static void onMazeSolvePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((MazeBoard)d).AnimationSolve();
+        }
+
+        private static void onMovePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((MazeBoard)d).RivalMove();
+        }
+
+        private static object moveCallBack(DependencyObject d, object baseValue)
+        {
+            if (baseValue != null && (d.GetValue(MoveProperty) == baseValue))
+            {
+                d.SetCurrentValue(MoveProperty, null);
+                d.SetCurrentValue(MoveProperty, baseValue);
+            }
+            return baseValue;
         }
 
         /// <summary>
@@ -369,16 +398,22 @@ namespace MazeGUI.Controls
 
                 if (CurrntStateRow == GoalStateRow && CurrntStateCol == GoalStateCol)
                 {
-                    MessageBox.Show("winner");
+                    if (((MazeBoard)sender).Name != "otherMazeBoard")
+                            MessageBox.Show("loser");
+                    else
+                        MessageBox.Show("you won");
                     myCanvas.Children.Remove(Player);
                 }
                 if (e.Key == Key.Right || e.Key == Key.Left)
                     this.MovePlayer(Player, Convert.ToInt32(CurrntStateCol * RectWidth), "Left");
                 else if (e.Key == Key.Up || e.Key == Key.Down)
                     this.MovePlayer(Player, Convert.ToInt32(CurrntStateRow * RectHeight), "Top");
+                if(((MazeBoard)sender).Name == "myMazeBoard" && ModePlay=="Multi")
+                    PlayMoveChanged(e.Key.ToString());
             }
             catch { }
-            e.Handled = true;
+            if(((MazeBoard)sender).Name != "otherMazeBoard")
+                e.Handled = true;
         }
 
 
@@ -473,6 +508,12 @@ namespace MazeGUI.Controls
                 SinglePlayerGame window = (SinglePlayerGame)Window.GetWindow(this);
                 if (window != null)
                     window.AddListenToKeyBoard();
+            }
+            else if(ModePlay=="Multi")
+            {
+                MultiPlayerGame window = (MultiPlayerGame)Window.GetWindow(this);
+                if (window != null)
+                    window.AddListenToKeyBoard();
             }          
         }
 
@@ -486,6 +527,22 @@ namespace MazeGUI.Controls
                 SinglePlayerGame window = (SinglePlayerGame)Window.GetWindow(this);
                 if (window != null)
                     window.RemoveAddListenToKeyBoard();
+            }
+            else if (ModePlay == "Multi")
+            {
+                MultiPlayerGame window = (MultiPlayerGame)Window.GetWindow(this);
+                if (window != null)
+                    window.RemoveAddListenToKeyBoard();
+            }
+        }
+
+        public void RivalMove()
+        {
+            if (ModePlay == "Multi")
+            {
+                MultiPlayerGame window = (MultiPlayerGame)Window.GetWindow(this);
+                if (window != null)
+                    window.RivalMove(Move);
             }
         }
     }
