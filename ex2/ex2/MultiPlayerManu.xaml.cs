@@ -22,22 +22,13 @@ namespace ex2
     {
         private MultiPlayerGameViewModel vm;
 
-        /*
-        public ObservableCollection<string> ListOfGames
-        {
-            get { return (ObservableCollection<string>)GetValue(ListOfGamesProperty); }
-            set { SetValue(ListOfGamesProperty, value); }
-        }
-
-        public static readonly DependencyProperty ListOfGamesProperty =
-            DependencyProperty.Register("ModePlay", typeof(ObservableCollection<string>), typeof(MultiPlayerManu));
-            */
         /// <summary>
         /// constructor
         /// </summary>
         public MultiPlayerManu()
         {
             InitializeComponent();
+            this.Background = new SolidColorBrush(Colors.LightYellow);
             ITelnetClient telnetClient = new TelnetClient();
             MultiPlayerGameModel model = new MultiPlayerGameModel(telnetClient);
             this.vm = new MultiPlayerGameViewModel(model);
@@ -57,8 +48,8 @@ namespace ex2
                 string name = mazeFildes.txtMazeName.Text;
                 int rows = int.Parse(mazeFildes.txtRows.Text);
                 int cols = int.Parse(mazeFildes.txtCols.Text);
-                Window multiPlayerGame = new MultiPlayerGame("Start", name, rows, cols);
                 this.Close();
+                Window multiPlayerGame = new MultiPlayerGame("Start", name, rows, cols);                
             }
         }
 

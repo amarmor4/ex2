@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:MazeGUI.Controls"
         mc:Ignorable="d"
-        Title="multi" Height="400" Width="650">
+        Title="{Binding Path=Name}" Height="400" Width="650">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="stnSolve" Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,0" Click="stnMainMenu_Click">Back to main menu</Button>
+        <Button x:Name="stnMainMenu" Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,0" Click="stnMainMenu_Click">Back to main menu</Button>
         <Grid  Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -24,9 +24,11 @@
             <TextBlock Grid.Row="0" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Blue">My board</TextBlock>
             <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Green">others player's board</TextBlock>
             <controls:MazeBoard x:Name="myMazeBoard" Grid.Row="2" HorizontalAlignment="Left" Rows="{Binding Path=Rows}" Cols="{Binding Path=Cols}" MazePath="{Binding Path=MazePath}" 
-                            InitialState="{Binding Path=InitialState}" GoalState="{Binding Path=GoalState}" ModePlay="{Binding Path=ModePlay}" KeyDown="MazeBoard_KeyDown" Margin="10,10,5,10"></controls:MazeBoard>
+                            InitialState="{Binding Path=InitialState}" GoalState="{Binding Path=GoalState}" ModePlay="{Binding Path=ModePlay}"
+                                KeyDown="MazeBoard_KeyDown" CloseGame="{Binding Path=CloseGame}" ServerFailed="{Binding Path=ServerFailed}" Margin="10,10,5,10"></controls:MazeBoard>
             <controls:MazeBoard x:Name="otherMazeBoard" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Rows="{Binding Path=Rows}" Cols="{Binding Path=Cols}" MazePath="{Binding Path=MazePath}" 
-                            InitialState="{Binding Path=InitialState}" GoalState="{Binding Path=GoalState}" ModePlay="{Binding Path=ModePlay}" Move="{Binding Path=Move}"  Margin="5,10,10,10"></controls:MazeBoard>
+                            InitialState="{Binding Path=InitialState}" GoalState="{Binding Path=GoalState}" ModePlay="{Binding Path=ModePlay}" 
+                                Move="{Binding Path=Move}" Margin="5,10,10,10"></controls:MazeBoard>
         </Grid>
     </Grid>
 </Window>

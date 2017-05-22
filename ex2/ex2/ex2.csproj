@@ -93,6 +93,9 @@
       <DependentUpon>MazeFields.xaml</DependentUpon>
     </Compile>
     <Compile Include="MazeFieldsViewModel.cs" />
+    <Compile Include="MessageWin.xaml.cs">
+      <DependentUpon>MessageWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MultiPlayerGame.xaml.cs">
       <DependentUpon>MultiPlayerGame.xaml</DependentUpon>
     </Compile>
@@ -113,6 +116,9 @@
     <Compile Include="SinglePlayerGameViewModel.cs" />
     <Compile Include="SinglePlayerManu.xaml.cs">
       <DependentUpon>SinglePlayerManu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Spinner.xaml.cs">
+      <DependentUpon>Spinner.xaml</DependentUpon>
     </Compile>
     <Compile Include="TelnetClient.cs" />
     <Compile Include="ViewModel.cs" />
@@ -140,6 +146,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MessageWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MultiPlayerGame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -157,6 +167,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SinglePlayerManu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Spinner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,6 +193,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

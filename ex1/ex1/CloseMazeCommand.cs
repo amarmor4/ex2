@@ -61,7 +61,7 @@ namespace ex1
             if (temp != null)
                 return temp;
             if (otherParticipate != null)
-                this.view.SendToClient(this.ToJSON(), otherParticipate, "close");
+                this.view.SendToClient(this.ToJSON(), otherParticipate, "end");
             return this.ToJSON();
         }
 

@@ -45,9 +45,9 @@ namespace ex2
         /// </summary>
         public TelnetClient()
         {
-            int portnum = Properties.Settings.Default.ServerPort;
-            string ipAddress = Properties.Settings.Default.ServerIP;
-            this.ep = new IPEndPoint(IPAddress.Parse(ipAddress), portnum);
+                int portnum = Properties.Settings.Default.ServerPort;
+                string ipAddress = Properties.Settings.Default.ServerIP;
+                this.ep = new IPEndPoint(IPAddress.Parse(ipAddress), portnum);
         }
 
         /// <summary>
@@ -55,13 +55,17 @@ namespace ex2
         /// </summary>
         /// <param name="ip">ip address</param>
         /// <param name="port">port number</param>
-        public void Connect()
+        public bool Connect()
         {
             this.client = new TcpClient();
-            client.Connect(ep);
-            stream = client.GetStream();
-            this.writer = new StreamWriter(stream);
-            this.reader = new StreamReader(stream);
+            try {
+                client.Connect(ep);
+                stream = client.GetStream();
+                this.writer = new StreamWriter(stream);
+                this.reader = new StreamReader(stream);
+            }
+            catch { return false; }
+            return true;
         }
 
         /// <summary>

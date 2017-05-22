@@ -26,6 +26,10 @@ namespace ex2
 
         string playMove;
 
+        bool closeGame;
+
+        bool serverFailed;
+
         /// <summary>
         /// telnet client
         /// </summary>
@@ -56,7 +60,9 @@ namespace ex2
             if(name=="join")
                 MazeGame= MazeLib.Maze.FromJSON(message);
             if (name == "move")
-                Move = message;                
+                Move = message;
+            if (name == "end")
+                CloseGame = true;                
         }
 
         /// <summary>
@@ -102,21 +108,46 @@ namespace ex2
             }
         }
 
+        public bool CloseGame
+        {
+            get { return this.closeGame; }
+            set
+            {
+                this.closeGame = value;
+                NotifyPropertyChanged("CloseGame");
+            }
+        }
+
+        public bool ServerFailed
+        {
+            get { return this.serverFailed; }
+            set
+            {
+                this.serverFailed = value;
+                NotifyPropertyChanged("ServerFailed");
+            }
+        }
+
         /// <summary>
         /// list of games to join
         /// </summary>
         public void List()
         {
-            this.telnetClient.Connect();
-            string command = "list";
-            this.telnetClient.Write(command);
-            Task recv = new Task(() =>
+
+            if (this.telnetClient.Connect())
             {
-                string str = this.telnetClient.Read();
-                ListOfGames = str;
-                this.telnetClient.Disconnect();
-            });
-            recv.Start();
+                string command = "list";
+                this.telnetClient.Write(command);
+                Task recv = new Task(() =>
+                {
+                    string str = this.telnetClient.Read();
+                    ListOfGames = str;
+                    this.telnetClient.Disconnect();
+                });
+                recv.Start();
+            }
+            else
+                ServerFailed = true;
         }
 
         /// <summary>
@@ -125,8 +156,10 @@ namespace ex2
         /// <param name="command">command</param>
         public void Start(string command)
         {
-            this.clientMulti.Connect();
-            this.clientMulti.Write(command);
+            if (this.clientMulti.Connect())
+                this.clientMulti.Write(command);
+            else
+                ServerFailed = true;
         }
 
         /// <summary>
@@ -135,8 +168,10 @@ namespace ex2
         /// <param name="command">command</param>
         public void Join(string command)
         {
-            this.clientMulti.Connect();
-            this.clientMulti.Write(command);
+            if (this.clientMulti.Connect())
+                this.clientMulti.Write(command);
+            else
+                ServerFailed = true;
         }
 
         /// <summary>
@@ -145,7 +180,8 @@ namespace ex2
         /// <param name="command">command</param>
         public void Play(string command)
         {
-            this.clientMulti.Write(command);
+            if (!this.clientMulti.Write(command))
+                ServerFailed = true;
         }
 
         /// <summary>
@@ -154,7 +190,8 @@ namespace ex2
         /// <param name="command"></param>
         public void Close(string command)
         {
-
+            if (!this.clientMulti.Write(command))
+                ServerFailed = true;
             this.clientMulti.Disconnect();
         }
     }

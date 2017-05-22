@@ -14,7 +14,8 @@
         <Button x:Name="stnRestart" HorizontalAlignment="left" Margin="53,10,0,15" Click="stnRestart_Click">Restart game</Button>
         <Button x:Name="stnSolve" HorizontalAlignment="Center" Margin="0,10,0,15" Click="stnSolve_Click">Solve maze</Button>
         <Button x:Name="stnMainMenu" HorizontalAlignment="right" Margin="0,10,61,15" Click="stnMainMenu_Click">Main menu</Button>
-        <controls:MazeBoard x:Name="mazeBoard" Grid.Row="1" Rows="{Binding Path=Rows}" Cols="{Binding Path=Cols}" MazePath="{Binding Path=MazePath}" 
-                            InitialState="{Binding Path=InitialState}" GoalState="{Binding Path=GoalState}" MazeSolve="{Binding Path=MazeSolve}" ModePlay="{Binding Path=ModePlay}" Margin="0,0,0,10" KeyDown="MazeBoard_KeyDown"></controls:MazeBoard>
+        <controls:MazeBoard x:Name="myMazeBoard" Grid.Row="1" Rows="{Binding Path=Rows}" Cols="{Binding Path=Cols}" MazePath="{Binding Path=MazePath}" 
+                            InitialState="{Binding Path=InitialState}" GoalState="{Binding Path=GoalState}" MazeSolve="{Binding Path=MazeSolve}" 
+                            ModePlay="{Binding Path=ModePlay}" ServerFailed="{Binding Path=ServerFailed}"  Margin="0,0,0,10" KeyDown="MazeBoard_KeyDown"></controls:MazeBoard>
     </Grid>
 </Window>

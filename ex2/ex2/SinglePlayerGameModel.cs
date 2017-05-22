@@ -32,6 +32,8 @@ namespace ex2
         /// </summary>
         string solve;
 
+        bool serverFailed;
+
         /// <summary>
         /// telnet client 
         /// </summary>
@@ -68,6 +70,16 @@ namespace ex2
             }
         }
 
+        public bool ServerFailed
+        {
+            get { return this.serverFailed; }
+            set
+            {
+                this.serverFailed = value;
+                NotifyPropertyChanged("ServerFailed");
+            }
+        }
+
         /// <summary>
         /// notify property changed
         /// </summary>
@@ -92,15 +104,21 @@ namespace ex2
         /// <param name="command">command</param>
         public void Start(string command)
         {
-            this.telnetClient.Connect();
-            this.telnetClient.Write(command);           
-            Task recv = new Task(() =>
+            if (this.telnetClient.Connect())
             {
-                string str = this.telnetClient.Read();
-                this.telnetClient.Disconnect();
-                MazeGame = MazeLib.Maze.FromJSON(str);
-            });
-            recv.Start();           
+                this.telnetClient.Write(command);
+                Task recv = new Task(() =>
+                {
+                    string str = this.telnetClient.Read();
+                    this.telnetClient.Disconnect();
+                    MazeGame = MazeLib.Maze.FromJSON(str);
+                });
+                recv.Start();
+            }
+            else
+            {
+                ServerFailed = true;
+            }         
         }
 
         /// <summary>
@@ -109,16 +127,22 @@ namespace ex2
         /// <param name="command">command</param>
         public void Solve(string command)
         {
-            this.telnetClient.Connect();
-            this.telnetClient.Write(command);
-            Task recv = new Task(() =>
+            if (this.telnetClient.Connect())
             {
-                string str = this.telnetClient.Read();
-                this.telnetClient.Disconnect();
-                JObject sol = JObject.Parse(str);
-                MazeSolve = sol.GetValue("Solution").ToString();
-            });
-            recv.Start();
+                this.telnetClient.Write(command);
+                Task recv = new Task(() =>
+                {
+                    string str = this.telnetClient.Read();
+                    this.telnetClient.Disconnect();
+                    JObject sol = JObject.Parse(str);
+                    MazeSolve = sol.GetValue("Solution").ToString();
+                });
+                recv.Start();
+            }
+            else
+            {
+                ServerFailed = true;
+            }
         }
     }
 }

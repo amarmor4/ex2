@@ -47,7 +47,7 @@ namespace ex2
         /// <param name="mazeRows">maze rows</param>
         /// <param name="mazeCols">maze cols</param>
         public SinglePlayerGame(string mazeName, int mazeRows, int mazeCols)
-        {
+        {          
             this.name = mazeName;
             this.rows = mazeRows;
             this.cols = mazeCols;
@@ -56,6 +56,7 @@ namespace ex2
             vm = new SinglePlayerGameViewModel(model);
             this.DataContext = vm;
             InitializeComponent();
+            this.Background = new SolidColorBrush(Colors.LightYellow);
             this.StartGame();
         }
 
@@ -77,7 +78,7 @@ namespace ex2
             Window areYouSure = new AreYouSure();
             if (areYouSure.ShowDialog() == true)
             {
-                mazeBoard.ResetCurrentState();
+                myMazeBoard.ResetCurrentState();
             }
         }
 
@@ -114,17 +115,36 @@ namespace ex2
         /// <param name="e">KeyEventArgs</param>
         private void MazeBoard_KeyDown(object sender, KeyEventArgs e)
         {
-            mazeBoard.KeyBoardDown(sender, e);
+            myMazeBoard.KeyBoardDown(myMazeBoard, e);
         }
 
         public void AddListenToKeyBoard()
         {
+            this.KeyDown -= MazeBoard_KeyDown;
             this.KeyDown += MazeBoard_KeyDown;
         }
 
         public void RemoveAddListenToKeyBoard()
         {
             this.KeyDown -= MazeBoard_KeyDown;
+        }
+
+        public void EnableButtons()
+        {
+            stnRestart.IsEnabled = true;
+            stnSolve.IsEnabled = true;
+            stnMainMenu.IsEnabled = true;
+        }
+
+        public void DisableButtons()
+        {
+            stnRestart.IsEnabled = false;
+            stnSolve.IsEnabled = false;
+            stnMainMenu.IsEnabled = false;
+            myMazeBoard.AnimationEndedChanged += delegate () {
+                this.EnableButtons();
+                
+            };
         }
     }
 }

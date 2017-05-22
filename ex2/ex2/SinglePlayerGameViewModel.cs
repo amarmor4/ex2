@@ -66,6 +66,8 @@ namespace ex2
         /// </summary>
         public int cols;
 
+        public bool serverFailed;
+
         /// <summary>
         /// constructor
         /// </summary>
@@ -76,6 +78,7 @@ namespace ex2
             model.PropertyChanged += delegate(Object sender, PropertyChangedEventArgs e) {
                 NotifyPropertyChangedModel(e.PropertyName);
             };
+            ModePlay = "Single";
         }
 
         /// <summary>
@@ -93,6 +96,8 @@ namespace ex2
                 MazeGame = model.MazeGame;
             if (propName == "MazeSolve")
                 MazeSolve = model.MazeSolve;
+            if (propName == "ServerFailed")
+                ServerFailed = model.ServerFailed;
         }
 
         /// <summary>
@@ -104,7 +109,10 @@ namespace ex2
             set
             {
                 this.mazeGame = value;
-                this.InitializeMaze();
+                if (mazeGame.InitialPos.Equals(mazeGame.GoalPos))
+                    this.StartGame(mazeGame.Name, mazeGame.Rows, mazeGame.Cols);
+                else
+                    this.InitializeMaze();
             }
         }
 
@@ -122,12 +130,21 @@ namespace ex2
 
         }
 
+        public bool ServerFailed
+        {
+            get { return this.serverFailed; }
+            set
+            {
+                this.serverFailed = value;
+                NotifyPropertyChanged("ServerFailed");
+            }
+        }
+
         /// <summary>
         /// initialize maze when maze game set
         /// </summary>
         public void InitializeMaze()
         {
-            ModePlay = "Single";
             Name = this.mazeGame.Name;
             string strInitial = this.mazeGame.InitialPos.ToString();
             strInitial=strInitial.Replace("(","");

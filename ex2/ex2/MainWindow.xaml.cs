@@ -26,6 +26,7 @@ namespace ex2
         public MainWindow()
         {
             InitializeComponent();
+            this.Background = new ImageBrush(new BitmapImage(new Uri(@"pokemon.png", UriKind.Relative)));
         }
 
         /// <summary>

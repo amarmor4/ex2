@@ -14,7 +14,7 @@ namespace ex2
         /// <summary>
         /// connect to server
         /// </summary>
-        void Connect();
+        bool Connect();
 
         /// <summary>
         /// send to server command.

@@ -26,7 +26,7 @@ namespace ex2
         public SinglePlayerManu()
         {
             InitializeComponent();
-
+            this.Background = new SolidColorBrush(Colors.LightYellow);
         }
 
         /// <summary>

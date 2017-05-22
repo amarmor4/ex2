@@ -30,6 +30,7 @@ namespace ex2
         public SettingManu()
         {
             InitializeComponent();
+            this.Background = new SolidColorBrush(Colors.LightYellow);
             ISettingsModel settingsModel=new ApplicationSettingsModel();
             vm = new SettingsViewModel(settingsModel);
             this.DataContext = vm;

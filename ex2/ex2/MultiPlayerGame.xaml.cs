@@ -25,6 +25,9 @@ namespace ex2
         /// </summary>
         private MultiPlayerGameViewModel vm;
 
+        Window spinner;
+
+
         /// <summary>
         /// constructor
         /// </summary>
@@ -35,8 +38,13 @@ namespace ex2
             this.vm = new MultiPlayerGameViewModel(model);
             this.DataContext = this.vm;
             InitializeComponent();
+            this.Background = new SolidColorBrush(Colors.LightYellow);
             if (command == "Start")
-                this.Start(name, rows, cols);
+            {
+                this.spinner = new Spinner();
+                this.spinner.Show();
+                this.Start(name, rows, cols);                
+            }
             if (command == "Join")
                 this.Join(name);
         }
@@ -51,6 +59,7 @@ namespace ex2
             Window areYouSure = new AreYouSure();
             if (areYouSure.ShowDialog() == true)
             {
+                this.CloseGame();
                 MainWindow win = (MainWindow)Application.Current.MainWindow;
                 win.Show();
                 this.Close();
@@ -70,15 +79,13 @@ namespace ex2
         private void MazeBoard_KeyDown(object sender, KeyEventArgs e)
         {
             myMazeBoard.KeyBoardDown(myMazeBoard, e);
-            
+            this.vm.Play(e.Key.ToString());
         }
 
         public void AddListenToKeyBoard()
         {
+            this.KeyDown -= MazeBoard_KeyDown;
             this.KeyDown += MazeBoard_KeyDown;
-            myMazeBoard.PlayMoveChanged += delegate (string move) {
-                this.vm.Play(move);
-            };
         }
 
         public void RemoveAddListenToKeyBoard()
@@ -110,6 +117,17 @@ namespace ex2
                 var kea = new KeyEventArgs(Keyboard.PrimaryDevice, new HwndSource(0, 0, 0, 0, 0, "", IntPtr.Zero), 0,key);
                 otherMazeBoard.KeyBoardDown(otherMazeBoard, kea);
             }
+        }
+
+        public void CloseGame()
+        {
+            this.vm.Close();
+        }
+
+        public void CloseSpinner()
+        {
+            if (this.spinner != null)
+                this.spinner.Close();
         }
     }
 }

@@ -52,6 +52,10 @@ namespace ex2
         /// </summary>
         public int cols;
 
+        public bool closeGame;
+
+        public bool serverFailed;
+
         /// <summary>
         /// list of games.
         /// </summary>
@@ -70,6 +74,7 @@ namespace ex2
             model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e) {
                 NotifyPropertyChangedModel(e.PropertyName);
             };
+            ModePlay = "Multi";
         }
 
         /// <summary>
@@ -95,7 +100,10 @@ namespace ex2
                 JObject play = JObject.Parse(model.Move);
                 Move = play.GetValue("Direction").ToString();
             }
-            
+            if(propName== "CloseGame")
+                CloseGame = model.CloseGame;
+            if (propName == "ServerFailed")
+                ServerFailed = model.ServerFailed;
         }
 
         /// <summary>
@@ -115,8 +123,7 @@ namespace ex2
         /// initialize maze when maze game set
         /// </summary>
         public void InitializeMaze()
-        {
-            ModePlay = "Multi";
+        {         
             Name = this.mazeGame.Name;
             string strInitial = this.mazeGame.InitialPos.ToString();
             strInitial = strInitial.Replace("(", "");
@@ -241,6 +248,26 @@ namespace ex2
             }
         }
 
+        public bool CloseGame
+        {
+            get { return this.closeGame; }
+            set
+            {
+                this.closeGame = value;
+                NotifyPropertyChanged("CloseGame");
+            }
+        }
+
+        public bool ServerFailed
+        {
+            get { return this.serverFailed; }
+            set
+            {
+                this.serverFailed = value;
+                NotifyPropertyChanged("ServerFailed");
+            }
+        }
+
         /// <summary>
         /// start game - start maze
         /// </summary>
@@ -271,6 +298,12 @@ namespace ex2
         {
             string command = "play " + move;
             model.Play(command);
+        }
+
+        public void Close()
+        {
+            string command = "close " + Name;
+            model.Close(command);
         }
     }
 }
