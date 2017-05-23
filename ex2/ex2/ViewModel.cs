@@ -10,7 +10,7 @@ namespace ex2
     /// <summary>
     /// viewmodle abstract class
     /// </summary>
-    abstract class ViewModel : INotifyPropertyChanged
+    public abstract class ViewModel : INotifyPropertyChanged
     {
         /// <summary>
         /// event PropertyChangedEventHandler

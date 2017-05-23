@@ -20,11 +20,17 @@ namespace ex2
     public partial class AreYouSure : Window
     {
         /// <summary>
+        /// if clicked sure
+        /// </summary>
+        bool isClickedSure;
+
+        /// <summary>
         /// constructor
         /// </summary>
         public AreYouSure()
         {
             InitializeComponent();
+            this.isClickedSure = false;
         }
 
         /// <summary>
@@ -34,7 +40,6 @@ namespace ex2
         /// <param name="e">routedEventArgs</param>
         public void btnCancel_click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false;
             this.Close();
         }
 
@@ -45,8 +50,21 @@ namespace ex2
         /// <param name="e">routedEventArgs</param>
         public void btnSure_click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
+            this.isClickedSure = true;
             this.Close();
+        }
+
+        /// <summary>
+        /// closing window event.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">System.ComponentModel.CancelEventArgs</param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (this.isClickedSure)
+                this.DialogResult = true;
+            else
+                this.DialogResult = false;
         }
     }
 }

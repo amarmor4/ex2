@@ -221,10 +221,8 @@ namespace ex1
                 this.clientsAtGame.Remove(client);
                 TcpClient otherPlayer = game.GetOtherPlayer(client);
                 if (otherPlayer != null)
-                {
                     this.clientsAtGame.Remove(otherPlayer);
-                    this.multiPlayersGames.Remove(name);
-                }
+                this.multiPlayersGames.Remove(name);
                 return null;
             }
             return "Error try to close not exist game or game of others player";

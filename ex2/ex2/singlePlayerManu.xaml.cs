@@ -20,6 +20,8 @@ namespace ex2
     /// </summary>
     public partial class SinglePlayerManu : Window
     {
+        bool isStartGame;
+
         /// <summary>
         /// constructor
         /// </summary>
@@ -27,6 +29,7 @@ namespace ex2
         {
             InitializeComponent();
             this.Background = new SolidColorBrush(Colors.LightYellow);
+            this.isStartGame = false;
         }
 
         /// <summary>
@@ -41,6 +44,7 @@ namespace ex2
                 string name = mazeFildes.txtMazeName.Text;
                 int rows = int.Parse(mazeFildes.txtRows.Text);
                 int cols = int.Parse(mazeFildes.txtCols.Text);
+                this.isStartGame = true;
                 this.Close();
                 Window singlePlayerGame = new SinglePlayerGame(name, rows, cols);
             }
@@ -53,9 +57,21 @@ namespace ex2
         /// <param name="e">routed event args</param>
         private void btnCancel_click(object sender, RoutedEventArgs e)
         {
-            MainWindow win = (MainWindow)Application.Current.MainWindow;
-            win.Show();
             this.Close();
+        }
+
+        /// <summary>
+        /// closing window event.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">System.ComponentModel.CancelEventArgs</param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!this.isStartGame)
+            {
+                MainWindow win = (MainWindow)Application.Current.MainWindow;
+                win.Show();
+            }
         }
     }
 }

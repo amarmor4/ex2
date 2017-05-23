@@ -130,6 +130,9 @@ namespace ex2
 
         }
 
+        /// <summary>
+        /// server failed
+        /// </summary>
         public bool ServerFailed
         {
             get { return this.serverFailed; }
@@ -160,6 +163,9 @@ namespace ex2
             MazePath = maze.GetValue("Maze").ToString();
         }
 
+        /// <summary>
+        /// mode play
+        /// </summary>
         public string ModePlay
         {
             get { return this.modePlay; }

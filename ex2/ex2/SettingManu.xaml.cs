@@ -56,9 +56,18 @@ namespace ex2
         /// <param name="e">routed event args</param>
         private void btnCancel_click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
+
+        /// <summary>
+        /// closing window event.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">System.ComponentModel.CancelEventArgs</param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
             win.Show();
-            this.Close();
         }
     }
 }

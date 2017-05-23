@@ -52,8 +52,14 @@ namespace ex2
         /// </summary>
         public int cols;
 
+        /// <summary>
+        /// close game
+        /// </summary>
         public bool closeGame;
 
+        /// <summary>
+        /// server failed
+        /// </summary>
         public bool serverFailed;
 
         /// <summary>
@@ -61,6 +67,9 @@ namespace ex2
         /// </summary>
         public ObservableCollection<string> listOfGames;
 
+        /// <summary>
+        /// play move
+        /// </summary>
         public string playMove;
 
         /// <summary>
@@ -68,6 +77,10 @@ namespace ex2
         /// </summary>
         private MultiPlayerGameModel model;
 
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="model"></param>
         public MultiPlayerGameViewModel(MultiPlayerGameModel model)
         {
             this.model = model;
@@ -139,6 +152,9 @@ namespace ex2
             MazePath = maze.GetValue("Maze").ToString();
         }
 
+        /// <summary>
+        /// mode play
+        /// </summary>
         public string ModePlay
         {
             get { return this.modePlay; }
@@ -227,7 +243,9 @@ namespace ex2
             }
         }
 
-        
+        /// <summary>
+        /// list of games
+        /// </summary>
         public ObservableCollection<string> ListOfGames
         {
             get { return this.listOfGames; }
@@ -238,6 +256,9 @@ namespace ex2
             }
         }
 
+        /// <summary>
+        /// move
+        /// </summary>
         public string Move
         {
             get { return this.playMove; }
@@ -248,6 +269,9 @@ namespace ex2
             }
         }
 
+        /// <summary>
+        /// close game
+        /// </summary>
         public bool CloseGame
         {
             get { return this.closeGame; }
@@ -258,6 +282,9 @@ namespace ex2
             }
         }
 
+        /// <summary>
+        /// server failed
+        /// </summary>
         public bool ServerFailed
         {
             get { return this.serverFailed; }
@@ -288,21 +315,33 @@ namespace ex2
             model.List();
         }
 
+        /// <summary>
+        /// request to join game
+        /// </summary>
+        /// <param name="name">maze name</param>
         public void Join(string name)
         {
             string command = "join " + name;
             model.Join(command);
         }
 
+        /// <summary>
+        /// play step
+        /// </summary>
+        /// <param name="move">move</param>
         public void Play(string move)
         {
             string command = "play " + move;
             model.Play(command);
         }
 
-        public void Close()
+        /// <summary>
+        /// close
+        /// </summary>
+        /// <param name="name">maze name</param>
+        public void Close(string name)
         {
-            string command = "close " + Name;
+            string command = "close " + name;
             model.Close(command);
         }
     }

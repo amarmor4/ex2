@@ -24,10 +24,19 @@ namespace ex2
         /// </summary>
         string listOfGames;
 
+        /// <summary>
+        /// play move
+        /// </summary>
         string playMove;
 
+        /// <summary>
+        /// close game
+        /// </summary>
         bool closeGame;
 
+        /// <summary>
+        /// server failed
+        /// </summary>
         bool serverFailed;
 
         /// <summary>
@@ -35,6 +44,9 @@ namespace ex2
         /// </summary>
         ITelnetClient telnetClient;
 
+        /// <summary>
+        /// client multi communication
+        /// </summary>
         ClientMulti clientMulti;
 
         /// <summary>
@@ -55,6 +67,11 @@ namespace ex2
             };
         }
 
+        /// <summary>
+        /// notify message changed
+        /// </summary>
+        /// <param name="name">name</param>
+        /// <param name="message">message</param>
         public void NotifyMessageChanged(string name, string message)
         {
             if(name=="join")
@@ -62,7 +79,9 @@ namespace ex2
             if (name == "move")
                 Move = message;
             if (name == "end")
-                CloseGame = true;                
+                CloseGame = true; 
+            if(name=="colse")
+                this.clientMulti.Disconnect();
         }
 
         /// <summary>
@@ -88,6 +107,9 @@ namespace ex2
             }
         }
 
+        /// <summary>
+        /// list of games
+        /// </summary>
         public string ListOfGames
         {
             get { return this.listOfGames; }
@@ -98,6 +120,9 @@ namespace ex2
             }
         }
 
+        /// <summary>
+        /// move
+        /// </summary>
         public string Move
         {
             get { return this.playMove; }
@@ -108,6 +133,9 @@ namespace ex2
             }
         }
 
+        /// <summary>
+        /// close game
+        /// </summary>
         public bool CloseGame
         {
             get { return this.closeGame; }
@@ -118,6 +146,10 @@ namespace ex2
             }
         }
 
+
+        /// <summary>
+        /// server failed
+        /// </summary>
         public bool ServerFailed
         {
             get { return this.serverFailed; }
@@ -192,7 +224,6 @@ namespace ex2
         {
             if (!this.clientMulti.Write(command))
                 ServerFailed = true;
-            this.clientMulti.Disconnect();
         }
     }
 }

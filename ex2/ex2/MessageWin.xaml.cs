@@ -25,17 +25,25 @@ namespace ex2
             txtBlockMsg.Text = msg;
         }
 
-
         /// <summary>
         /// stnMainMenu_Click event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routedEventArgs</param>
         private void stnMainMenu_Click(object sender, RoutedEventArgs e)
-        {             
-                MainWindow win = (MainWindow)Application.Current.MainWindow;
-                win.Show();
-                this.Close();
+        {
+            this.Close();
+        }
+
+        /// <summary>
+        /// closing window event.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">System.ComponentModel.CancelEventArgs</param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MainWindow win = (MainWindow)Application.Current.MainWindow;
+            win.Show();
         }
     }
 }

@@ -41,6 +41,13 @@ namespace ex2
         int cols;
 
         /// <summary>
+        /// is btn disabled
+        /// </summary>
+        bool isBtnDisabled;
+
+        public bool IsServerFailed { set; get; }
+
+        /// <summary>
         /// constructor
         /// </summary>
         /// <param name="mazeName">maze name</param>
@@ -57,7 +64,9 @@ namespace ex2
             this.DataContext = vm;
             InitializeComponent();
             this.Background = new SolidColorBrush(Colors.LightYellow);
-            this.StartGame();
+            this.isBtnDisabled = false;
+            this.IsServerFailed = false;
+            this.StartGame();            
         }
 
         /// <summary>
@@ -89,7 +98,10 @@ namespace ex2
         /// <param name="e">routedEventArgs</param>
         private void stnSolve_Click(object sender, RoutedEventArgs e)
         {
-            vm.SolveGame(this.name);
+            if (vm.MazeSolve == null)
+                vm.SolveGame(this.name);
+            else
+                myMazeBoard.AnimationSolve();
         }
 
         /// <summary>
@@ -99,13 +111,7 @@ namespace ex2
         /// <param name="e">routedEventArgs</param>
         private void stnMainMenu_Click(object sender, RoutedEventArgs e)
         {
-            Window areYouSure = new AreYouSure();
-            if (areYouSure.ShowDialog()==true)
-            {
-                MainWindow win = (MainWindow)Application.Current.MainWindow;
-                win.Show();
-                this.Close();
-            }
+            this.Close();
         }
 
         /// <summary>
@@ -118,33 +124,68 @@ namespace ex2
             myMazeBoard.KeyBoardDown(myMazeBoard, e);
         }
 
+        /// <summary>
+        /// add listen to keyBoard
+        /// </summary>
         public void AddListenToKeyBoard()
         {
             this.KeyDown -= MazeBoard_KeyDown;
             this.KeyDown += MazeBoard_KeyDown;
         }
 
-        public void RemoveAddListenToKeyBoard()
+        /// <summary>
+        /// remove listen to keyBoard
+        /// </summary>
+        public void RemoveListenToKeyBoard()
         {
             this.KeyDown -= MazeBoard_KeyDown;
         }
 
+        /// <summary>
+        /// enable buttons
+        /// </summary>
         public void EnableButtons()
         {
             stnRestart.IsEnabled = true;
             stnSolve.IsEnabled = true;
             stnMainMenu.IsEnabled = true;
+            this.isBtnDisabled = false;
         }
 
+        /// <summary>
+        /// disable buttons
+        /// </summary>
         public void DisableButtons()
         {
             stnRestart.IsEnabled = false;
             stnSolve.IsEnabled = false;
             stnMainMenu.IsEnabled = false;
-            myMazeBoard.AnimationEndedChanged += delegate () {
-                this.EnableButtons();
-                
-            };
+            this.isBtnDisabled = true;
+        }
+
+        /// <summary>
+        /// closing window event.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">System.ComponentModel.CancelEventArgs</param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!this.isBtnDisabled && !IsServerFailed)
+            {
+                Window areYouSure = new AreYouSure();
+                if (areYouSure.ShowDialog() == true)
+                {
+                    MainWindow win = (MainWindow)Application.Current.MainWindow;
+                    win.Show();
+                }
+                else
+                    e.Cancel = true;
+            }
+            else if(this.isBtnDisabled)
+            {
+                MessageBox.Show("wait for animation to finish");
+                e.Cancel = true;
+            }
         }
     }
 }

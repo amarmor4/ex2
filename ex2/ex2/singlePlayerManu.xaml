@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:MazeGUI.Controls"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Closing="Window_Closing"
         Title="SinglePlayerManu" Height="180" Width="300">
     <Grid TextBlock.FontSize="12">
         <Grid.RowDefinitions>
@@ -12,8 +12,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <controls:MazeFields x:Name="mazeFildes"></controls:MazeFields>
-        <Button x:Name="btnStart" Grid.Row="3" HorizontalAlignment="left" Grid.Column="1" Click="btnStart_click" Margin="3,20,0,0">Start Game</Button>
-        <Button x:Name="btnCancel" Grid.Row="3" HorizontalAlignment="right" Grid.Column="1" Click="btnCancel_click" Margin="0,20,90,0">cancel</Button>
+        <Button x:Name="btnStart" Grid.Row="3" HorizontalAlignment="left" Grid.Column="1" Click="btnStart_click" Margin="90,20,0,0">Start Game</Button>
+        <Button x:Name="btnCancel" Grid.Row="3" HorizontalAlignment="right" Grid.Column="1" Click="btnCancel_click" Margin="0,20,80,0">cancel</Button>
     </Grid>
 
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ex2"
         xmlns:controls="clr-namespace:MazeGUI.Controls"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Closing="Window_Closing"
         Title="MultiPlayerManu" Height="210" Width="300">
     <Grid TextBlock.FontSize="12">
         <Grid.RowDefinitions>
@@ -37,7 +37,7 @@
             <Button x:Name="btnJoin" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="9,0,0,0" Click="btnJoin_click" IsEnabled="False">Join Game</Button>
         </Grid>
         <controls:MazeFields x:Name="mazeFildes"  Grid.Row="2"></controls:MazeFields>
-        <Button x:Name="btnStart" Grid.Row="5" Grid.Column="1" HorizontalAlignment="center" Click="btnStart_click" Margin="65,10,0,0">Start Game</Button>
-        <Button x:Name="btnCancel" Grid.Row="5" HorizontalAlignment="center" Grid.Column="1" Padding="5,0,5,0" Margin="0,10,65,0" Click="btnCancel_click">cancel</Button>
+        <Button x:Name="btnStart" Grid.Row="5" Grid.Column="1" HorizontalAlignment="center" Click="btnStart_click" Margin="20,10,65,0">Start Game</Button>
+        <Button x:Name="btnCancel" Grid.Row="5" HorizontalAlignment="center" Grid.Column="1" Padding="5,0,5,0" Margin="85,10,0,0" Click="btnCancel_click">cancel</Button>
     </Grid>
 </Window>

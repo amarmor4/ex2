@@ -32,10 +32,9 @@ namespace MazeGUI.Controls
             InitializeComponent();
         }
 
-        public delegate void AnimationEnded();
-
-        public event AnimationEnded AnimationEndedChanged;
-
+        /// <summary>
+        /// close game
+        /// </summary>
         public bool CloseGame
         {
             get { return (bool)GetValue(CloseGameProperty); }
@@ -112,6 +111,9 @@ namespace MazeGUI.Controls
             }
         }
 
+        /// <summary>
+        /// move direction
+        /// </summary>
         public string Move
         {
             get { return (string)GetValue(MoveProperty); }
@@ -121,6 +123,9 @@ namespace MazeGUI.Controls
             }
         }
 
+        /// <summary>
+        /// server failed
+        /// </summary>
         public bool ServerFailed
         {
             get { return (bool)GetValue(ServerFailedProperty); }
@@ -200,12 +205,21 @@ namespace MazeGUI.Controls
         public static readonly DependencyProperty MazeSolveProperty =
             DependencyProperty.Register("MazeSolve", typeof(string), typeof(MazeBoard), new PropertyMetadata(onMazeSolvePropertyChanged));
 
+        /// <summary>
+        /// DependencyProperty MoveProperty
+        /// </summary>
         public static readonly DependencyProperty MoveProperty =
             DependencyProperty.Register("Move", typeof(object), typeof(MazeBoard), new PropertyMetadata(null,onMovePropertyChanged, moveCallBack));
 
+        /// <summary>
+        /// DependencyProperty CloseGameProperty
+        /// </summary>
         public static readonly DependencyProperty CloseGameProperty =
             DependencyProperty.Register("CloseGame", typeof(bool), typeof(MazeBoard), new PropertyMetadata(onCloseGamePropertyChanged));
 
+        /// <summary>
+        /// DependencyProperty ServerFailedProperty
+        /// </summary>
         public static readonly DependencyProperty ServerFailedProperty =
             DependencyProperty.Register("ServerFailed", typeof(bool), typeof(MazeBoard), new PropertyMetadata(onServerFailedPropertyPropertyChanged));
 
@@ -230,11 +244,22 @@ namespace MazeGUI.Controls
             ((MazeBoard)d).AnimationSolve();
         }
 
+        /// <summary>
+        /// onMovePropertyChanged metadata - multi player
+        /// </summary>
+        /// <param name="d">DependencyObject</param>
+        /// <param name="e">DependencyPropertyChangedEventArgs</param>
         private static void onMovePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((MazeBoard)d).RivalMove();
         }
 
+        /// <summary>
+        /// call back to move - can be the same value with notify
+        /// </summary>
+        /// <param name="d">DependencyObject</param>
+        /// <param name="baseValue">object</param>
+        /// <returns></returns>
         private static object moveCallBack(DependencyObject d, object baseValue)
         {
             if (baseValue != null && (d.GetValue(MoveProperty) == baseValue))
@@ -245,18 +270,34 @@ namespace MazeGUI.Controls
             return baseValue;
         }
 
+        /// <summary>
+        /// onCloseGamePropertyChanged metadata
+        /// </summary>
+        /// <param name="d">DependencyObject</param>
+        /// <param name="e">DependencyPropertyChangedEventArgs</param>
         private static void onCloseGamePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((MazeBoard)d).CloseThisGame();
         }
 
+        /// <summary>
+        /// onServerFailedPropertyPropertyChanged metadata
+        /// </summary>
+        /// <param name="d">DependencyObject</param>
+        /// <param name="e">DependencyPropertyChangedEventArgs</param>
         private static void onServerFailedPropertyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((MazeBoard)d).ServerFailedExist();
         }
 
+        /// <summary>
+        /// single player game window
+        /// </summary>
         public SinglePlayerGame SingleWindow { get{ return (SinglePlayerGame)Window.GetWindow(this); }}
 
+        /// <summary>
+        /// multi player game window
+        /// </summary>
         public MultiPlayerGame MultiWindow { get { return (MultiPlayerGame)Window.GetWindow(this); } }
 
 
@@ -302,11 +343,7 @@ namespace MazeGUI.Controls
         public void DrawMaze()
         {
             this.DrawWalls(RectHeight, RectWidth);
-            this.DrawIcons(InitialStateCol, InitialStateRow, RectHeight, RectWidth, "pokeball.png", "player");
             this.DrawIcons(GoalStateCol, GoalStateRow, RectHeight, RectWidth, "jigglypuff.png", "goal");
-            foreach (UIElement ue in myCanvas.Children)
-                if (((System.Windows.FrameworkElement)ue).Name == "player")
-                    Player = ue; 
             ResetCurrentState();
         }
 
@@ -397,12 +434,13 @@ namespace MazeGUI.Controls
         {
             if (myCanvas.Children.Contains(Player))
                 myCanvas.Children.Remove(Player);
-            myCanvas.Children.Add(Player);
             CurrntStateRow = InitialStateRow;
             CurrntStateCol = InitialStateCol;
-            this.MovePlayer(Player, Convert.ToInt32(CurrntStateCol * RectWidth), "Left");
-            this.MovePlayer(Player, Convert.ToInt32(CurrntStateRow * RectHeight), "Top");
-            this.ListenToKeyBoard();           
+            this.DrawIcons(InitialStateCol, InitialStateRow, RectHeight, RectWidth, "pokeball.png", "player");
+            foreach (UIElement ue in myCanvas.Children)
+                if (((System.Windows.FrameworkElement)ue).Name == "player")
+                    Player = ue;
+            this.ListenToKeyBoard();
         }
 
         /// <summary>
@@ -520,13 +558,12 @@ namespace MazeGUI.Controls
                 MessageBox.Show("show soultion path ended");
                 this.Dispatcher.Invoke((Action)(() =>
                 {
-                    
-                 }));
+                    this.EnableButtons();
+                }));
              },
             new object[] { MazeSolve, CurrntStateRow, CurrntStateCol, GoalStateRow, GoalStateCol, RectHeight, RectWidth, Player, InitialStateRow, InitialStateCol});
             animation.Start();
-            this.EnableButtons();
-            
+            //this.EnableButtons();           
         }
 
         /// <summary>
@@ -537,6 +574,7 @@ namespace MazeGUI.Controls
             if(ModePlay=="Multi" && MultiWindow!=null)
             {
                 MultiWindow.CloseSpinner();
+                MultiWindow.SecondPlayerCloseGame = false;
             }
             Window window = Window.GetWindow(this);
             if (window != null)
@@ -560,55 +598,73 @@ namespace MazeGUI.Controls
         public void RemoveListenToKeyBoard()
         {
             if (ModePlay == "Single" && SingleWindow != null)
-                SingleWindow.RemoveAddListenToKeyBoard();           
+                SingleWindow.RemoveListenToKeyBoard();           
             else if (ModePlay == "Multi" && MultiWindow != null)
-                MultiWindow.RemoveAddListenToKeyBoard();           
+                MultiWindow.RemoveListenToKeyBoard();           
         }
 
+        /// <summary>
+        /// rival move
+        /// </summary>
         public void RivalMove()
         {
             if (ModePlay == "Multi" && MultiWindow != null)
                 MultiWindow.RivalMove(Move);           
         }
 
+        /// <summary>
+        /// enable buttons
+        /// </summary>
         public void EnableButtons()
         {
             if (ModePlay == "Single" && SingleWindow != null)
                 SingleWindow.EnableButtons();           
         }
 
+        /// <summary>
+        /// disable buttons
+        /// </summary>
         public void DisableButtons()
         {
             if (ModePlay == "Single" && SingleWindow != null)
                 SingleWindow.DisableButtons();           
         }
 
+        /// <summary>
+        /// close this game
+        /// </summary>
         public void CloseThisGame()
         {
             if (CloseGame == true)
             {
                 if (ModePlay == "Multi" && MultiWindow != null)
                 {
+                    MultiWindow.SecondPlayerCloseGame = true;
                     MultiWindow.Close();
                     MessageWin win = new MessageWin("seconde player exit from game");
                     win.Show();
                 }
             }
-
         }
 
+        /// <summary>
+        /// server falied exist
+        /// </summary>
         public void ServerFailedExist()
         {
             if (ServerFailed == true)
             {
                 if (ModePlay == "Single" && SingleWindow != null)
                 {
+                    SingleWindow.IsServerFailed = true;
                     SingleWindow.Close();
                     MessageWin win = new MessageWin("connection to server failed");
                     win.Show();                    
                 }
                 if (ModePlay == "Multi" && MultiWindow != null)
                 {
+                    MultiWindow.IsServerFailed = true;
+                    MultiWindow.CloseSpinner();
                     MultiWindow.Close();
                     MessageWin win = new MessageWin("connection to server failed");
                     win.Show();                                           

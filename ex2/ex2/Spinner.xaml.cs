@@ -20,10 +20,25 @@ namespace ex2
     /// </summary>
     public partial class Spinner : Window
     {
-        public Spinner()
+        /// <summary>
+        /// MultiPlayerGame window
+        /// </summary>
+        MultiPlayerGame MultiWindow;
+
+        /// <summary>
+        /// is closed due to start game
+        /// </summary>
+        bool isClosedDueToStartGame;
+
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="multiPlayerGame">multiPlayerGame window</param>
+        public Spinner(MultiPlayerGame multiPlayerGame)
         {
             InitializeComponent();
-            this.Background = new SolidColorBrush(Colors.LightYellow);
+            this.MultiWindow = multiPlayerGame;
+            this.isClosedDueToStartGame = false;
         }
 
         /// <summary>
@@ -33,19 +48,43 @@ namespace ex2
         /// <param name="e">routedEventArgs</param>
         private void stnMainMenu_Click(object sender, RoutedEventArgs e)
         {
-            Window areYouSure = new AreYouSure();
-            if (areYouSure.ShowDialog() == true)
-            {
-                MainWindow win = (MainWindow)Application.Current.MainWindow;
-                win.Show();
-                this.Close();
-            }
+            this.Close();
         }
 
+        /// <summary>
+        /// when gid end event
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routedEventArgs</param>
         private void myGif_MediaEnded(object sender, RoutedEventArgs e)
         {
             gifSpinner.Position = new TimeSpan(0, 0, 1);
             gifSpinner.Play();
+        }
+
+        /// <summary>
+        /// close due to start game
+        /// </summary>
+        public void ClosedDueToStartGame()
+        {
+            this.isClosedDueToStartGame = true;
+            this.Close();
+        }
+
+        /// <summary>
+        /// closing window event.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">System.ComponentModel.CancelEventArgs</param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!this.isClosedDueToStartGame)
+            {
+                if (this.MultiWindow != null)
+                {
+                    this.MultiWindow.Close();
+                }
+            }
         }
     }
 }
