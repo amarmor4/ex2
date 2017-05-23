@@ -454,19 +454,19 @@ namespace MazeGUI.Controls
                 switch (e.Key)
                 {
                     case Key.Right:
-                        if (MazePath[CurrntStateRow * Cols + (CurrntStateCol + 1)] == '0')
+                        if (CurrntStateCol + 1 <= Cols - 1 && MazePath[CurrntStateRow * Cols + (CurrntStateCol + 1)] == '0')
                             CurrntStateCol += 1;
                         break;
                     case Key.Left:
-                        if (MazePath[CurrntStateRow * Cols + (CurrntStateCol - 1)] == '0')
+                        if (CurrntStateCol - 1 >= 0 && MazePath[CurrntStateRow * Cols + (CurrntStateCol - 1)] == '0')
                             CurrntStateCol -= 1;
                         break;
                     case Key.Up:
-                        if (MazePath[(CurrntStateRow - 1) * Cols + CurrntStateCol] == '0')
+                        if (CurrntStateRow - 1 >= 0 && MazePath[(CurrntStateRow - 1) * Cols + CurrntStateCol] == '0')
                             CurrntStateRow -= 1;
                         break;
                     case Key.Down:
-                        if (MazePath[(CurrntStateRow + 1) * Cols + CurrntStateCol] == '0')
+                        if (CurrntStateRow + 1 <= Rows - 1 && MazePath[(CurrntStateRow + 1) * Cols + CurrntStateCol] == '0')
                             CurrntStateRow += 1;
                         break;
                 }

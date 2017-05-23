@@ -33,7 +33,7 @@
                 </Style>
             </Grid.Resources>
             <TextBlock>List of games:</TextBlock>
-            <ComboBox x:Name="comboGamesList" ItemsSource="{Binding Path=ListOfGames}"  SelectedItem="{Binding TheSelectedItem, Mode=TwoWay}" SelectionChanged="comboSelectedItem" AllowDrop="True" Grid.Column="1"></ComboBox>
+            <ComboBox x:Name="comboGamesList" ItemsSource="{Binding Path=ListOfGames}" SelectedItem="{Binding TheSelectedItem, Mode=TwoWay}" SelectionChanged="comboSelectedItem" AllowDrop="True" Grid.Column="1" DropDownOpened="comboGamesList_DropDownOpened"></ComboBox>
             <Button x:Name="btnJoin" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="9,0,0,0" Click="btnJoin_click" IsEnabled="False">Join Game</Button>
         </Grid>
         <controls:MazeFields x:Name="mazeFildes"  Grid.Row="2"></controls:MazeFields>

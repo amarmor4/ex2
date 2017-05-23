@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,8 +43,8 @@ namespace ex2
             this.vm = new MultiPlayerGameViewModel(model);
             this.DataContext = this.vm;
             this.isStartGame = false;
-            vm.GetListToJoin();      
         }
+
 
         /// <summary>
         /// event click on start btn.
@@ -111,9 +112,14 @@ namespace ex2
             }
         }
 
+        /// <summary>
+        /// combobox list of games - drop down open event
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event args</param>
         private void comboGamesList_DropDownOpened(object sender, EventArgs e)
         {
-
+            vm.GetListToJoin();
         }
     }
 }
